@@ -109,3 +109,17 @@ footer {
   height: 35px;
   margin: 12px;
 }
+header {
+  background-color: #e6f0ff;  /* हल्का नीला बैकग्राउंड */
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+}
+header {
+  background-color: #e6f0ff;  /* हल्का नीला बैकग्राउंड */
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+}
