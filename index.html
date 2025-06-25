@@ -22,6 +22,27 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyAjqjVXxtxN93L-fn3bKNCdlDE3nDf1s7s",
+    authDomain: "boc-billmanager.firebaseapp.com",
+    projectId: "boc-billmanager",
+    storageBucket: "boc-billmanager.appspot.com",
+    messagingSenderId: "626232964549",
+    appId: "1:626232964549:web:ed516c84693c45bda207ac",
+    measurementId: "G-KCXMM1J2G1"
+  };
+
+  // Firebase init
+  firebase.initializeApp(firebaseConfig);
+  const ui = new firebaseui.auth.AuthUI(firebase.auth());
+
+  // Start Login UI
+  ui.start('#firebaseui-auth-container', {
+    signInOptions: [firebase.auth.EmailAuthProvider.PROVIDER_ID],
+    signInSuccessUrl: '/dashboard.html' // Login ke baad yeh page open hoga
+  });
+  </script>
   <header style="display: flex; align-items: center; gap: 15px; padding: 15px; background-color: #e6f0ff; border-bottom: 1px solid #ccc;">
   <img src="logo.png" alt="Bharat Oil Carrier Logo" style="height: 80px;">
   <div>
@@ -65,6 +86,10 @@
   </section>
 
   <footer>
+    <section style="padding: 40px 20px; background-color: #f9f9f9;">
+  <h2>🔐 Client Login Panel</h2>
+  <div id="firebaseui-auth-container"></div>
+    </section>
     <p>© 2025 Bharat Oil Carrier | <a href="https://wa.me/91XXXXXXXXXX">WhatsApp Us</a></p>
   </footer>
   <a href="https://wa.me/918077703137" class="whatsapp-button" target="_blank">
