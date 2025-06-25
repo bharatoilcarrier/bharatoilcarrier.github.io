@@ -1,26 +1,36 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <title>Bharat Oil Carrier | Bitumen & Liquid Transport Services</title>
+  <title>Bharat Oil Carrier | Bitumen & Transport Services</title>
   <meta name="description" content="Bharat Oil Carrier is a trusted partner in bulk bitumen transport across India. Get live prices, request quotations, and explore services online.">
-
-  <!-- Google font for modern look -->
   <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
-
-  <!-- Firebase Scripts & CSS -->
-  <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/ui/6.0.0/firebase-ui-auth.js"></script>
-  <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/6.0.0/firebase-ui-auth.css" />
-
+  <link rel="stylesheet" href="style.css" />
   <style>
     body {
       font-family: 'Inter', sans-serif;
-      padding: 0;
       margin: 0;
+      padding-bottom: 60px; /* for bottom nav */
+    }
+    nav {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background: #ffffff;
+      display: flex;
+      justify-content: space-around;
+      border-top: 1px solid #ccc;
+      padding: 8px 0;
+      z-index: 1000;
+    }
+    nav a {
+      text-align: center;
+      font-size: 12px;
+      color: #000;
+      text-decoration: none;
+    }
+    nav a div {
+      font-size: 20px;
     }
     header {
       display: flex;
@@ -30,51 +40,45 @@
       background-color: #e6f0ff;
       border-bottom: 1px solid #ccc;
     }
+    header img {
+      height: 80px;
+    }
     section {
       padding: 20px;
     }
-    footer {
-      text-align: center;
-      padding: 20px;
-      background-color: #f1f1f1;
+    .whatsapp-button {
+      position: fixed;
+      bottom: 70px;
+      right: 15px;
+      width: 50px;
     }
     .whatsapp-button img {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      height: 50px;
+      width: 100%;
     }
   </style>
 </head>
-
 <body>
   <header>
-    <img src="logo.png" alt="Bharat Oil Carrier Logo" style="height: 80px;">
+    <img src="logo.png" alt="Bharat Oil Carrier Logo">
     <div>
-      <h1 style="margin: 0; font-size: 28px; font-weight: bold; color: #000000;">Bharat Oil Carrier</h1>
-      <p style="margin: 0; font-size: 14px; color: #222222;">Your Trusted Partner for Bitumen & Bulk Liquid Transport</p>
+      <h1>Bharat Oil Carrier</h1>
+      <p>Your Trusted Partner for Bitumen & Bulk Liquid Transport</p>
     </div>
-  </header>
-
-  <section>
-    <h2>🛢 Bitumen Price of Bulk Bitumen (June 2025)</h2>
+  </header>  <section id="home">
+    <h2>🛢 Bitumen Price (June 2025)</h2>
     <ul>
       <li>VG10 – ₹45,422/MT</li>
       <li>VG30 – ₹47,722/MT</li>
       <li>VG40 – ₹50,382/MT</li>
     </ul>
     <p><strong>Note:</strong> Prices are approximate and exclude freight.</p>
-  </section>
-
-  <section style="text-align: center;">
+  </section>  <section id="download" style="text-align: center;">
     <h2>Download Our Company Profile</h2>
     <p>You can download our latest company brochure for complete details.</p>
-    <a href="bharat-brochure.pdf" download style="display: inline-block; margin-top: 15px; background-color: #007bff; color: white; padding: 12px 20px; border-radius: 8px; text-decoration: none; font-weight: bold;">
+    <a href="bharat-brochure.pdf" download style="background-color: #007bff; color: white; padding: 12px 20px; border-radius: 8px; text-decoration: none; font-weight: bold; display: inline-block;">
       📄 Download Profile (PDF)
     </a>
-  </section>
-
-  <section>
+  </section>  <section id="quotation">
     <h2>🚚 Get a Quotation</h2>
     <form>
       <label>Product Type:</label>
@@ -85,47 +89,31 @@
         <option>Emulsion</option>
         <option>LDO</option>
         <option>F.O.</option>
-      </select><br><br>
-      <input type="text" placeholder="Loading Point" /><br><br>
-      <input type="text" placeholder="Unloading Point" /><br><br>
-      <input type="number" placeholder="Quantity (MT)" /><br><br>
+      </select><br>
+      <input type="text" placeholder="Loading Point" /><br>
+      <input type="text" placeholder="Unloading Point" /><br>
+      <input type="number" placeholder="Quantity (MT)" /><br>
       <button type="submit">Submit</button>
     </form>
-  </section>
-
-  <!-- 🔐 Login Section -->
-  <section style="background-color: #f9f9f9; margin-top: 40px;">
+  </section>  <section id="login">
     <h2>🔐 Client Login Panel</h2>
-    <div id="firebaseui-auth-container"></div>
-  </section>
-
-  <footer>
-    <p>© 2025 Bharat Oil Carrier | <a href="https://wa.me/918077703137">WhatsApp Us</a></p>
-  </footer>
-
-  <a href="https://wa.me/918077703137" class="whatsapp-button" target="_blank">
+    <p>Login system coming soon...</p>
+  </section>  <section id="orders">
+    <h2>📄 Orders</h2>
+    <p>Track your monthly orders here.</p>
+  </section>  <section id="fleet">
+    <h2>🚗 Fleet Location</h2>
+    <p>Track live fleet movement (Coming Soon)</p>
+  </section>  <footer>
+    <p style="text-align: center;">&copy; 2025 Bharat Oil Carrier | <a href="https://wa.me/918077703137">WhatsApp Us</a></p>
+  </footer>  <a href="https://wa.me/918077703137" class="whatsapp-button" target="_blank">
     <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="Chat on WhatsApp">
-  </a>
-
-  <!-- 🔥 Firebase Login Setup Script -->
-  <script>
-    const firebaseConfig = {
-      apiKey: "AIzaSyAjqjVXxtxN93L-fn3bKNCdlDE3nDf1s7s",
-      authDomain: "boc-billmanager.firebaseapp.com",
-      projectId: "boc-billmanager",
-      storageBucket: "boc-billmanager.appspot.com",
-      messagingSenderId: "626232964549",
-      appId: "1:626232964549:web:ed516c84693c45bda207ac",
-      measurementId: "G-KCXMM1J2G1"
-    };
-
-    firebase.initializeApp(firebaseConfig);
-    const ui = new firebaseui.auth.AuthUI(firebase.auth());
-
-    ui.start('#firebaseui-auth-container', {
-      signInOptions: [firebase.auth.EmailAuthProvider.PROVIDER_ID],
-      signInSuccessUrl: '/dashboard.html'
-    });
-  </script>
+  </a>  <nav>
+    <a href="#home"><div>🏠</div>Home</a>
+    <a href="#login"><div>🔐</div>Login</a>
+    <a href="#quotation"><div>🔍</div>Quote</a>
+    <a href="#orders"><div>📦</div>Orders</a>
+    <a href="#fleet"><div>🚗</div>Fleet</a>
+  </nav>
 </body>
-</html>
+      </html>
