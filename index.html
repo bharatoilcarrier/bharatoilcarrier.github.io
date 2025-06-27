@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -10,7 +11,38 @@
     body {
       font-family: 'Inter', sans-serif;
       margin: 0;
-      padding-bottom: 60px; /* for bottom nav */
+      padding-bottom: 60px; /* For bottom nav */
+      background-image: url('tanker-bg.jpg'); /* Your tanker image name */
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      background-repeat: no-repeat;
+      color: #fff;
+    }
+    header {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      padding: 15px;
+      background-color: rgba(0, 0, 0, 0.6); /* Transparent black overlay */
+      border-bottom: 1px solid #ccc;
+    }
+    header img {
+      height: 80px;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 24px;
+    }
+    header p {
+      margin: 0;
+      font-size: 14px;
+    }
+    section {
+      padding: 20px;
+      background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background for readability */
+      margin: 20px;
+      border-radius: 10px;
     }
     nav {
       position: fixed;
@@ -32,39 +64,38 @@
     nav a div {
       font-size: 20px;
     }
-    header {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-      padding: 15px;
-      background-color: #e6f0ff;
-      border-bottom: 1px solid #ccc;
-    }
-    header img {
-      height: 80px;
-    }
-    section {
-      padding: 20px;
-    }
     .whatsapp-button {
       position: fixed;
       bottom: 70px;
       right: 15px;
-      width: 50px;
+      width: 60px;
     }
     .whatsapp-button img {
       width: 100%;
     }
+    form input, form select, form button {
+      display: block;
+      margin: 10px 0;
+      padding: 10px;
+      width: 90%;
+      max-width: 400px;
+    }
+    a, a:visited {
+      color: #00ffcc;
+    }
   </style>
 </head>
 <body>
+
   <header>
     <img src="logo.png" alt="Bharat Oil Carrier Logo">
     <div>
       <h1>Bharat Oil Carrier</h1>
       <p>Your Trusted Partner for Bitumen & Bulk Liquid Transport</p>
     </div>
-  </header>  <section id="home">
+  </header>
+
+  <section id="home">
     <h2>🛢 Bitumen Price (June 2025)</h2>
     <ul>
       <li>VG10 – ₹45,422/MT</li>
@@ -72,13 +103,17 @@
       <li>VG40 – ₹50,382/MT</li>
     </ul>
     <p><strong>Note:</strong> Prices are approximate and exclude freight.</p>
-  </section>  <section id="download" style="text-align: center;">
-    <h2>Download Our Company Profile</h2>
+  </section>
+
+  <section id="download" style="text-align: center;">
+    <h2>📄 Download Our Company Profile</h2>
     <p>You can download our latest company brochure for complete details.</p>
     <a href="bharat-brochure.pdf" download style="background-color: #007bff; color: white; padding: 12px 20px; border-radius: 8px; text-decoration: none; font-weight: bold; display: inline-block;">
-      📄 Download Profile (PDF)
+      📥 Download Profile (PDF)
     </a>
-  </section>  <section id="quotation">
+  </section>
+
+  <section id="quotation">
     <h2>🚚 Get a Quotation</h2>
     <form>
       <label>Product Type:</label>
@@ -90,30 +125,43 @@
         <option>LDO</option>
         <option>F.O.</option>
       </select><br>
-      <input type="text" placeholder="Loading Point" /><br>
-      <input type="text" placeholder="Unloading Point" /><br>
-      <input type="number" placeholder="Quantity (MT)" /><br>
+      <input type="text" placeholder="Loading Point" required/><br>
+      <input type="text" placeholder="Unloading Point" required/><br>
+      <input type="number" placeholder="Quantity (MT)" required/><br>
       <button type="submit">Submit</button>
     </form>
-  </section>  <section id="login">
+  </section>
+
+  <section id="login">
     <h2>🔐 Client Login Panel</h2>
     <p>Login system coming soon...</p>
-  </section>  <section id="orders">
+  </section>
+
+  <section id="orders">
     <h2>📄 Orders</h2>
-    <p>Track your monthly orders here.</p>
-  </section>  <section id="fleet">
+    <p>Track your monthly orders here. (Coming Soon)</p>
+  </section>
+
+  <section id="fleet">
     <h2>🚗 Fleet Location</h2>
     <p>Track live fleet movement (Coming Soon)</p>
-  </section>  <footer>
-    <p style="text-align: center;">&copy; 2025 Bharat Oil Carrier | <a href="https://wa.me/918077703137">WhatsApp Us</a></p>
-  </footer>  <a href="https://wa.me/918077703137" class="whatsapp-button" target="_blank">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="Chat on WhatsApp">
-  </a>  <nav>
+  </section>
+
+  <footer>
+    <p style="text-align: center;">&copy; 2025 Bharat Oil Carrier | <a href="https://wa.me/918077703137" target="_blank">WhatsApp Us</a></p>
+  </footer>
+
+  <a href="https://wa.me/918077703137" class="whatsapp-button" target="_blank">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/WhatsApp_icon.png" alt="Chat on WhatsApp">
+  </a>
+
+  <nav>
     <a href="#home"><div>🏠</div>Home</a>
     <a href="#login"><div>🔐</div>Login</a>
     <a href="#quotation"><div>🔍</div>Quote</a>
     <a href="#orders"><div>📦</div>Orders</a>
     <a href="#fleet"><div>🚗</div>Fleet</a>
   </nav>
+
 </body>
-      </html>
+</html>
