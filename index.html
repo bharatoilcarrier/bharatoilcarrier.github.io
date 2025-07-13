@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Bharat Oil Carrier | Bitumen & Transport Services</title>
   <meta name="description" content="Bharat Oil Carrier is a trusted partner in bulk bitumen transport across India. Get live prices, request quotations, and explore services online.">
   <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
@@ -16,13 +16,13 @@
       background-position: center;
       background-attachment: fixed;
       background-repeat: no-repeat;
-      color: #fff;
+      color: #ffffff;
     }
 
     h2 {
-      color: #007BFF;
+      color: #32CD32;
       font-weight: bold;
-      text-shadow: 1px 1px 2px #00000055;
+      text-shadow: 1px 1px 2px #00000088;
     }
 
     header {
@@ -31,7 +31,7 @@
       gap: 15px;
       padding: 15px;
       background-color: rgba(0, 0, 0, 0.6);
-      border-bottom: 1px solid #ccc;
+      border-bottom: 1px solid #444;
     }
 
     header img {
@@ -46,6 +46,7 @@
     header p {
       margin: 0;
       font-size: 14px;
+      color: #ccc;
     }
 
     section {
@@ -59,10 +60,10 @@
       position: fixed;
       bottom: 0;
       width: 100%;
-      background: #333;
+      background: #111;
       display: flex;
       justify-content: space-around;
-      border-top: 1px solid #ccc;
+      border-top: 1px solid #444;
       padding: 8px 0;
       z-index: 1000;
     }
@@ -70,8 +71,12 @@
     nav a {
       text-align: center;
       font-size: 12px;
-      color: #007BFF;
+      color: #ffffff;
       text-decoration: none;
+    }
+
+    nav a:hover {
+      color: #00ffff;
     }
 
     nav a div {
@@ -82,54 +87,59 @@
       position: fixed;
       bottom: 80px;
       right: 15px;
-      background-color: #25D366;
-      color: #fff;
-      padding: 10px 15px;
-      border-radius: 5px;
-      text-decoration: none;
-      display: flex;
-      align-items: center;
+      width: 60px;
       z-index: 1001;
-      font-size: 14px;
     }
 
     .whatsapp-button img {
-      margin-right: 5px;
+      width: 100%;
+      border-radius: 50%;
+      background-color: white;
+      padding: 8px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+      transition: transform 0.3s ease;
     }
 
-    form input, form select {
+    .whatsapp-button img:hover {
+      transform: scale(1.1);
+    }
+
+    form input, form select, form button {
       display: block;
       margin: 10px 0;
       padding: 10px;
       width: 90%;
       max-width: 400px;
-      background-color: #fff;
-      color: #333;
-      border: 1px solid #ccc;
-      border-radius: 5px;
+      border-radius: 6px;
+      border: none;
     }
 
     form button {
-      background-color: #007BFF;
-      color: #fff;
-      border: none;
-      padding: 10px 15px;
-      border-radius: 5px;
+      background-color: #32CD32;
+      color: white;
+      font-weight: bold;
       cursor: pointer;
     }
 
-    a, a:visited {
-      color: #003366;
+    form button:hover {
+      background-color: #28a745;
     }
 
-    .download-button {
-      background-color: #007BFF;
-      color: white;
-      padding: 12px 20px;
-      border-radius: 8px;
+    a, a:visited {
+      color: #00ffcc;
       text-decoration: none;
-      font-weight: bold;
-      display: inline-block;
+    }
+
+    footer {
+      background: #000000aa;
+      padding: 10px 0;
+      text-align: center;
+      font-size: 14px;
+      color: #ccc;
+    }
+
+    footer a {
+      color: #00ffcc;
     }
   </style>
 </head>
@@ -156,7 +166,7 @@
   <section id="download" style="text-align: center;">
     <h2>📄 Download Our Company Profile</h2>
     <p>You can download our latest company brochure for complete details.</p>
-    <a href="bharat-brochure.pdf" download class="download-button">
+    <a href="bharat-brochure.pdf" download style="background-color: #007bff; color: white; padding: 12px 20px; border-radius: 8px; text-decoration: none; font-weight: bold; display: inline-block;">
       📥 Download Profile (PDF)
     </a>
   </section>
@@ -165,17 +175,17 @@
     <h2>🚚 Get a Quotation</h2>
     <form>
       <label>Product Type:</label>
-      <select>
+      <select required>
         <option>VG10</option>
         <option>VG30</option>
         <option>VG40</option>
         <option>Emulsion</option>
         <option>LDO</option>
         <option>F.O.</option>
-      </select><br>
-      <input type="text" placeholder="Loading Point" required/><br>
-      <input type="text" placeholder="Unloading Point" required/><br>
-      <input type="number" placeholder="Quantity (MT)" required/><br>
+      </select>
+      <input type="text" placeholder="Loading Point" required/>
+      <input type="text" placeholder="Unloading Point" required/>
+      <input type="number" placeholder="Quantity (MT)" required/>
       <button type="submit">Submit</button>
     </form>
   </section>
@@ -196,12 +206,12 @@
   </section>
 
   <footer>
-    <p style="text-align: center;">© 2025 Bharat Oil Carrier | <a href="[invalid url, do not cite] target="_blank">WhatsApp Us</a></p>
+    &copy; 2025 Bharat Oil Carrier | <a href="https://wa.me/918077703137" target="_blank">WhatsApp Us</a>
   </footer>
 
-  <a href="[invalid url, do not cite] class="whatsapp-button" target="_blank">
-    <img src="[invalid url, do not cite] alt="WhatsApp" width="24" height="24" style="margin-right: 5px;">
-    Chat on WhatsApp
+  <!-- ✅ Updated WhatsApp Button with transparent icon -->
+  <a href="https://wa.me/918077703137" class="whatsapp-button" target="_blank">
+    <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" alt="Chat on WhatsApp">
   </a>
 
   <nav>
