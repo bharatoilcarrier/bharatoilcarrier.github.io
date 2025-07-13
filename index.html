@@ -11,39 +11,51 @@
     body {
       font-family: 'Inter', sans-serif;
       margin: 0;
-      padding-bottom: 60px; /* For bottom nav */
-      background-image: url('tanker-bg.jpg'); /* Your tanker image name */
+      padding-bottom: 60px;
+      background-image: url('tanker-bg.jpg');
       background-size: cover;
       background-position: center;
       background-attachment: fixed;
       background-repeat: no-repeat;
       color: #fff;
     }
+
+    h2 {
+      color: #32CD32;
+      font-weight: bold;
+      text-shadow: 1px 1px 2px #00000055;
+    }
+
     header {
       display: flex;
       align-items: center;
       gap: 15px;
       padding: 15px;
-      background-color: rgba(0, 0, 0, 0.6); /* Transparent black overlay */
+      background-color: rgba(0, 0, 0, 0.6);
       border-bottom: 1px solid #ccc;
     }
+
     header img {
       height: 80px;
     }
+
     header h1 {
       margin: 0;
       font-size: 24px;
     }
+
     header p {
       margin: 0;
       font-size: 14px;
     }
+
     section {
       padding: 20px;
-      background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background for readability */
+      background-color: rgba(0, 0, 0, 0.5);
       margin: 20px;
       border-radius: 10px;
     }
+
     nav {
       position: fixed;
       bottom: 0;
@@ -55,24 +67,30 @@
       padding: 8px 0;
       z-index: 1000;
     }
+
     nav a {
       text-align: center;
       font-size: 12px;
-      color: #000;
+      color: #007BFF; /* Blue color for nav text */
       text-decoration: none;
     }
+
     nav a div {
       font-size: 20px;
     }
+
     .whatsapp-button {
       position: fixed;
-      bottom: 70px;
+      bottom: 80px;
       right: 15px;
       width: 60px;
+      z-index: 1001;
     }
+
     .whatsapp-button img {
       width: 100%;
     }
+
     form input, form select, form button {
       display: block;
       margin: 10px 0;
@@ -80,6 +98,7 @@
       width: 90%;
       max-width: 400px;
     }
+
     a, a:visited {
       color: #00ffcc;
     }
@@ -102,7 +121,7 @@
       <li>VG30 – ₹47,722/MT</li>
       <li>VG40 – ₹50,382/MT</li>
     </ul>
-    <p><strong>Note:</strong> Prices are approximate and exclude freight.</p>
+    <p><strong>Note:</strong> The above rates are indicative and do not include freight charges.</p>
   </section>
 
   <section id="download" style="text-align: center;">
