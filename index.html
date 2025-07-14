@@ -8,153 +8,170 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Poppins:wght@600&display=swap" rel="stylesheet">
   <link rel="icon" href="logo.png" type="image/png">
   <style>
-    :root {
-      --primary: #002244;
-      --accent: #007bff;
-      --bg: #f9f9f9;
-      --text: #1a1a1a;
-      --card: #ffffff;
-    }* { box-sizing: border-box; }
-body {
-  margin: 0;
-  font-family: 'Inter', sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  line-height: 1.6;
-}
-
-header {
-  background: var(--primary);
-  color: white;
-  padding: 20px;
-  text-align: center;
-}
-
-header h1 {
-  font-family: 'Poppins', sans-serif;
-  margin: 0;
-  font-size: 1.8rem;
-}
-
-header p {
-  font-size: 0.95rem;
-  margin-top: 5px;
-}
-
-section {
-  background: var(--card);
-  margin: 20px;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-}
-
-h2 {
-  font-family: 'Poppins', sans-serif;
-  color: var(--primary);
-  font-size: 1.3rem;
-  margin-bottom: 10px;
-}
-
-ul {
-  padding-left: 20px;
-}
-
-a {
-  color: var(--accent);
-  text-decoration: none;
-}
-
-a:hover {
-  text-decoration: underline;
-}
-
-.quote-button {
-  display: inline-block;
-  background: var(--accent);
-  color: white;
-  padding: 10px 16px;
-  border-radius: 6px;
-  font-weight: 600;
-  margin-top: 10px;
-}
-
-.quote-button:hover {
-  background: #0056b3;
-}
-
-iframe {
-  width: 100%;
-  height: 400px;
-  border: none;
-  border-radius: 6px;
-  margin-top: 10px;
-}
-
-footer {
-  text-align: center;
-  font-size: 14px;
-  padding: 15px;
-  background: #111;
-  color: #eee;
-}
-
-.whatsapp-button {
-  position: fixed;
-  bottom: 85px;
-  right: 15px;
-  width: 50px;
-  z-index: 999;
-}
-
-.whatsapp-button img {
-  width: 100%;
-  border-radius: 50%;
-  background: white;
-  padding: 6px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-}
-
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: #f4f4f4;
+      color: #333;
+      padding-bottom: 80px;
+    }
+    header {
+      background: #002244;
+      color: white;
+      display: flex;
+      align-items: center;
+      padding: 20px;
+      gap: 15px;
+    }
+    header img { height: 70px; }
+    header h1 {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      font-size: 24px;
+    }
+    header p {
+      margin: 0;
+      font-size: 13px;
+    }
+    section {
+      background: white;
+      margin: 20px;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+    h2, h3 {
+      font-family: 'Poppins', sans-serif;
+      color: #007bff;
+    }
+    ul {
+      padding-left: 20px;
+    }
+    a, a:visited { color: #007bff; text-decoration: none; }
+    nav {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background: #002244;
+      display: flex;
+      justify-content: space-around;
+      padding: 10px 0;
+      color: white;
+      font-size: 12px;
+    }
+    nav a { color: white; text-align: center; }
+    nav a div { font-size: 20px; }
+    .whatsapp-button {
+      position: fixed;
+      bottom: 90px;
+      right: 20px;
+      width: 50px;
+      z-index: 1001;
+    }
+    .whatsapp-button img {
+      width: 100%;
+      border-radius: 50%;
+      background: white;
+      padding: 6px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    }
+    .quote-button {
+      display: inline-block;
+      background: #007bff;
+      color: white;
+      padding: 12px 20px;
+      border-radius: 6px;
+      font-weight: bold;
+    }
+    .quote-button:hover {
+      background: #0056b3;
+    }
+    iframe {
+      border: none;
+      width: 100%;
+      max-width: 700px;
+      height: 600px;
+      border-radius: 8px;
+    }
+    footer {
+      background: #001122;
+      color: #ccc;
+      text-align: center;
+      font-size: 14px;
+      padding: 10px;
+    }
   </style>
 </head>
 <body>
   <header>
-    <h1>Bharat Oil Carrier</h1>
-    <p>Bitumen & Bulk Liquid Transport – PAN India, GPS-Enabled Fleet</p>
-  </header>  <section>
-    <h2>📊 Bitumen Price – June 2025</h2>
+    <img src="logo.png" alt="Bharat Oil Carrier Logo">
+    <div>
+      <h1>Bharat Oil Carrier</h1>
+      <p>Trusted Bitumen & Bulk Liquid Transport from Mathura, Panipat, Vadodara</p>
+    </div>
+  </header>  <section id="home">
+    <h2>🛢 Latest Bitumen Price (July 2025)</h2>
     <ul>
       <li>VG10 – ₹45,422/MT</li>
       <li>VG30 – ₹47,722/MT</li>
       <li>VG40 – ₹50,382/MT</li>
     </ul>
-    <p><strong>Note:</strong> Prices are indicative & exclude freight/tax.</p>
-  </section>  <section>
-    <h2>📥 Company Brochure</h2>
-    <p>Download our company profile for complete details.</p>
-    <a href="bharat-brochure.pdf" download class="quote-button">Download PDF</a>
-  </section>  <section>
-    <h2>📨 Get a Quotation</h2>
-    <p>Request instant quotation below:</p>
-    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSeU-I3xpmlZg23HgHzo51vOyBsDwXM-ljwq46babeeYktAYbg/viewform?embedded=true" loading="lazy">Loading…</iframe>
-  </section>  <section>
-    <h2>📘 About Us</h2>
-    <p>We’re India’s trusted partner for Bitumen & Petrochemical transportation – with a PAN India fleet of GPS-enabled tankers, verified by top infrastructure developers and NHAI contractors.</p>
-    <ul>
-      <li>🚚 Certified 19MT–33MT tankers</li>
-      <li>🔒 Secure, trackable fleet</li>
-      <li>📊 Transparent pricing & billing</li>
-      <li>🧑‍💼 Dedicated support team</li>
-    </ul>
-  </section>  <section>
-    <h2>📍 Contact Us</h2>
-    <p><strong>Address:</strong> Gate No. 9, Mathura Refinery, Bharat Dharm Kata</p>
-    <p><strong>Email:</strong> <a href="mailto:bharatoilcarrier@gmail.com">bharatoilcarrier@gmail.com</a></p>
-    <p><strong>Phone:</strong> <a href="tel:+918077703137">+91 8077703137</a></p>
+    <p><strong>Note:</strong> Prices are approximate. Taxes & freight extra.</p>
+  </section>  <section id="download">
+    <h2>📄 Company Brochure</h2>
+    <p>Download our detailed profile.</p>
+    <a href="bharat-brochure.pdf" class="quote-button" download>📥 Download PDF</a>
+  </section>  <section id="quotation">
+    <h2>🚚 Get a Quotation</h2>
+    <p>Request a quote for bitumen transport:</p>
+    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSeU-I3xpmlZg23HgHzo51vOyBsDwXM-ljwq46babeeYktAYbg/viewform?embedded=true">Loading…</iframe>
+  </section>  <section id="about">
+    <h2>📘 About Bharat Oil Carrier</h2>
+    <p>Bharat Oil Carrier is a leading bitumen transport company in India with over a decade of experience. Based near Mathura Refinery, we provide PAN India services for road construction, highway projects, and industrial clients. With our GPS-enabled fleet, we ensure timely and safe delivery of bitumen, VG10, VG30, VG40, and other liquid petroleum products.</p><h3>✅ Key Highlights</h3>
+<ul>
+  <li>Trusted by major contractors & govt bodies</li>
+  <li>Verified fleet with capacities: 19MT to 33MT</li>
+  <li>Live tracking, timely updates, and support</li>
+  <li>Transparent billing & quotation process</li>
+  <li>Serving from IOC Mathura, Panipat, Vadodara</li>
+</ul>
+
+<h3>📞 Contact Us</h3>
+<p><strong>Email:</strong> <a href="mailto:bharatoilcarrier@gmail.com">bharatoilcarrier@gmail.com</a></p>
+<p><strong>Phone:</strong> <a href="tel:+918077703137">+91 8077703137</a>, <a href="tel:+919058374446">+91 9058374446</a></p>
+
+<h3>🌐 Follow Us</h3>
+<p>
+  <a href="https://www.linkedin.com/company/bharat-oil-carrrier/" target="_blank">
+    <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="LinkedIn" width="24">
+  </a>
+  &nbsp;
+  <a href="https://www.facebook.com/share/1AmsU8D3Wr/" target="_blank">
+    <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="Facebook" width="24">
+  </a>
+</p>
+
+  </section>  <section id="login">
+    <h2>🔐 Client Login</h2>
+    <p>Login panel coming soon to manage trips, bills, and documents.</p>
+  </section>  <section id="orders">
+    <h2>📦 Orders</h2>
+    <p>Check your monthly orders and dispatch records here. (Coming Soon)</p>
+  </section>  <section id="fleet">
+    <h2>🚗 Fleet Location</h2>
+    <p>Real-time tracking system under development.</p>
   </section>  <footer>
-    &copy; 2025 Bharat Oil Carrier | <a href="https://wa.me/918077703137">WhatsApp Us</a>
+    &copy; 2025 Bharat Oil Carrier | <a href="https://wa.me/918077703137" style="color: #ccc">WhatsApp Us</a>
   </footer>  <a href="https://wa.me/918077703137" class="whatsapp-button" target="_blank">
     <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" alt="Chat on WhatsApp">
-  </a>
+  </a>  <nav>
+    <a href="#home"><div>🏠</div>Home</a>
+    <a href="#quotation"><div>📨</div>Quote</a>
+    <a href="#login"><div>🔐</div>Login</a>
+    <a href="#orders"><div>📦</div>Orders</a>
+    <a href="#fleet"><div>🚗</div>Fleet</a>
+    <a href="#about"><div>📘</div>About</a>
+  </nav>
 </body>
 </html>
