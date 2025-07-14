@@ -7,151 +7,155 @@
   <meta name="keywords" content="Bitumen transport from Mathura Refinery, Panipat bitumen tanker, IOC Vadodara transport, Koyali refinery delivery, NHAI bitumen logistics, Bharat Oil Carrier, Bitumen tanker booking India" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Poppins:wght@600&display=swap" rel="stylesheet">
   <link rel="icon" href="logo.png" type="image/png">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    window.addEventListener('DOMContentLoaded', () => AOS.init({ duration: 1000, once: true }));
+  </script>
   <style>
     :root {
       --primary: #002244;
       --accent: #FFD700;
-      --bg: #f9f9f9;
-      --text: #1c1c1c;
-      --light: #ffffff;
-    }* { box-sizing: border-box; }
-body {
-  margin: 0;
-  font-family: 'Inter', sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  padding-bottom: 70px;
-  scroll-behavior: smooth;
-}
-header {
-  background: linear-gradient(90deg, #000000, #222222);
-  display: flex;
-  align-items: center;
-  padding: 15px;
-  gap: 15px;
-  border-bottom: 2px solid #FFD700;
-  color: white;
-  position: sticky;
-  top: 0;
-  z-index: 1001;
-}
-header img { height: 60px; }
-header h1 {
-  margin: 0;
-  font-family: 'Poppins', sans-serif;
-  font-size: 22px;
-}
-header p {
-  margin: 0;
-  font-size: 13px;
-  color: #ddd;
-}
-section {
-  background: var(--light);
-  margin: 25px;
-  padding: 25px;
-  border-radius: 16px;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  max-height: 420px;
-  overflow-y: auto;
-}
-section:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.12);
-}
-h2, h3 {
-  font-family: 'Poppins', sans-serif;
-  color: var(--primary);
-  margin-bottom: 15px;
-}
-ul {
-  padding-left: 20px;
-  line-height: 1.6;
-}
-a, a:visited {
-  color: var(--primary);
-  text-decoration: none;
-}
-a:hover {
-  color: var(--accent);
-}
-nav {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  background: #fff;
-  display: flex;
-  justify-content: space-around;
-  padding: 8px 0;
-  border-top: 1px solid #ccc;
-  z-index: 1000;
-}
-nav a {
-  color: var(--text);
-  font-size: 12px;
-  text-align: center;
-  transition: color 0.3s;
-}
-nav a:hover {
-  color: var(--accent);
-}
-nav a div {
-  font-size: 20px;
-}
-.whatsapp-button {
-  position: fixed;
-  bottom: 85px;
-  right: 15px;
-  width: 50px;
-  z-index: 1001;
-}
-.whatsapp-button img {
-  width: 100%;
-  border-radius: 50%;
-  background-color: white;
-  padding: 6px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-}
-footer {
-  background: var(--primary);
-  color: white;
-  text-align: center;
-  font-size: 14px;
-  padding: 15px 10px;
-  margin-top: 40px;
-}
-.quote-button {
-  display: inline-block;
-  background: var(--accent);
-  color: black;
-  padding: 12px 20px;
-  border-radius: 8px;
-  font-weight: bold;
-  transition: background 0.3s;
-}
-.quote-button:hover {
-  background: #e6c200;
-}
-iframe {
-  border: none;
-  width: 100%;
-  max-width: 700px;
-  height: 400px;
-  margin-top: 20px;
-  border-radius: 8px;
-}
-::-webkit-scrollbar {
-  width: 8px;
-}
-::-webkit-scrollbar-thumb {
-  background: #ccc;
-  border-radius: 8px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #999;
-}
-
+      --text: #f8f8f8;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: url('tanker-bg.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: var(--text);
+      padding-bottom: 70px;
+    }
+    header {
+      background: rgba(0, 0, 0, 0.85);
+      display: flex;
+      align-items: center;
+      padding: 15px;
+      gap: 15px;
+      border-bottom: 1px solid #444;
+      animation: slideDown 1s ease-out forwards;
+      opacity: 0;
+    }
+    @keyframes slideDown {
+      0% { transform: translateY(-50px); opacity: 0; }
+      100% { transform: translateY(0); opacity: 1; }
+    }
+    header img { height: 70px; }
+    header h1 {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      font-size: 22px;
+      color: var(--accent);
+    }
+    header p {
+      margin: 0;
+      font-size: 13px;
+      color: #ccc;
+    }
+    section {
+      background: rgba(0, 0, 0, 0.85);
+      margin: 20px;
+      padding: 20px;
+      border-radius: 12px;
+      max-height: 420px;
+      overflow-y: auto;
+    }
+    h2, h3 {
+      font-family: 'Poppins', sans-serif;
+      color: var(--accent);
+      margin-bottom: 15px;
+    }
+    ul {
+      padding-left: 20px;
+      line-height: 1.6;
+    }
+    a, a:visited {
+      color: #00ffcc;
+      text-decoration: none;
+    }
+    a:hover {
+      color: #66ffe0;
+    }
+    nav {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      display: flex;
+      justify-content: space-around;
+      padding: 8px 0;
+      border-top: 1px solid #444;
+      z-index: 1000;
+    }
+    nav a {
+      color: white;
+      font-size: 12px;
+      text-align: center;
+    }
+    nav a div {
+      font-size: 20px;
+    }
+    .whatsapp-button {
+      position: fixed;
+      bottom: 85px;
+      right: 15px;
+      width: 48px;
+      z-index: 1001;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0,255,0, 0.5); }
+      70% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(0,255,0, 0); }
+      100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0,255,0, 0); }
+    }
+    .whatsapp-button img {
+      width: 100%;
+      border-radius: 50%;
+      background-color: white;
+      padding: 6px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    }
+    footer {
+      background: rgba(0, 0, 0, 0.9);
+      color: #ddd;
+      text-align: center;
+      font-size: 14px;
+      padding: 15px 10px;
+      margin-top: 40px;
+    }
+    .quote-button {
+      display: inline-block;
+      background: #007bff;
+      color: white;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-weight: bold;
+      transition: background 0.3s, box-shadow 0.3s;
+      background-image: linear-gradient(45deg, #007bff, #00c6ff);
+    }
+    .quote-button:hover {
+      background: #0056b3;
+      box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
+    }
+    iframe {
+      border: none;
+      width: 100%;
+      max-width: 700px;
+      height: 400px;
+      margin-top: 20px;
+      border-radius: 8px;
+    }
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #999;
+      border-radius: 8px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #666;
+    }
   </style>
 </head>
 <body>
