@@ -1,0 +1,39 @@
+---
+layout: none
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Client Dashboard — Bharat Oil Carrier</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>body{font-family:Inter,system-ui;}</style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+
+  <div id="dashboard" class="min-h-screen p-6">
+    <div class="max-w-4xl mx-auto bg-white rounded shadow p-6 dark:bg-gray-800">
+      <div class="flex justify-between items-start">
+        <div>
+          <h2 class="text-xl font-semibold">Client Dashboard</h2>
+          <p id="userInfo" class="text-sm text-gray-600 dark:text-gray-300 mt-1"></p>
+        </div>
+        <div>
+          <button id="logoutBtn" class="px-3 py-1 bg-red-500 text-white rounded">Logout</button>
+        </div>
+      </div>
+
+      <hr class="my-4" />
+
+      <h3 class="font-semibold">Your Orders</h3>
+      <div id="ordersList" class="mt-3">
+        <!-- orders injected by app.js -->
+        <p>Loading orders…</p>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="/app.js"></script>
+</body>
+</html>
