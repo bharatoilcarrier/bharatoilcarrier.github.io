@@ -1,186 +1,285 @@
-<!DOCTYPE html><html lang="en">
+<!doctype html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Bharat Oil Carrier | Bitumen & Transport Services</title>
-  <meta name="description" content="Bharat Oil Carrier is a trusted logistics partner for bulk bitumen transport across India. View live bitumen prices, get professional quotations, and explore our modern fleet.">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Poppins:wght@600&display=swap" rel="stylesheet">
-  <link rel="icon" href="logo.png" type="image/png">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Bharat Oil Carrier — Bitumen & Bulk Liquid Transport (PAN-India)</title>
+  <meta name="description" content="Bharat Oil Carrier — Reliable bulk bitumen transport across India. GPS-enabled fleet, transparent quotations, client portal, and real-time fleet tracking." />
+  <meta name="theme-color" content="#0b1220" />
+
+  <!-- Open Graph / Social -->
+  <meta property="og:site_name" content="Bharat Oil Carrier" />
+  <meta property="og:title" content="Bharat Oil Carrier — Bitumen & Bulk Liquid Transport" />
+  <meta property="og:description" content="Reliable bulk bitumen transport across India. Request quotations, track fleet, and access client portal." />
+  <meta property="og:image" content="/logo.png" />
+  <meta property="og:url" content="https://bharatoilcarrier.github.io/" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <!-- Tailwind quick CDN (dev/quick-start). Later you can compile Tailwind locally for production. -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+  <!-- AOS (Animate on Scroll) -->
+  <link href="https://unpkg.com/aos@next/dist/aos.css" rel="stylesheet" />
+
+  <link rel="icon" href="/logo.png" type="image/png">
+
   <style>
-    * {
-      box-sizing: border-box;
-    }
-    body {
-      margin: 0;
-      font-family: 'Inter', sans-serif;
-      background: url('tanker-bg.jpg') no-repeat center center fixed;
-      background-size: cover;
-      padding-bottom: 70px;
-      color: #eee;
-    }
-    header {
-      background: rgba(0, 0, 0, 0.75);
-      display: flex;
-      align-items: center;
-      padding: 15px;
-      gap: 15px;
-      border-bottom: 1px solid #444;
-    }
-    header img {
-      height: 70px;
-    }
-    header h1 {
-      margin: 0;
-      font-family: 'Poppins', sans-serif;
-      font-size: 24px;
-    }
-    header p {
-      margin: 0;
-      font-size: 14px;
-      color: #ccc;
-    }
-    section {
-      background: rgba(0, 0, 0, 0.9);
-      margin: 20px;
-      padding: 20px;
-      border-radius: 12px;
-    }
-    h2, h3 {
-      font-family: 'Poppins', sans-serif;
-      color: #FF3B3B;
-      text-shadow: 1px 1px 2px #000;
-    }
-    ul {
-      padding-left: 20px;
-    }
-    a, a:visited {
-      color: #00ffcc;
-    }
-    nav {
-      position: fixed;
-      bottom: 0;
-      width: 100%;
-      background: #111;
-      display: flex;
-      justify-content: space-around;
-      padding: 8px 0;
-      border-top: 1px solid #444;
-      z-index: 1000;
-    }
-    nav a {
-      color: white;
-      font-size: 12px;
-      text-align: center;
-      text-decoration: none;
-    }
-    nav a div {
-      font-size: 20px;
-    }
-    .whatsapp-button {
-      position: fixed;
-      bottom: 85px;
-      right: 15px;
-      width: 48px;
-      z-index: 1001;
-    }
-    .whatsapp-button img {
-      width: 100%;
-      border-radius: 50%;
-      background-color: white;
-      padding: 6px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
-    }
-    footer {
-      background: #000a;
-      color: #aaa;
-      text-align: center;
-      font-size: 14px;
-      padding: 10px;
-    }
-    .quote-button {
-      display: inline-block;
-      background: #007bff;
-      color: white;
-      padding: 12px 20px;
-      border-radius: 8px;
-      font-weight: bold;
-      text-decoration: none;
-    }
-    .quote-button:hover {
-      background: #0056b3;
-    }
-    iframe {
-      border: none;
-      width: 100%;
-      max-width: 700px;
-      height: 600px;
-      margin-top: 20px;
-      border-radius: 8px;
-    }
+    /* Minor custom overrides */
+    :root { --accent: #007bff; --accent-2: #00ffcc; }
+    html.dark { background: #071027; color: #e6eef8; }
+    .hero-overlay{background:linear-gradient(180deg, rgba(2,6,23,0.55), rgba(2,6,23,0.6));}
+    .glass { background: rgba(255,255,255,0.04); backdrop-filter: blur(6px); }
+    .card-dark { background: rgba(10,14,20,0.6); }
+    /* ensure hero image covers on mobile */
+    .hero-bg { background-position: center; background-size: cover; background-repeat: no-repeat; }
+    /* small screen footer spacing */
+    footer a { text-decoration: underline; }
+    /* Accessible focus outlines */
+    a:focus, button:focus, input:focus { outline: 3px solid rgba(0,123,255,0.25); outline-offset: 2px; }
   </style>
 </head>
-<body>
-  <header>
-    <img src="logo.png" alt="Bharat Oil Carrier Logo">
-    <div>
-      <h1>Bharat Oil Carrier</h1>
-      <p>Your Trusted Partner for Bitumen & Bulk Liquid Transport</p>
+<body class="font-inter antialiased text-gray-900 dark:text-gray-100 bg-white">
+
+  <!-- HEADER -->
+  <header class="fixed w-full z-40 bg-white bg-opacity-60 dark:bg-black/70 backdrop-blur-md border-b border-gray-200 dark:border-gray-800">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <a href="/" class="flex items-center gap-3">
+          <img src="/logo.png" alt="Bharat Oil Carrier" class="h-12 w-auto" />
+          <div>
+            <div class="text-lg font-semibold text-gray-900 dark:text-white leading-tight">Bharat Oil Carrier</div>
+            <div class="text-xs text-gray-600 dark:text-gray-300">Bitumen & Bulk Liquid Transport — PAN India</div>
+          </div>
+        </a>
+      </div>
+
+      <nav class="hidden md:flex items-center gap-4">
+        <a class="text-sm hover:text-blue-600" href="#home">Home</a>
+        <a class="text-sm hover:text-blue-600" href="#services">Services</a>
+        <a class="text-sm hover:text-blue-600" href="#quotation">Get Quote</a>
+        <a class="text-sm hover:text-blue-600" href="/blog/">Blog</a>
+        <a class="text-sm hover:text-blue-600" href="#contact">Contact</a>
+        <a class="ml-2 px-3 py-1.5 bg-blue-600 text-white rounded text-sm" href="/client-portal/">Client Portal</a>
+        <!-- theme toggle -->
+        <button id="theme-btn" class="ml-3 p-2 rounded border border-gray-200 dark:border-gray-700" aria-label="Toggle theme" title="Toggle theme">🌙</button>
+      </nav>
+
+      <!-- small screen menu / social -->
+      <div class="md:hidden flex items-center gap-3">
+        <a href="https://www.facebook.com/share/1F1qrJr4Xz/" target="_blank" class="text-gray-700 dark:text-gray-200"><i class="fab fa-facebook fa-lg"></i></a>
+        <a href="https://www.instagram.com/bocbharatoilcarrier?igsh=YW1jdnQ3ZG1iODdv" target="_blank" class="text-gray-700 dark:text-gray-200"><i class="fab fa-instagram fa-lg"></i></a>
+        <a href="https://www.linkedin.com/company/bharat-oil-carrrier/" target="_blank" class="text-gray-700 dark:text-gray-200"><i class="fab fa-linkedin fa-lg"></i></a>
+      </div>
     </div>
-  </header>  <section id="home">
-    <h2>🛢 Bitumen Price (June 2025)</h2>
-    <ul>
-      <li>VG10 – ₹45,422/MT</li>
-      <li>VG30 – ₹47,722/MT</li>
-      <li>VG40 – ₹50,382/MT</li>
-    </ul>
-    <p><strong>Note:</strong> Prices are indicative and do not include freight or taxes.</p>
-  </section>  <section id="download" style="text-align: center;">
-    <h2>📄 Company Brochure</h2>
-    <p>Download our official company profile for complete details.</p>
-    <a href="bharat-brochure.pdf" download class="quote-button">
-      📥 Download PDF
-    </a>
-  </section>  <section id="quotation">
-    <h2>🚚 Get a Quotation</h2>
-    <p>Fill the form below to request a quotation:</p>
-    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSeU-I3xpmlZg23HgHzo51vOyBsDwXM-ljwq46babeeYktAYbg/viewform?embedded=true" loading="lazy">Loading…</iframe>
-  </section>  <section id="about">
-    <h2>📘 About Us & Why Choose Us</h2>
-    <p>Bharat Oil Carrier is India’s trusted logistics provider specializing in bitumen and petrochemical transport. With a vast fleet of GPS-enabled tankers and PAN India operations, we ensure reliable, efficient, and safe delivery across all terrains.</p>
-    <p>We are committed to infrastructure growth by delivering quality service, transparency in pricing, and dedicated client support.</p>
-    <h3>💼 Why Choose Bharat Oil Carrier?</h3>
-    <ul>
-      <li>🚚 PAN India delivery with verified tanker capacity: 19MT, 23MT, 27MT, 28MT, 33MT</li>
-      <li>⏱ Timely dispatch and delivery tracking</li>
-      <li>🔒 GPS-enabled secure fleet</li>
-      <li>📊 Transparent quotation and billing system</li>
-      <li>🧑‍💼 Dedicated account managers for client support</li>
-      <li>✅ Trusted by government & private infrastructure leaders</li>
-    </ul>
-    <h3>📍 Our Location</h3>
-    <p><strong>Address:</strong> 9 No. Gate, Mathura Refinery, Bharat Dharm Kata, Mathura</p>
-    <p><strong>Email:</strong> <a href="mailto:bharatoilcarrier@gmail.com">bharatoilcarrier@gmail.com</a></p>
-    <p><strong>Phone:</strong> <a href="tel:+918077703137">+91 8077703137</a>, <a href="tel:+919058374446">+91 9058374446</a></p>
-  </section>  <section id="login">
-    <h2>🔐 Client Login</h2>
-    <p>Login system coming soon to manage orders, documents, and fleet tracking.</p>
-  </section>  <section id="orders">
-    <h2>📦 Orders</h2>
-    <p>Track all your monthly orders and shipment details here. (Coming Soon)</p>
-  </section>  <section id="fleet">
-    <h2>🚗 Fleet Location</h2>
-    <p>Live fleet tracking system coming soon for real-time updates.</p>
-  </section>  <footer>
-    &copy; 2025 Bharat Oil Carrier | <a href="https://wa.me/918077703137" target="_blank">WhatsApp Us</a>
-  </footer>  <a href="https://wa.me/918077703137" class="whatsapp-button" target="_blank">
-    <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" alt="Chat on WhatsApp">
-  </a>  <nav>
-    <a href="#home"><div>🏠</div>Home</a>
-    <a href="#quotation"><div>📨</div>Quote</a>
-    <a href="#login"><div>🔐</div>Login</a>
-    <a href="#orders"><div>📦</div>Orders</a>
-    <a href="#fleet"><div>🚗</div>Fleet</a>
-    <a href="#about"><div>📘</div>About</a>
+  </header>
+
+  <main class="pt-24">
+
+    <!-- HERO -->
+    <section id="home" class="hero-bg" style="background-image: url('/tanker-bg.jpg');">
+      <div class="hero-overlay">
+        <div class="max-w-6xl mx-auto px-4 py-20">
+          <div class="grid md:grid-cols-2 gap-8 items-center">
+            <div data-aos="fade-right" class="space-y-4">
+              <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold text-white">Safe & Timely Bitumen Transport<br class="hidden md:block"/> — PAN-India</h1>
+              <p class="text-gray-200 max-w-xl">GPS-enabled tankers • Verified capacities (19–33 MT) • Transparent quotations • Dedicated account managers</p>
+              <div class="flex flex-wrap gap-3 mt-4">
+                <a href="#quotation" class="px-5 py-3 bg-accent text-white rounded font-semibold" style="background:var(--accent)">Get a Quote</a>
+                <a href="/assets/files/bharat-brochure.pdf" download class="px-5 py-3 border border-white/30 rounded text-white">Download Brochure</a>
+                <a href="/client-portal/" class="px-5 py-3 bg-white text-gray-900 rounded font-semibold">Client Portal</a>
+              </div>
+              <div class="mt-5 flex gap-3 items-center text-sm text-white/80">
+                <div>📞 <a href="tel:+918077703137" class="underline">+91 8077703137</a></div>
+                <div>✉️ <a href="mailto:bharatoilcarrier@gmail.com" class="underline">bharatoilcarrier@gmail.com</a></div>
+              </div>
+            </div>
+
+            <div data-aos="fade-left" class="bg-white/5 p-6 rounded-lg glass">
+              <div class="text-white">
+                <h3 class="text-lg font-semibold mb-2">Current Bitumen Prices (sample)</h3>
+                <ul class="space-y-2 text-sm">
+                  <li>VG10 — <strong>₹45,422 / MT</strong></li>
+                  <li>VG30 — <strong>₹47,722 / MT</strong></li>
+                  <li>VG40 — <strong>₹50,382 / MT</strong></li>
+                </ul>
+                <p class="mt-3 text-xs text-gray-200/80">Prices are indicative. Freight, taxes & GST not included.</p>
+                <a href="#quotation" class="mt-4 inline-block px-4 py-2 bg-blue-600 text-white rounded">Request Quotation</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SERVICES / WHY CHOOSE -->
+    <section id="services" class="max-w-6xl mx-auto px-4 py-12" data-aos="fade-up">
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="p-6 bg-white rounded shadow dark:bg-gray-800">
+          <h4 class="font-semibold text-lg">Verified Tanker Capacities</h4>
+          <p class="mt-2 text-sm text-gray-700 dark:text-gray-300">19MT, 23MT, 27MT, 28MT, 33MT — Certified & well-maintained tankers for safe delivery.</p>
+        </div>
+        <div class="p-6 bg-white rounded shadow dark:bg-gray-800">
+          <h4 class="font-semibold text-lg">GPS Tracking & Safety</h4>
+          <p class="mt-2 text-sm text-gray-700 dark:text-gray-300">Real-time tracking and strict safety protocols for hazardous material handling.</p>
+        </div>
+        <div class="p-6 bg-white rounded shadow dark:bg-gray-800">
+          <h4 class="font-semibold text-lg">Transparent Pricing</h4>
+          <p class="mt-2 text-sm text-gray-700 dark:text-gray-300">Clear quotations with full cost breakdown — diesel, toll, labour and GST.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- QUOTATION (embedded form) -->
+    <section id="quotation" class="max-w-4xl mx-auto px-4 py-10" data-aos="fade-up">
+      <div class="bg-white rounded shadow p-6 dark:bg-gray-800">
+        <h2 class="text-2xl font-semibold">Request a Quotation</h2>
+        <p class="text-sm text-gray-600 dark:text-gray-300 mt-2">Fill this quick form. Our team will contact you within the same working day.</p>
+
+        <!-- Embedded Google Form (you already had this) -->
+        <div class="mt-4">
+          <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSeU-I3xpmlZg23HgHzo51vOyBsDwXM-ljwq46babeeYktAYbg/viewform?embedded=true" loading="lazy" class="w-full h-96 rounded"></iframe>
+        </div>
+      </div>
+    </section>
+
+    <!-- BLOG PREVIEW (will show Jekyll posts or LinkedIn feed) -->
+    <section id="blog" class="max-w-6xl mx-auto px-4 py-10" data-aos="fade-up">
+      <div class="flex items-center justify-between mb-4">
+        <h2 class="text-2xl font-semibold">Latest from our Blog</h2>
+        <a href="/blog/" class="text-sm text-blue-600">See all</a>
+      </div>
+
+      <!-- Placeholder cards: when Jekyll builds, this area will be replaced/filled on /blog page.
+           On index we show a few highlights and link to /blog/ -->
+      <div class="grid md:grid-cols-3 gap-6">
+        <article class="p-5 bg-white rounded shadow dark:bg-gray-800">
+          <h3 class="font-semibold">How we handle long-distance deliveries</h3>
+          <p class="mt-2 text-sm text-gray-600 dark:text-gray-300">Safety-first approach, route planning and timely dispatch strategies.</p>
+          <a href="/blog/" class="mt-3 inline-block text-sm text-blue-600">Read more</a>
+        </article>
+
+        <article class="p-5 bg-white rounded shadow dark:bg-gray-800">
+          <h3 class="font-semibold">Case Study: Project X — 500 MT delivery</h3>
+          <p class="mt-2 text-sm text-gray-600 dark:text-gray-300">A detailed look at logistics, scheduling and results for a major road project.</p>
+          <a href="/blog/" class="mt-3 inline-block text-sm text-blue-600">Read more</a>
+        </article>
+
+        <article class="p-5 bg-white rounded shadow dark:bg-gray-800">
+          <h3 class="font-semibold">Why GPS tracking matters</h3>
+          <p class="mt-2 text-sm text-gray-600 dark:text-gray-300">Real-time location improves ETA accuracy and client trust.</p>
+          <a href="/blog/" class="mt-3 inline-block text-sm text-blue-600">Read more</a>
+        </article>
+      </div>
+    </section>
+
+    <!-- FLEET (link to interactive map) -->
+    <section id="fleet" class="max-w-6xl mx-auto px-4 py-10" data-aos="fade-up">
+      <div class="bg-white rounded shadow p-6 dark:bg-gray-800 flex flex-col md:flex-row items-center gap-6">
+        <div class="flex-1">
+          <h2 class="text-xl font-semibold">Live Fleet Tracking</h2>
+          <p class="mt-2 text-sm text-gray-700 dark:text-gray-300">Track vehicles in real-time on an interactive map (client login required).</p>
+          <a href="/fleet/map.html" class="inline-block mt-4 px-4 py-2 bg-blue-600 text-white rounded">View Fleet Map</a>
+        </div>
+        <div class="w-full md:w-1/3">
+          <img src="/assets/images/logo.png" alt="fleet" class="w-32 mx-auto opacity-80" />
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT / CONTACT -->
+    <section id="contact" class="max-w-6xl mx-auto px-4 py-10" data-aos="fade-up">
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="p-6 bg-white rounded shadow dark:bg-gray-800">
+          <h3 class="font-semibold">About Bharat Oil Carrier</h3>
+          <p class="mt-3 text-sm text-gray-700 dark:text-gray-300">Trusted provider in bulk liquid logistics with a focus on infrastructure growth, safety and transparent pricing.</p>
+
+          <h4 class="mt-4 font-semibold">Address</h4>
+          <p class="text-sm text-gray-600 dark:text-gray-300">9 No. Gate, Mathura Refinery, Bharat Dharm Kata, Mathura</p>
+
+          <h4 class="mt-3 font-semibold">Contact</h4>
+          <p class="text-sm"><a href="tel:+918077703137" class="underline">+91 8077703137</a> | <a href="mailto:bharatoilcarrier@gmail.com" class="underline">bharatoilcarrier@gmail.com</a></p>
+        </div>
+
+        <div class="p-6 bg-white rounded shadow dark:bg-gray-800">
+          <h3 class="font-semibold">Quick Links</h3>
+          <ul class="mt-3 space-y-2 text-sm">
+            <li><a href="/blog/">Blog & Case Studies</a></li>
+            <li><a href="#quotation">Get Quotation</a></li>
+            <li><a href="/client-portal/">Client Portal / Login</a></li>
+            <li><a href="/sitemap.xml">Sitemap</a></li>
+          </ul>
+
+          <div class="mt-6">
+            <h4 class="font-semibold">Follow Us</h4>
+            <div class="flex gap-3 mt-3">
+              <a href="https://www.facebook.com/share/1F1qrJr4Xz/" target="_blank" class="text-gray-700 dark:text-gray-200"><i class="fab fa-facebook fa-lg"></i></a>
+              <a href="https://www.instagram.com/bocbharatoilcarrier?igsh=YW1jdnQ3ZG1iODdv" target="_blank" class="text-gray-700 dark:text-gray-200"><i class="fab fa-instagram fa-lg"></i></a>
+              <a href="https://www.linkedin.com/company/bharat-oil-carrrier/" target="_blank" class="text-gray-700 dark:text-gray-200"><i class="fab fa-linkedin fa-lg"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- WHATSAPP floating button -->
+  <a class="fixed right-5 bottom-28 z-50" href="https://wa.me/918077703137" target="_blank" aria-label="WhatsApp">
+    <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" alt="WhatsApp" class="h-14 w-14 rounded-full shadow-lg bg-white p-2" />
+  </a>
+
+  <!-- BOTTOM NAV (mobile) -->
+  <nav class="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 md:hidden z-40">
+    <div class="max-w-6xl mx-auto px-4 flex justify-between items-center py-2">
+      <a href="#home" class="flex flex-col items-center text-xs text-gray-700 dark:text-gray-200"><div>🏠</div>Home</a>
+      <a href="#quotation" class="flex flex-col items-center text-xs text-gray-700 dark:text-gray-200"><div>📨</div>Quote</a>
+      <a href="/client-portal/" class="flex flex-col items-center text-xs text-gray-700 dark:text-gray-200"><div>🔐</div>Login</a>
+      <a href="/fleet/map.html" class="flex flex-col items-center text-xs text-gray-700 dark:text-gray-200"><div>🚗</div>Fleet</a>
+      <a href="#contact" class="flex flex-col items-center text-xs text-gray-700 dark:text-gray-200"><div>📘</div>About</a>
+    </div>
   </nav>
+
+  <!-- FOOTER -->
+  <footer class="mt-12">
+    <div class="max-w-6xl mx-auto px-4 py-6 text-center text-sm text-gray-600 dark:text-gray-400">
+      &copy; <span id="year"></span> Bharat Oil Carrier • <a href="/sitemap.xml">Sitemap</a> • <a href="mailto:bharatoilcarrier@gmail.com">bharatoilcarrier@gmail.com</a>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+  <script> AOS.init({ duration: 650, once: true }); </script>
+
+  <script>
+    // show year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Theme toggle (persist)
+    (function(){
+      const root = document.documentElement;
+      const btn = document.getElementById('theme-btn');
+      const setTheme = (t) => {
+        if (t === 'dark') root.classList.add('dark');
+        else root.classList.remove('dark');
+      };
+      const saved = localStorage.getItem('boc-theme');
+      if (saved) setTheme(saved);
+      else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) setTheme('dark');
+
+      btn?.addEventListener('click', () => {
+        const isDark = root.classList.toggle('dark');
+        localStorage.setItem('boc-theme', isDark ? 'dark' : 'light');
+        btn.textContent = isDark ? '☀️' : '🌙';
+      });
+    })();
+  </script>
+
+  <!-- Optional: if you have app.js / firebase.js for client-portal etc -->
+  <!-- <script type="module" src="/app.js"></script> -->
+
 </body>
 </html>
