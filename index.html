@@ -1,243 +1,854 @@
-<!doctype html>
+import React, { useState, useMemo } from 'react';
 
-<html lang="en">  
-<head>  
-  <meta charset="utf-8" />  
-  <meta name="viewport" content="width=device-width,initial-scale=1" />  
-  <title>Bharat Oil Carrier — Bitumen & Bulk Liquid Transport (PAN-India)</title>  
-  <meta name="description" content="Bharat Oil Carrier — Reliable bulk bitumen transport across India. GPS-enabled fleet, transparent quotations, client portal, and real-time fleet tracking." />  
-  <meta name="theme-color" content="#0b1220" />    <!-- Open Graph / Social -->    <meta property="og:site_name" content="Bharat Oil Carrier" />  
-  <meta property="og:title" content="Bharat Oil Carrier — Bitumen & Bulk Liquid Transport" />  
-  <meta property="og:description" content="Reliable bulk bitumen transport across India. Request quotations, track fleet, and access client portal." />  
-  <meta property="og:image" content="/logo.png" />  
-  <meta property="og:url" content="https://bharatoilcarrier.github.io/" />  
-  <meta name="twitter:card" content="summary_large_image" />    <!-- Fonts & Icons -->    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Poppins:wght@600;700&display=swap" rel="stylesheet">  
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />    <!-- Tailwind quick CDN (dev/quick-start). Later you can compile Tailwind locally for production. -->    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">    <!-- AOS (Animate on Scroll) -->    <link href="https://unpkg.com/aos@next/dist/aos.css" rel="stylesheet" />    <link rel="icon" href="/logo.png" type="image/png">    <style>  
-    /* Minor custom overrides */  
-    :root { --accent: #007bff; --accent-2: #00ffcc; }  
-    html.dark { background: #071027; color: #e6eef8; }  
-    .hero-overlay{background:linear-gradient(180deg, rgba(2,6,23,0.55), rgba(2,6,23,0.6));}  
-    .glass { background: rgba(255,255,255,0.04); backdrop-filter: blur(6px); }  
-    .card-dark { background: rgba(10,14,20,0.6); }  
-    /* ensure hero image covers on mobile */  
-    .hero-bg { background-position: center; background-size: cover; background-repeat: no-repeat; }  
-    /* small screen footer spacing */  
-    footer a { text-decoration: underline; }  
-    /* Accessible focus outlines */  
-    a:focus, button:focus, input:focus { outline: 3px solid rgba(0,123,255,0.25); outline-offset: 2px; }  
-  </style>  </head>  
-<body class="font-inter antialiased text-gray-900 dark:text-gray-100 bg-white">    <!-- HEADER -->    <header class="fixed w-full z-40 bg-white bg-opacity-60 dark:bg-black/70 backdrop-blur-md border-b border-gray-200 dark:border-gray-800">  
-    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">  
-      <div class="flex items-center gap-3">  
-        <a href="/" class="flex items-center gap-3">  
-          <img src="/logo.png" alt="Bharat Oil Carrier" class="h-12 w-auto" />  
-          <div>  
-            <div class="text-lg font-semibold text-gray-900 dark:text-white leading-tight">Bharat Oil Carrier</div>  
-            <div class="text-xs text-gray-600 dark:text-gray-300">Bitumen & Bulk Liquid Transport — PAN India</div>  
-          </div>  
-        </a>  
-      </div>  <nav class="hidden md:flex items-center gap-4">  
-    <a class="text-sm hover:text-blue-600" href="#home">Home</a>  
-    <a class="text-sm hover:text-blue-600" href="#services">Services</a>  
-    <a class="text-sm hover:text-blue-600" href="#quotation">Get Quote</a>  
-    <a class="text-sm hover:text-blue-600" href="/blog/">Blog</a>  
-    <a class="text-sm hover:text-blue-600" href="#contact">Contact</a>  
-    <a class="ml-2 px-3 py-1.5 bg-blue-600 text-white rounded text-sm" href="/client-portal/">Client Portal</a>  
-    <!-- theme toggle -->  
-    <button id="theme-btn" class="ml-3 p-2 rounded border border-gray-200 dark:border-gray-700" aria-label="Toggle theme" title="Toggle theme">🌙</button>  
-  </nav>  
+// ============================================================================
+// 1. EDITABLE COMPANY SETTINGS (ADMIN CONFIGURABLE - NO FABRICATED CLAIMS)
+// ============================================================================
+const INITIAL_COMPANY_SETTINGS = {
+  name: 'Bharat Oil Carrier (BOC)',
+  operatingSince: 1990,
+  tagline: 'Your Trust, Our Commitment — Powering Every Mile!',
+  address: 'Gate No. 9, Mathura Refinery, Mathura, Uttar Pradesh 281005',
+  email: 'bharatoilcarrier@gmail.com',
+  phones: ['8077703137', '9058374446'],
+  gstin: 'UNVERIFIED (Admin to enter before production)',
+  enableBitumenSupplyPage: false, // Switched OFF until BOC confirms stock & rates
+  highValueMaintenanceThresholdInr: 15000,
+};
 
-  <!-- small screen menu / social -->  
-  <div class="md:hidden flex items-center gap-3">  
-    <a href="https://www.facebook.com/share/1F1qrJr4Xz/" target="_blank" class="text-gray-700 dark:text-gray-200"><i class="fab fa-facebook fa-lg"></i></a>  
-    <a href="https://www.instagram.com/bocbharatoilcarrier?igsh=YW1jdnQ3ZG1iODdv" target="_blank" class="text-gray-700 dark:text-gray-200"><i class="fab fa-instagram fa-lg"></i></a>  
-    <a href="https://www.linkedin.com/company/bharat-oil-carrrier/" target="_blank" class="text-gray-700 dark:text-gray-200"><i class="fab fa-linkedin fa-lg"></i></a>  
-  </div>  
-</div>
+// ============================================================================
+// 2. BILINGUAL DICTIONARY (ENGLISH / HINDI)
+// ============================================================================
+const LABELS = {
+  en: {
+    publicSite: 'Public Sales Website',
+    erpPortal: 'Private ERP & Client Portal',
+    requestQuote: 'Request a Transport Quote',
+    talkToOps: 'Talk to Operations',
+    dashboard: 'Overview Dashboard',
+    leads: 'Leads & Quotations',
+    trips: 'Trip & Dispatch',
+    freightStmt: 'Freight Statement (A4)',
+    fleetDocs: 'Fleet & Document Expiry',
+    maintenance: 'Maintenance & Proof',
+    settings: 'Company & Role Settings',
+    loadedWt: 'Loaded Weight (kg / MT)',
+    unloadedWt: 'Unloaded Weight (kg / MT)',
+    printA4: 'Print A4 Landscape Statement',
+    demoBanner: 'DEMO MODE ACTIVE — All records below are synthetic DEMO data for Phase 1 testing.',
+  },
+  hi: {
+    publicSite: 'पब्लिक सेल्स वेबसाइट',
+    erpPortal: 'प्राइवेट ERP और क्लाइंट पोर्टल',
+    requestQuote: 'ट्रांसपोर्ट कोटेशन मांगें',
+    talkToOps: 'ऑपरेशंस से बात करें',
+    dashboard: 'डैशबोर्ड (Overview)',
+    leads: 'लीड्स और कोटेशन',
+    trips: 'ट्रिप और डिस्पैच',
+    freightStmt: 'फ्रेट स्टेटमेंट (A4 बिल)',
+    fleetDocs: 'गाड़ियां और काग़ज़ात एक्सपायरी',
+    maintenance: 'मेंटेनेंस और बिल प्रूफ',
+    settings: 'कंपनी और रोल सेटिंग्स',
+    loadedWt: 'लदा वजन (कि.ग्रा. / MT)',
+    unloadedWt: 'उतरा वजन (कि.ग्रा. / MT)',
+    printA4: 'A4 लैंडस्केप स्टेटमेंट प्रिंट करें',
+    demoBanner: 'डेमो मोड (DEMO MODE) — नीचे दिया गया सारा डेटा केवल Phase 1 की जांच के लिए नकली (DEMO) है।',
+  },
+};
 
-  </header>    <main class="pt-24">  <!-- HERO -->  
-<section id="home" class="hero-bg" style="background-image: url('/tanker-bg.jpg');">  
-  <div class="hero-overlay">  
-    <div class="max-w-6xl mx-auto px-4 py-20">  
-      <div class="grid md:grid-cols-2 gap-8 items-center">  
-        <div data-aos="fade-right" class="space-y-4">  
-          <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold text-white">Safe & Timely Bitumen Transport<br class="hidden md:block"/> — PAN-India</h1>  
-          <p class="text-gray-200 max-w-xl">GPS-enabled tankers • Verified capacities (19–33 MT) • Transparent quotations • Dedicated account managers</p>  
-          <div class="flex flex-wrap gap-3 mt-4">  
-            <a href="#quotation" class="px-5 py-3 bg-accent text-white rounded font-semibold" style="background:var(--accent)">Get a Quote</a>  
-            <a href="/assets/files/bharat-brochure.pdf" download class="px-5 py-3 border border-white/30 rounded text-white">Download Brochure</a>  
-            <a href="/client-portal/" class="px-5 py-3 bg-white text-gray-900 rounded font-semibold">Client Portal</a>  
-          </div>  
-          <div class="mt-5 flex gap-3 items-center text-sm text-white/80">  
-            <div>📞 <a href="tel:+918077703137" class="underline">+91 8077703137</a></div>  
-            <div>✉️ <a href="mailto:bharatoilcarrier@gmail.com" class="underline">bharatoilcarrier@gmail.com</a></div>  
-          </div>  
-        </div>  
+// ============================================================================
+// 3. ROLES & PERMISSIONS MODEL (SECTION C)
+// ============================================================================
+type RoleId = 'ADMIN' | 'OPERATIONS' | 'ACCOUNTS' | 'MAINTENANCE' | 'DRIVER' | 'CUSTOMER_A' | 'CUSTOMER_B';
 
-       <div data-aos="fade-left" class="bg-white/5 p-6 rounded-lg glass">
-  <div class="text-white">
-    <h3 class="text-lg font-semibold mb-2">Current Bitumen Prices (Refineries)</h3>
-    <ul class="space-y-2 text-sm">
-      <li>VG10 — <strong>₹43,372 / MT</strong></li>
-      <li>VG30 — <strong>₹45,672 / MT</strong></li>
-      <li>VG40 — <strong>₹48,010 / MT</strong></li>
-    </ul>
-    <p class="mt-3 text-xs text-gray-200/80">Prices are indicative. Freight, taxes & GST not included.</p>
-    <a href="#quotation" class="mt-4 inline-block px-4 py-2 bg-blue-600 text-white rounded">Request Quotation</a>
-  </div>
-</div>
-          </div>  
-        </div>  
-      </div>  
-    </div>  
-  </div>  
-</section>  
+interface UserSession {
+  role: RoleId;
+  label: string;
+  organisationId?: string;
+  assignedVehicleNo?: string;
+}
 
-<!-- SERVICES / WHY CHOOSE -->  
-<section id="services" class="max-w-6xl mx-auto px-4 py-12" data-aos="fade-up">  
-  <div class="grid md:grid-cols-3 gap-6">  
-    <div class="p-6 bg-white rounded shadow dark:bg-gray-800">  
-      <h4 class="font-semibold text-lg">Verified Tanker Capacities</h4>  
-      <p class="mt-2 text-sm text-gray-700 dark:text-gray-300">19MT, 23MT, 27MT, 28MT, 33MT — Certified & well-maintained tankers for safe delivery.</p>  
-    </div>  
-    <div class="p-6 bg-white rounded shadow dark:bg-gray-800">  
-      <h4 class="font-semibold text-lg">GPS Tracking & Safety</h4>  
-      <p class="mt-2 text-sm text-gray-700 dark:text-gray-300">Real-time tracking and strict safety protocols for hazardous material handling.</p>  
-    </div>  
-    <div class="p-6 bg-white rounded shadow dark:bg-gray-800">  
-      <h4 class="font-semibold text-lg">Transparent Pricing</h4>  
-      <p class="mt-2 text-sm text-gray-700 dark:text-gray-300">Clear quotations with full cost breakdown — diesel, toll, labour and GST.</p>  
-    </div>  
-  </div>  
-</section>  
+const ROLE_PRESETS: Record<RoleId, UserSession> = {
+  ADMIN: { role: 'ADMIN', label: '1. Owner / Admin (MD) — Full Access' },
+  OPERATIONS: { role: 'OPERATIONS', label: '2. Operations & Dispatch — Trips & Weights Only' },
+  ACCOUNTS: { role: 'ACCOUNTS', label: '3. Accounts & Commercial — Billing & Statements' },
+  MAINTENANCE: { role: 'MAINTENANCE', label: '4. Fleet & Maintenance — Workshop & Vehicle Docs' },
+  DRIVER: { role: 'DRIVER', label: '5. Driver (UP85-DEMO-101) — Assigned Trip Only', assignedVehicleNo: 'UP85-DEMO-101' },
+  CUSTOMER_A: { role: 'CUSTOMER_A', label: '6A. Customer A (Demo Highway Contractors Pvt Ltd)', organisationId: 'CUST-DEMO-A' },
+  CUSTOMER_B: { role: 'CUSTOMER_B', label: '6B. Customer B (Demo Infra Roads Ltd — Isolated)', organisationId: 'CUST-DEMO-B' },
+};
 
-<!-- QUOTATION (embedded form) -->  
-<section id="quotation" class="max-w-4xl mx-auto px-4 py-10" data-aos="fade-up">  
-  <div class="bg-white rounded shadow p-6 dark:bg-gray-800">  
-    <h2 class="text-2xl font-semibold">Request a Quotation</h2>  
-    <p class="text-sm text-gray-600 dark:text-gray-300 mt-2">Fill this quick form. Our team will contact you within the same working day.</p>  
+// ============================================================================
+// 4. SEEDED DEMO REPOSITORY (CLEARLY LABELLED DEMO DATA)
+// ============================================================================
+const INITIAL_STATEMENT_ROWS = [
+  {
+    sno: 1,
+    date: '02/10/2026',
+    vehicleNo: 'UP85-DEMO-101',
+    customerId: 'CUST-DEMO-A',
+    loadedKg: 22500,
+    unloadedKg: 22460,
+    ratePerMt: 4500,
+    slCustom: '40 kg',
+    seAmtCustom: 0,
+    hsdQty: 120,
+    hsdAmt: 10800,
+    cash: 5000,
+    plantHsdQty: 50,
+    plantHsdAmt: 4500,
+    plantCash: 2000,
+    site: 'Gairsain Project Site (DEMO)',
+    status: 'Delivered',
+    gpsStatus: 'GPS NOT CONNECTED (Manual Update)',
+  },
+  {
+    sno: 2,
+    date: '05/10/2026',
+    vehicleNo: 'UP85-DEMO-102',
+    customerId: 'CUST-DEMO-A',
+    loadedKg: 24800,
+    unloadedKg: 24800,
+    ratePerMt: 4500,
+    slCustom: '0 kg',
+    seAmtCustom: 0,
+    hsdQty: 140,
+    hsdAmt: 12600,
+    cash: 6000,
+    plantHsdQty: 0,
+    plantHsdAmt: 0,
+    plantCash: 3000,
+    site: 'Gairsain Project Site (DEMO)',
+    status: 'In Transit',
+    gpsStatus: 'GPS NOT CONNECTED (Manual Update)',
+  },
+  {
+    sno: 3,
+    date: '09/10/2026',
+    vehicleNo: 'UP85-DEMO-101',
+    customerId: 'CUST-DEMO-A',
+    loadedKg: 21950,
+    unloadedKg: 21900,
+    ratePerMt: 4500,
+    slCustom: '50 kg',
+    seAmtCustom: 500,
+    hsdQty: 110,
+    hsdAmt: 9900,
+    cash: 4000,
+    plantHsdQty: 40,
+    plantHsdAmt: 3600,
+    plantCash: 1500,
+    site: 'Karnaprayag Base (DEMO)',
+    status: 'POD Pending',
+    gpsStatus: 'GPS NOT CONNECTED (Manual Update)',
+  },
+];
 
-    <!-- Embedded Google Form (you already had this) -->  
-    <div class="mt-4">  
-      <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSeU-I3xpmlZg23HgHzo51vOyBsDwXM-ljwq46babeeYktAYbg/viewform?embedded=true" loading="lazy" class="w-full h-96 rounded"></iframe>  
-    </div>  
-  </div>  
-</section>  
+const INITIAL_VEHICLE_DOCS = [
+  { id: 'DOC-1', vehicleNo: 'UP85-DEMO-101', docType: 'Insurance Certificate', docNo: 'INS-DEMO-991', expiryDate: '22/10/2026', daysRemaining: 4, verificationStatus: 'VERIFIED' },
+  { id: 'DOC-2', vehicleNo: 'UP85-DEMO-101', docType: 'Fitness Certificate', docNo: 'FIT-DEMO-442', expiryDate: '30/10/2026', daysRemaining: 12, verificationStatus: 'VERIFIED' },
+  { id: 'DOC-3', vehicleNo: 'UP85-DEMO-102', docType: 'National Permit', docNo: 'NP-DEMO-118', expiryDate: '10/11/2026', daysRemaining: 23, verificationStatus: 'UNVERIFIED' },
+  { id: 'DOC-4', vehicleNo: 'UP85-DEMO-102', docType: 'PUC / Pollution', docNo: 'PUC-DEMO-009', expiryDate: '01/10/2026', daysRemaining: -17, verificationStatus: 'EXPIRED' },
+];
 
-<!-- BLOG PREVIEW (will show Jekyll posts or LinkedIn feed) -->  
-<section id="blog" class="max-w-6xl mx-auto px-4 py-10" data-aos="fade-up">  
-  <div class="flex items-center justify-between mb-4">  
-    <h2 class="text-2xl font-semibold">Latest from our Blog</h2>  
-    <a href="/blog/" class="text-sm text-blue-600">See all</a>  
-  </div>  
+export default function App() {
+  const [lang, setLang] = useState<'en' | 'hi'>('en');
+  const [viewMode, setViewMode] = useState<'PUBLIC' | 'ERP'>('PUBLIC');
+  const [activeRole, setActiveRole] = useState<RoleId>('ADMIN');
+  const [erpTab, setErpTab] = useState<'DASHBOARD' | 'LEADS' | 'TRIPS' | 'FREIGHT' | 'DOCS' | 'SETTINGS'>('FREIGHT');
+  const [company, setCompany] = useState(INITIAL_COMPANY_SETTINGS);
 
-  <!-- Placeholder cards: when Jekyll builds, this area will be replaced/filled on /blog page.  
-       On index we show a few highlights and link to /blog/ -->  
-  <div class="grid md:grid-cols-3 gap-6">  
-    <article class="p-5 bg-white rounded shadow dark:bg-gray-800">  
-      <h3 class="font-semibold">How we handle long-distance deliveries</h3>  
-      <p class="mt-2 text-sm text-gray-600 dark:text-gray-300">Safety-first approach, route planning and timely dispatch strategies.</p>  
-      <a href="/blog/" class="mt-3 inline-block text-sm text-blue-600">Read more</a>  
-    </article>  
+  // Leads state (Demo Inbox)
+  const [leads, setLeads] = useState([
+    {
+      id: 'LEAD-DEMO-1',
+      companyName: 'Shivalik Road Builders [DEMO]',
+      phone: '9800000001',
+      product: 'VG-30 Bitumen Transport',
+      quantityMt: '45 MT',
+      origin: 'Mathura Refinery',
+      destination: 'Haldwani (263139)',
+      expectedDate: '25/10/2026',
+      status: 'New',
+      isDemo: true,
+    },
+  ]);
 
-    <article class="p-5 bg-white rounded shadow dark:bg-gray-800">  
-      <h3 class="font-semibold">Case Study: Project X — 500 MT delivery</h3>  
-      <p class="mt-2 text-sm text-gray-600 dark:text-gray-300">A detailed look at logistics, scheduling and results for a major road project.</p>  
-      <a href="/blog/" class="mt-3 inline-block text-sm text-blue-600">Read more</a>  
-    </article>  
+  // Quote Form state
+  const [quoteForm, setQuoteForm] = useState({
+    companyName: '',
+    phone: '',
+    product: 'Bitumen Bulk Tanker Transport',
+    quantityMt: '',
+    origin: 'Mathura Refinery',
+    destination: '',
+    expectedDate: '',
+    consent: false,
+  });
+  const [quoteSubmittedMsg, setQuoteSubmittedMsg] = useState('');
 
-    <article class="p-5 bg-white rounded shadow dark:bg-gray-800">  
-      <h3 class="font-semibold">Why GPS tracking matters</h3>  
-      <p class="mt-2 text-sm text-gray-600 dark:text-gray-300">Real-time location improves ETA accuracy and client trust.</p>  
-      <a href="/blog/" class="mt-3 inline-block text-sm text-blue-600">Read more</a>  
-    </article>  
-  </div>  
-</section>  
+  // Freight Statement state
+  const [rows, setRows] = useState(INITIAL_STATEMENT_ROWS);
+  const [billableBasis, setBillableBasis] = useState<'LOADED' | 'UNLOADED'>('LOADED');
+  const [slLabel, setSlLabel] = useState('S/L');
+  const [seLabel, setSeLabel] = useState('S/E Amt (₹)');
+  const [seRule, setSeRule] = useState<'DEDUCT' | 'ADD' | 'IGNORE'>('DEDUCT');
+  const [simulateMismatch, setSimulateMismatch] = useState(false);
+  const [overrideReason, setOverrideReason] = useState('');
 
-<!-- FLEET (link to interactive map) -->  
-<section id="fleet" class="max-w-6xl mx-auto px-4 py-10" data-aos="fade-up">  
-  <div class="bg-white rounded shadow p-6 dark:bg-gray-800 flex flex-col md:flex-row items-center gap-6">  
-    <div class="flex-1">  
-      <h2 class="text-xl font-semibold">Live Fleet Tracking</h2>  
-      <p class="mt-2 text-sm text-gray-700 dark:text-gray-300">Track vehicles in real-time on an interactive map (client login required).</p>  
-      <a href="/fleet/map.html" class="inline-block mt-4 px-4 py-2 bg-blue-600 text-white rounded">View Fleet Map</a>  
-    </div>  
-    <div class="w-full md:w-1/3">  
-      <img src="/assets/images/logo.png" alt="fleet" class="w-32 mx-auto opacity-80" />  
-    </div>  
-  </div>  
-</section>  
+  const t = LABELS[lang];
+  const currentUser = ROLE_PRESETS[activeRole];
 
-<!-- ABOUT / CONTACT -->  
-<section id="contact" class="max-w-6xl mx-auto px-4 py-10" data-aos="fade-up">  
-  <div class="grid md:grid-cols-2 gap-6">  
-    <div class="p-6 bg-white rounded shadow dark:bg-gray-800">  
-      <h3 class="font-semibold">About Bharat Oil Carrier</h3>  
-      <p class="mt-3 text-sm text-gray-700 dark:text-gray-300">Trusted provider in bulk liquid logistics with a focus on infrastructure growth, safety and transparent pricing.</p>  
+  // Role-based permission checks
+  const canEditRates = activeRole === 'ADMIN' || activeRole === 'ACCOUNTS';
+  const canViewFinance = activeRole === 'ADMIN' || activeRole === 'ACCOUNTS' || activeRole === 'CUSTOMER_A' || activeRole === 'CUSTOMER_B';
 
-      <h4 class="mt-4 font-semibold">Address</h4>  
-      <p class="text-sm text-gray-600 dark:text-gray-300">9 No. Gate, Mathura Refinery, Bharat Dharm Kata, Mathura</p>  
+  // Filter trips by role (Multi-tenant Customer & Driver isolation)
+  const visibleRows = useMemo(() => {
+    if (activeRole === 'DRIVER') {
+      return rows.filter((r) => r.vehicleNo === currentUser.assignedVehicleNo);
+    }
+    if (activeRole === 'CUSTOMER_A' || activeRole === 'CUSTOMER_B') {
+      return rows.filter((r) => r.customerId === currentUser.organisationId);
+    }
+    return rows;
+  }, [rows, activeRole, currentUser]);
 
-      <h4 class="mt-3 font-semibold">Contact</h4>  
-      <p class="text-sm"><a href="tel:+918077703137" class="underline">+91 8077703137</a> | <a href="mailto:bharatoilcarrier@gmail.com" class="underline">bharatoilcarrier@gmail.com</a></p>  
-    </div>  
+  // Deterministic Freight Statement Calculation (Section E)
+  const statementCalc = useMemo(() => {
+    let totLoadedKg = 0;
+    let totUnloadedKg = 0;
+    let totFreight = 0;
+    let totHsdQty = 0;
+    let totHsdAmt = 0;
+    let totCash = 0;
+    let totPlantHsdQty = 0;
+    let totPlantHsdAmt = 0;
+    let totPlantCash = 0;
+    let totSeAmt = 0;
 
-    <div class="p-6 bg-white rounded shadow dark:bg-gray-800">  
-      <h3 class="font-semibold">Quick Links</h3>  
-      <ul class="mt-3 space-y-2 text-sm">  
-        <li><a href="/blog/">Blog & Case Studies</a></li>  
-        <li><a href="#quotation">Get Quotation</a></li>  
-        <li><a href="/client-portal/">Client Portal / Login</a></li>  
-        <li><a href="/sitemap.xml">Sitemap</a></li>  
-      </ul>  
+    const computedRows = visibleRows.map((r) => {
+      const loadedMt = Number((r.loadedKg / 1000).toFixed(3));
+      const unloadedMt = Number((r.unloadedKg / 1000).toFixed(3));
+      const billableMt = billableBasis === 'LOADED' ? loadedMt : unloadedMt;
+      const freight = Number((billableMt * r.ratePerMt).toFixed(2));
+      const diffKg = Math.max(0, r.loadedKg - r.unloadedKg);
 
-      <div class="mt-6">  
-        <h4 class="font-semibold">Follow Us</h4>  
-        <div class="flex gap-3 mt-3">  
-          <a href="https://www.facebook.com/share/1F1qrJr4Xz/" target="_blank" class="text-gray-700 dark:text-gray-200"><i class="fab fa-facebook fa-lg"></i></a>  
-          <a href="https://www.instagram.com/bocbharatoilcarrier?igsh=YW1jdnQ3ZG1iODdv" target="_blank" class="text-gray-700 dark:text-gray-200"><i class="fab fa-instagram fa-lg"></i></a>  
-          <a href="https://www.linkedin.com/company/bharat-oil-carrrier/" target="_blank" class="text-gray-700 dark:text-gray-200"><i class="fab fa-linkedin fa-lg"></i></a>  
-        </div>  
-      </div>  
-    </div>  
-  </div>  
-</section>
+      totLoadedKg += r.loadedKg;
+      totUnloadedKg += r.unloadedKg;
+      totFreight += freight;
+      totHsdQty += r.hsdQty;
+      totHsdAmt += r.hsdAmt;
+      totCash += r.cash;
+      totPlantHsdQty += r.plantHsdQty;
+      totPlantHsdAmt += r.plantHsdAmt;
+      totPlantCash += r.plantCash;
+      totSeAmt += r.seAmtCustom;
 
-  </main>    <!-- WHATSAPP floating button -->    <a class="fixed right-5 bottom-28 z-50" href="https://wa.me/918077703137" target="_blank" aria-label="WhatsApp">  
-    <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" alt="WhatsApp" class="h-14 w-14 rounded-full shadow-lg bg-white p-2" />  
-  </a>    <!-- BOTTOM NAV (mobile) -->    <nav class="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 md:hidden z-40">  
-    <div class="max-w-6xl mx-auto px-4 flex justify-between items-center py-2">  
-      <a href="#home" class="flex flex-col items-center text-xs text-gray-700 dark:text-gray-200"><div>🏠</div>Home</a>  
-      <a href="#quotation" class="flex flex-col items-center text-xs text-gray-700 dark:text-gray-200"><div>📨</div>Quote</a>  
-      <a href="/client-portal/" class="flex flex-col items-center text-xs text-gray-700 dark:text-gray-200"><div>🔐</div>Login</a>  
-      <a href="/fleet/map.html" class="flex flex-col items-center text-xs text-gray-700 dark:text-gray-200"><div>🚗</div>Fleet</a>  
-      <a href="#contact" class="flex flex-col items-center text-xs text-gray-700 dark:text-gray-200"><div>📘</div>About</a>  
-    </div>  
-  </nav>    <!-- FOOTER -->    <footer class="mt-12">  
-    <div class="max-w-6xl mx-auto px-4 py-6 text-center text-sm text-gray-600 dark:text-gray-400">  
-      &copy; <span id="year"></span> Bharat Oil Carrier • <a href="/sitemap.xml">Sitemap</a> • <a href="mailto:bharatoilcarrier@gmail.com">bharatoilcarrier@gmail.com</a>  
-    </div>  
-  </footer>    <!-- Scripts -->    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>    <script> AOS.init({ duration: 650, once: true }); </script>    <script>  
-    // show year  
-    document.getElementById('year').textContent = new Date().getFullYear();  
-  
-    // Theme toggle (persist)  
-    (function(){  
-      const root = document.documentElement;  
-      const btn = document.getElementById('theme-btn');  
-      const setTheme = (t) => {  
-        if (t === 'dark') root.classList.add('dark');  
-        else root.classList.remove('dark');  
-      };  
-      const saved = localStorage.getItem('boc-theme');  
-      if (saved) setTheme(saved);  
-      else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) setTheme('dark');  
-  
-      btn?.addEventListener('click', () => {  
-        const isDark = root.classList.toggle('dark');  
-        localStorage.setItem('boc-theme', isDark ? 'dark' : 'light');  
-        btn.textContent = isDark ? '☀️' : '🌙';  
-      });  
-    })();  
-  </script>    <!-- Optional: if you have app.js / firebase.js for client-portal etc -->    <!-- <script type="module" src="/app.js"></script> -->  </body>  
-</html>
+      return { ...r, loadedMt, unloadedMt, billableMt, freight, slAuto: `${diffKg} kg` };
+    });
+
+    const hsdCashRecovery = totHsdAmt + totCash;
+    const plantRecovery = totPlantHsdAmt + totPlantCash;
+    const seAdjustment = seRule === 'DEDUCT' ? -totSeAmt : seRule === 'ADD' ? totSeAmt : 0;
+    const netBalance = totFreight - hsdCashRecovery - plantRecovery + seAdjustment;
+
+    return {
+      computedRows,
+      totLoadedKg,
+      totLoadedMt: (totLoadedKg / 1000).toFixed(3),
+      totUnloadedKg,
+      totUnloadedMt: (totUnloadedKg / 1000).toFixed(3),
+      totFreight,
+      totHsdQty,
+      totHsdAmt,
+      totCash,
+      totPlantHsdQty,
+      totPlantHsdAmt,
+      totPlantCash,
+      totSeAmt,
+      hsdCashRecovery,
+      plantRecovery,
+      seAdjustment,
+      netBalance,
+    };
+  }, [visibleRows, billableBasis, seRule]);
+
+  const handleQuoteSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!quoteForm.companyName || !quoteForm.phone || !quoteForm.consent) return;
+    setLeads([
+      {
+        id: `LEAD-DEMO-${leads.length + 1}`,
+        companyName: `${quoteForm.companyName} [DEMO]`,
+        phone: quoteForm.phone,
+        product: quoteForm.product,
+        quantityMt: `${quoteForm.quantityMt || '22.5'} MT`,
+        origin: quoteForm.origin,
+        destination: quoteForm.destination,
+        expectedDate: quoteForm.expectedDate || 'TBD',
+        status: 'New',
+        isDemo: true,
+      },
+      ...leads,
+    ]);
+    setQuoteSubmittedMsg('DEMO STAGING SUBMISSION CONFIRMED: Lead saved to local Demo Leads Inbox. (Not connected to live production DB yet).');
+    setQuoteForm({ ...quoteForm, companyName: '', phone: '', quantityMt: '', destination: '', consent: false });
+  };
+
+  const updateRowField = (sno: number, field: string, val: number) => {
+    setRows((prev) => prev.map((r) => (r.sno === sno ? { ...r, [field]: Math.max(0, val) } : r)));
+  };
+
+  return (
+    <div className="min-h-screen bg-slate-50 text-slate-900 font-sans pb-16">
+      {/* TOP PERSISTENT DEMO & ENVIRONMENT CONTROL BAR */}
+      <div className="bg-amber-400 text-slate-950 px-4 py-2 text-xs sm:text-sm font-bold flex flex-wrap items-center justify-between gap-2 border-b-2 border-slate-900 print:hidden">
+        <span>⚠️ {t.demoBanner}</span>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => setLang(lang === 'en' ? 'hi' : 'en')}
+            className="px-3 py-1 rounded bg-slate-900 text-white font-semibold hover:bg-slate-800"
+          >
+            {lang === 'en' ? '🇮🇳 हिन्दी में देखें' : '🇬🇧 Switch to English'}
+          </button>
+          <button
+            onClick={() => setViewMode(viewMode === 'PUBLIC' ? 'ERP' : 'PUBLIC')}
+            className="px-3 py-1 rounded bg-blue-700 text-white font-semibold hover:bg-blue-800"
+          >
+            {viewMode === 'PUBLIC' ? `🔐 Open ${t.erpPortal}` : `🌐 View ${t.publicSite}`}
+          </button>
+        </div>
+      </div>
+
+      {/* =====================================================================
+          EXPERIENCE 1: PUBLIC B2B SALES WEBSITE (SECTION A)
+         ===================================================================== */}
+      {viewMode === 'PUBLIC' && (
+        <div className="max-w-6xl mx-auto p-4 sm:p-6 space-y-8">
+          {/* Header */}
+          <header className="bg-slate-900 text-white rounded-xl p-6 sm:p-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-6 shadow-lg">
+            <div className="space-y-2">
+              <span className="inline-block bg-amber-400 text-slate-950 text-xs font-extrabold px-2.5 py-1 rounded uppercase tracking-wider">
+                Operating Since {company.operatingSince} • Mathura Refinery Gate No. 9
+              </span>
+              <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight">{company.name}</h1>
+              <p className="text-amber-300 font-medium text-base sm:text-lg">“{company.tagline}”</p>
+              <p className="text-slate-300 text-sm">{company.address}</p>
+            </div>
+            <div className="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
+              <a
+                href={`tel:${company.phones[0]}`}
+                className="px-5 py-3 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-center text-sm"
+              >
+                📞 Call: {company.phones[0]}
+              </a>
+              <button
+                onClick={() => setViewMode('ERP')}
+                className="px-5 py-3 rounded-lg bg-white text-slate-900 hover:bg-slate-100 font-bold text-center text-sm"
+              >
+                🔐 Client / Staff Portal Login
+              </button>
+            </div>
+          </header>
+
+          {/* Core Verified Services Grid */}
+          <section className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="bg-white p-6 rounded-xl border-2 border-slate-200 shadow-sm">
+              <h2 className="text-lg font-bold text-slate-900 mb-2">1. Bitumen Tanker Transportation</h2>
+              <p className="text-sm text-slate-600 leading-relaxed">
+                Dedicated refinery-to-project-site bulk bitumen logistics from Mathura Refinery to infrastructure, highway, and hot-mix plant sites. Every trip includes verified weighbridge tare/gross/net documentation and clear POD records.
+              </p>
+            </div>
+            <div className="bg-white p-6 rounded-xl border-2 border-slate-200 shadow-sm">
+              <h2 className="text-lg font-bold text-slate-900 mb-2">2. Transparent Weighbridge Billing</h2>
+              <p className="text-sm text-slate-600 leading-relaxed">
+                Canonical scale weights recorded in kilograms (kg) and converted accurately to metric tonnes (MT). No hidden formulas—each B2B customer gets an isolated portal for trip settlements, HSD/cash advance reconciliation, and POD downloads.
+              </p>
+            </div>
+            <div className="bg-white p-6 rounded-xl border-2 border-slate-200 shadow-sm">
+              <h2 className="text-lg font-bold text-slate-900 mb-2">3. Operations & Compliance Control</h2>
+              <p className="text-sm text-slate-600 leading-relaxed">
+                Pre-dispatch vehicle document verification (RC, Fitness, Insurance, Permits, Calibration) and honest dispatch status tracking. Optional Bitumen Supply page is currently{' '}
+                <span className="font-bold text-slate-900">{company.enableBitumenSupplyPage ? 'ENABLED' : 'SWITCHED OFF (Transport Only)'}</span>.
+              </p>
+            </div>
+          </section>
+
+          {/* Mobile-First Request a Transport Quote Form */}
+          <section className="bg-white p-6 sm:p-8 rounded-xl border-2 border-blue-600 shadow-md">
+            <h2 className="text-2xl font-bold text-slate-900 mb-1">{t.requestQuote}</h2>
+            <p className="text-sm text-slate-600 mb-6">
+              For B2B road contractors, infrastructure teams, and bitumen procurement coordinators. Submissions in Phase 1 go directly to the ERP Demo Leads Inbox.
+            </p>
+            {quoteSubmittedMsg && (
+              <div className="mb-4 p-4 rounded-lg bg-emerald-50 border border-emerald-500 text-emerald-900 text-sm font-semibold">
+                ✅ {quoteSubmittedMsg}
+              </div>
+            )}
+            <form onSubmit={handleQuoteSubmit} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div>
+                <label className="block text-xs font-bold uppercase text-slate-700 mb-1">Customer / Company Name *</label>
+                <input
+                  required
+                  type="text"
+                  placeholder="e.g., ABC Infra Projects Ltd"
+                  value={quoteForm.companyName}
+                  onChange={(e) => setQuoteForm({ ...quoteForm, companyName: e.target.value })}
+                  className="w-full px-3 py-2.5 rounded border border-slate-300 text-sm"
+                />
+              </div>
+              <div>
+                <label className="block text-xs font-bold uppercase text-slate-700 mb-1">Phone / WhatsApp Number *</label>
+                <input
+                  required
+                  type="tel"
+                  placeholder="10-digit mobile number"
+                  value={quoteForm.phone}
+                  onChange={(e) => setQuoteForm({ ...quoteForm, phone: e.target.value })}
+                  className="w-full px-3 py-2.5 rounded border border-slate-300 text-sm"
+                />
+              </div>
+              <div>
+                <label className="block text-xs font-bold uppercase text-slate-700 mb-1">Product / Service Needed</label>
+                <select
+                  value={quoteForm.product}
+                  onChange={(e) => setQuoteForm({ ...quoteForm, product: e.target.value })}
+                  className="w-full px-3 py-2.5 rounded border border-slate-300 text-sm bg-white"
+                >
+                  <option>Bitumen Bulk Tanker Transport (VG-30 / VG-40)</option>
+                  <option>Bitumen Emulsion / CRMB Transport</option>
+                  {company.enableBitumenSupplyPage && <option>Bitumen Supply + Delivered Rate</option>}
+                </select>
+              </div>
+              <div>
+                <label className="block text-xs font-bold uppercase text-slate-700 mb-1">Estimated Quantity (MT)</label>
+                <input
+                  type="number"
+                  step="0.5"
+                  placeholder="e.g., 45"
+                  value={quoteForm.quantityMt}
+                  onChange={(e) => setQuoteForm({ ...quoteForm, quantityMt: e.target.value })}
+                  className="w-full px-3 py-2.5 rounded border border-slate-300 text-sm"
+                />
+              </div>
+              <div>
+                <label className="block text-xs font-bold uppercase text-slate-700 mb-1">Loading Point / Refinery</label>
+                <input
+                  type="text"
+                  value={quoteForm.origin}
+                  onChange={(e) => setQuoteForm({ ...quoteForm, origin: e.target.value })}
+                  className="w-full px-3 py-2.5 rounded border border-slate-300 text-sm"
+                />
+              </div>
+              <div>
+                <label className="block text-xs font-bold uppercase text-slate-700 mb-1">Delivery Site & Pincode *</label>
+                <input
+                  required
+                  type="text"
+                  placeholder="e.g., Gairsain Site, UK 246428"
+                  value={quoteForm.destination}
+                  onChange={(e) => setQuoteForm({ ...quoteForm, destination: e.target.value })}
+                  className="w-full px-3 py-2.5 rounded border border-slate-300 text-sm"
+                />
+              </div>
+              <div className="sm:col-span-2 flex items-center gap-2 pt-2">
+                <input
+                  required
+                  id="consent-chk"
+                  type="checkbox"
+                  checked={quoteForm.consent}
+                  onChange={(e) => setQuoteForm({ ...quoteForm, consent: e.target.checked })}
+                  className="w-5 h-5"
+                />
+                <label htmlFor="consent-chk" className="text-xs text-slate-700">
+                  I authorize Bharat Oil Carrier (BOC) operations to contact me via phone/WhatsApp regarding this transport inquiry.
+                </label>
+              </div>
+              <div className="flex items-end">
+                <button
+                  type="submit"
+                  className="w-full py-3 px-4 rounded-lg bg-blue-700 hover:bg-blue-800 text-white font-bold text-sm shadow"
+                >
+                  Submit Quote Inquiry (Demo)
+                </button>
+              </div>
+            </form>
+          </section>
+        </div>
+      )}
+
+      {/* =====================================================================
+          EXPERIENCE 2: PRIVATE ROLE-BASED ERP & CUSTOMER PORTAL
+         ===================================================================== */}
+      {viewMode === 'ERP' && (
+        <div className="max-w-7xl mx-auto p-3 sm:p-6 space-y-6">
+          {/* Role Switcher & Navigation Bar */}
+          <div className="bg-slate-900 text-white p-4 rounded-xl flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 print:hidden">
+            <div>
+              <div className="text-xs uppercase tracking-wider text-amber-400 font-bold">BOC Smart ERP — Role Isolation Sandbox</div>
+              <div className="text-lg font-bold">{currentUser.label}</div>
+            </div>
+            <div className="flex flex-wrap items-center gap-2 w-full lg:w-auto">
+              <label className="text-xs font-bold text-slate-300">Switch Test Persona:</label>
+              <select
+                value={activeRole}
+                onChange={(e) => setActiveRole(e.target.value as RoleId)}
+                className="px-3 py-2 rounded bg-slate-800 text-white border border-slate-600 text-xs sm:text-sm font-semibold"
+              >
+                {Object.entries(ROLE_PRESETS).map(([key, val]) => (
+                  <option key={key} value={key}>
+                    {val.label}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+
+          {/* Role-Aware Module Tabs */}
+          <nav className="flex flex-wrap gap-2 border-b border-slate-300 pb-3 print:hidden">
+            <button
+              onClick={() => setErpTab('FREIGHT')}
+              className={`px-4 py-2.5 rounded-lg text-xs sm:text-sm font-bold ${
+                erpTab === 'FREIGHT' ? 'bg-blue-700 text-white' : 'bg-white text-slate-800 border border-slate-300'
+              }`}
+            >
+              📄 {t.freightStmt}
+            </button>
+            <button
+              onClick={() => setErpTab('TRIPS')}
+              className={`px-4 py-2.5 rounded-lg text-xs sm:text-sm font-bold ${
+                erpTab === 'TRIPS' ? 'bg-blue-700 text-white' : 'bg-white text-slate-800 border border-slate-300'
+              }`}
+            >
+              🚛 {t.trips} ({visibleRows.length})
+            </button>
+            {activeRole !== 'DRIVER' && activeRole !== 'CUSTOMER_A' && activeRole !== 'CUSTOMER_B' && (
+              <>
+                <button
+                  onClick={() => setErpTab('DOCS')}
+                  className={`px-4 py-2.5 rounded-lg text-xs sm:text-sm font-bold ${
+                    erpTab === 'DOCS' ? 'bg-blue-700 text-white' : 'bg-white text-slate-800 border border-slate-300'
+                  }`}
+                >
+                  🛡️ {t.fleetDocs}
+                </button>
+                <button
+                  onClick={() => setErpTab('LEADS')}
+                  className={`px-4 py-2.5 rounded-lg text-xs sm:text-sm font-bold ${
+                    erpTab === 'LEADS' ? 'bg-blue-700 text-white' : 'bg-white text-slate-800 border border-slate-300'
+                  }`}
+                >
+                  📥 {t.leads} ({leads.length})
+                </button>
+              </>
+            )}
+          </nav>
+
+          {/* TAB 1: A4 LANDSCAPE FREIGHT STATEMENT & SETTLEMENT (SECTION E) */}
+          {erpTab === 'FREIGHT' && (
+            <div className="space-y-4">
+              {!canViewFinance ? (
+                <div className="p-6 rounded-xl bg-red-50 border-2 border-red-600 text-red-900 font-bold">
+                  🔒 ACCESS DENIED: Role "{currentUser.label}" does not have permission to view commercial freight rates or financial settlement statements. Switch to Admin, Accounts, or Customer A to inspect billing.
+                </div>
+              ) : visibleRows.length === 0 ? (
+                <div className="p-6 rounded-xl bg-amber-50 border-2 border-amber-500 text-slate-900 font-bold">
+                  🔒 TENANT ISOLATION VERIFIED: Logged in as "{currentUser.label}". You have 0 assigned statements. Customer B cannot read Customer A's records!
+                </div>
+              ) : (
+                <div className="bg-white p-4 sm:p-6 rounded-xl border-2 border-slate-300 shadow-sm space-y-5">
+                  {/* Interactive Contract Formula & Column Config Toolbar */}
+                  {canEditRates && (
+                    <div className="bg-slate-100 p-3 rounded-lg border border-slate-300 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-xs print:hidden">
+                      <div>
+                        <label className="font-bold block mb-1">1. Contract Billable Weight Rule:</label>
+                        <select
+                          value={billableBasis}
+                          onChange={(e) => setBillableBasis(e.target.value as 'LOADED' | 'UNLOADED')}
+                          className="w-full px-2 py-1.5 rounded border border-slate-400 bg-white font-semibold"
+                        >
+                          <option value="LOADED">Loaded Weight (MT)</option>
+                          <option value="UNLOADED">Unloaded Weight (MT)</option>
+                        </select>
+                      </div>
+                      <div>
+                        <label className="font-bold block mb-1">2. Custom Col 7 Label (S/L):</label>
+                        <input
+                          type="text"
+                          value={slLabel}
+                          onChange={(e) => setSlLabel(e.target.value)}
+                          className="w-full px-2 py-1.5 rounded border border-slate-400 bg-white"
+                        />
+                      </div>
+                      <div>
+                        <label className="font-bold block mb-1">3. Custom Col 8 (S/E) Label & Rule:</label>
+                        <div className="flex gap-1">
+                          <input
+                            type="text"
+                            value={seLabel}
+                            onChange={(e) => setSeLabel(e.target.value)}
+                            className="w-1/2 px-2 py-1.5 rounded border border-slate-400 bg-white"
+                          />
+                          <select
+                            value={seRule}
+                            onChange={(e) => setSeRule(e.target.value as 'DEDUCT' | 'ADD' | 'IGNORE')}
+                            className="w-1/2 px-1 py-1.5 rounded border border-slate-400 bg-white font-semibold"
+                          >
+                            <option value="DEDUCT">Deduct (−)</option>
+                            <option value="ADD">Add (+)</option>
+                            <option value="IGNORE">Info Only (0)</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div className="flex flex-col justify-end gap-1">
+                        <button
+                          onClick={() => setSimulateMismatch(!simulateMismatch)}
+                          className="py-1.5 px-3 rounded border border-red-600 text-red-700 font-bold hover:bg-red-50"
+                        >
+                          {simulateMismatch ? 'Clear Mismatch Alert' : '⚠️ Test Discrepancy Alert'}
+                        </button>
+                        <button
+                          onClick={() => window.print()}
+                          className="py-1.5 px-3 rounded bg-blue-700 text-white font-bold hover:bg-blue-800"
+                        >
+                          🖨️ {t.printA4}
+                        </button>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Statement Header */}
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pb-4 border-b-2 border-slate-900">
+                    <div>
+                      <div className="text-[11px] font-bold uppercase text-slate-500">BILL FROM (CARRIER)</div>
+                      <div className="text-lg font-extrabold">{company.name}</div>
+                      <div className="text-xs text-slate-700">{company.address}</div>
+                      <div className="text-xs text-slate-700">Phone: {company.phones.join(', ')}</div>
+                    </div>
+                    <div className="text-left md:text-center flex flex-col justify-center">
+                      <span className="text-xs font-extrabold uppercase text-blue-700">FREIGHT / TRIP SETTLEMENT STATEMENT</span>
+                      <span className="text-base font-bold">Mathura to Gairsain Freight (DEMO)</span>
+                      <span className="text-xs font-semibold text-amber-800">Period: 01/10/2026 to 15/10/2026</span>
+                    </div>
+                    <div className="text-left md:text-right">
+                      <div className="text-[11px] font-bold uppercase text-slate-500">BILL TO (CUSTOMER)</div>
+                      <div className="text-sm font-bold">Demo Highway Contractors Pvt Ltd [DEMO]</div>
+                      <div className="text-xs text-slate-600">Statement No: BOC/DEMO/26-27/014</div>
+                      <div className="text-xs text-slate-600">Status: Draft Verified (Version 1.0)</div>
+                    </div>
+                  </div>
+
+                  {/* 16-Column Landscape Table */}
+                  <div className="overflow-x-auto">
+                    <table className="w-full min-w-[1050px] border-collapse border border-slate-300 text-xs">
+                      <thead>
+                        <tr className="bg-slate-100 text-slate-900 border-b border-slate-300">
+                          <th className="p-2 border border-slate-300">S.No</th>
+                          <th className="p-2 border border-slate-300">Date</th>
+                          <th className="p-2 border border-slate-300">Vehicle No.</th>
+                          <th className="p-2 border border-slate-300 text-right">Loaded Wt (kg / MT)</th>
+                          <th className="p-2 border border-slate-300 text-right">Unloaded Wt (kg / MT)</th>
+                          <th className="p-2 border border-slate-300 text-right">Rate/MT (₹)</th>
+                          <th className="p-2 border border-slate-300 bg-amber-50">{slLabel}</th>
+                          <th className="p-2 border border-slate-300 bg-amber-50 text-right">{seLabel}</th>
+                          <th className="p-2 border border-slate-300 text-right">HSD Qty</th>
+                          <th className="p-2 border border-slate-300 text-right">HSD Amt (₹)</th>
+                          <th className="p-2 border border-slate-300 text-right">Cash (₹)</th>
+                          <th className="p-2 border border-slate-300 text-right">Plant HSD Qty</th>
+                          <th className="p-2 border border-slate-300 text-right">Plant HSD (₹)</th>
+                          <th className="p-2 border border-slate-300 text-right">Plant Cash (₹)</th>
+                          <th className="p-2 border border-slate-300">Unloading Site</th>
+                          <th className="p-2 border border-slate-300 text-right bg-blue-50">Freight (₹)</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {statementCalc.computedRows.map((r) => (
+                          <tr key={r.sno} className="border-b border-slate-200 hover:bg-slate-50">
+                            <td className="p-2 border border-slate-300 text-center font-bold">{r.sno}</td>
+                            <td className="p-2 border border-slate-300">{r.date}</td>
+                            <td className="p-2 border border-slate-300 font-mono font-bold">{r.vehicleNo}</td>
+                            <td className="p-2 border border-slate-300 text-right">
+                              {canEditRates ? (
+                                <input
+                                  type="number"
+                                  value={r.loadedKg}
+                                  onChange={(e) => updateRowField(r.sno, 'loadedKg', Number(e.target.value))}
+                                  className="w-20 text-right border border-slate-300 rounded px-1 font-bold"
+                                />
+                              ) : (
+                                <span>{r.loadedKg.toLocaleString('en-IN')} kg</span>
+                              )}
+                              <div className="text-[10px] font-bold text-blue-700">= {r.loadedMt.toFixed(3)} MT</div>
+                            </td>
+                            <td className="p-2 border border-slate-300 text-right">
+                              {canEditRates ? (
+                                <input
+                                  type="number"
+                                  value={r.unloadedKg}
+                                  onChange={(e) => updateRowField(r.sno, 'unloadedKg', Number(e.target.value))}
+                                  className="w-20 text-right border border-slate-300 rounded px-1 font-bold"
+                                />
+                              ) : (
+                                <span>{r.unloadedKg.toLocaleString('en-IN')} kg</span>
+                              )}
+                              <div className="text-[10px] text-slate-600">= {r.unloadedMt.toFixed(3)} MT</div>
+                            </td>
+                            <td className="p-2 border border-slate-300 text-right font-semibold">₹{r.ratePerMt.toLocaleString('en-IN')}</td>
+                            <td className="p-2 border border-slate-300 text-center bg-amber-50">{r.slAuto}</td>
+                            <td className="p-2 border border-slate-300 text-right bg-amber-50">₹{r.seAmtCustom.toLocaleString('en-IN')}</td>
+                            <td className="p-2 border border-slate-300 text-right">{r.hsdQty} L</td>
+                            <td className="p-2 border border-slate-300 text-right">₹{r.hsdAmt.toLocaleString('en-IN')}</td>
+                            <td className="p-2 border border-slate-300 text-right">₹{r.cash.toLocaleString('en-IN')}</td>
+                            <td className="p-2 border border-slate-300 text-right">{r.plantHsdQty} L</td>
+                            <td className="p-2 border border-slate-300 text-right">₹{r.plantHsdAmt.toLocaleString('en-IN')}</td>
+                            <td className="p-2 border border-slate-300 text-right">₹{r.plantCash.toLocaleString('en-IN')}</td>
+                            <td className="p-2 border border-slate-300">{r.site}</td>
+                            <td className="p-2 border border-slate-300 text-right font-extrabold bg-blue-50">
+                              ₹{r.freight.toLocaleString('en-IN', { minimumFractionDigits: 2 })}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                      <tfoot>
+                        <tr className="bg-slate-200 font-extrabold text-slate-900">
+                          <td colSpan={3} className="p-2 border border-slate-300">TOTAL ({statementCalc.computedRows.length} DEMO TRIPS)</td>
+                          <td className="p-2 border border-slate-300 text-right">
+                            {statementCalc.totLoadedKg.toLocaleString('en-IN')} kg ({statementCalc.totLoadedMt} MT)
+                          </td>
+                          <td className="p-2 border border-slate-300 text-right">
+                            {statementCalc.totUnloadedKg.toLocaleString('en-IN')} kg ({statementCalc.totUnloadedMt} MT)
+                          </td>
+                          <td className="p-2 border border-slate-300 text-right">—</td>
+                          <td className="p-2 border border-slate-300 text-center">{statementCalc.totLoadedKg - statementCalc.totUnloadedKg} kg</td>
+                          <td className="p-2 border border-slate-300 text-right">₹{statementCalc.totSeAmt.toLocaleString('en-IN')}</td>
+                          <td className="p-2 border border-slate-300 text-right">{statementCalc.totHsdQty} L</td>
+                          <td className="p-2 border border-slate-300 text-right">₹{statementCalc.totHsdAmt.toLocaleString('en-IN')}</td>
+                          <td className="p-2 border border-slate-300 text-right">₹{statementCalc.totCash.toLocaleString('en-IN')}</td>
+                          <td className="p-2 border border-slate-300 text-right">{statementCalc.totPlantHsdQty} L</td>
+                          <td className="p-2 border border-slate-300 text-right">₹{statementCalc.totPlantHsdAmt.toLocaleString('en-IN')}</td>
+                          <td className="p-2 border border-slate-300 text-right">₹{statementCalc.totPlantCash.toLocaleString('en-IN')}</td>
+                          <td className="p-2 border border-slate-300">All Sites</td>
+                          <td className="p-2 border border-slate-300 text-right text-blue-900">
+                            ₹{statementCalc.totFreight.toLocaleString('en-IN', { minimumFractionDigits: 2 })}
+                          </td>
+                        </tr>
+                      </tfoot>
+                    </table>
+                  </div>
+
+                  {/* Visible Formula & Settlement Reconciliation Summary */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+                    <div className="p-4 rounded-lg bg-slate-50 border border-slate-300 text-xs space-y-2">
+                      <div className="font-bold uppercase text-blue-800">Visible Contract Formula (No Hidden Assumptions)</div>
+                      <p className="font-mono">
+                        • Billable Basis: <strong>{billableBasis} WEIGHT</strong> (1,000 kg = 1.000 MT)
+                      </p>
+                      <p className="font-mono">
+                        • Net Balance = Total Freight (₹{statementCalc.totFreight.toLocaleString('en-IN')}) − En-Route HSD & Cash (₹{statementCalc.hsdCashRecovery.toLocaleString('en-IN')}) − Plant HSD & Cash (₹{statementCalc.plantRecovery.toLocaleString('en-IN')}) {seRule === 'DEDUCT' ? '−' : '+'} {seLabel} (₹{statementCalc.totSeAmt.toLocaleString('en-IN')})
+                      </p>
+                    </div>
+
+                    <div className={`p-4 rounded-lg border-2 text-xs space-y-1.5 ${simulateMismatch ? 'bg-red-50 border-red-600' : 'bg-emerald-50 border-emerald-600'}`}>
+                      <div className="flex justify-between font-bold text-sm">
+                        <span>Net Balance Payable:</span>
+                        <span className="text-lg font-extrabold text-blue-900">
+                          ₹{statementCalc.netBalance.toLocaleString('en-IN', { minimumFractionDigits: 2 })}
+                        </span>
+                      </div>
+                      {simulateMismatch && (
+                        <div className="pt-2 border-t border-red-300 text-red-900 space-y-2">
+                          <div className="font-extrabold">🚨 RED RECONCILIATION ALERT: Summary Override Mismatch (+₹1,775.00)!</div>
+                          <p>Approval and final export are locked until line totals match or Admin logs an explicit override reason:</p>
+                          <input
+                            type="text"
+                            placeholder="Enter mandatory Admin override reason..."
+                            value={overrideReason}
+                            onChange={(e) => setOverrideReason(e.target.value)}
+                            className="w-full px-2 py-1 rounded border border-red-400 bg-white"
+                          />
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* TAB 2: TRIP & DISPATCH WORKFLOW + HONEST GPS STATUS (SECTIONS D & G) */}
+          {erpTab === 'TRIPS' && (
+            <div className="bg-white p-6 rounded-xl border border-slate-300 space-y-4">
+              <h2 className="text-lg font-bold">Trip & Dispatch List ({currentUser.label})</h2>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {visibleRows.map((r) => (
+                  <div key={r.sno} className="p-4 rounded-lg border border-slate-300 space-y-2">
+                    <div className="flex justify-between items-center">
+                      <span className="font-mono font-bold text-base">{r.vehicleNo}</span>
+                      <span className="px-2 py-0.5 rounded bg-blue-100 text-blue-900 text-xs font-bold">{r.status}</span>
+                    </div>
+                    <div className="text-xs text-slate-600">Route: Mathura Refinery → {r.site}</div>
+                    <div className="text-xs font-semibold">
+                      Loaded: {r.loadedKg.toLocaleString('en-IN')} kg ({(r.loadedKg / 1000).toFixed(3)} MT)
+                    </div>
+                    <div className="p-2 rounded bg-amber-50 border border-amber-300 text-[11px] font-bold text-amber-900">
+                      📡 Telemetry: {r.gpsStatus}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* TAB 3: VEHICLE DOCUMENTS & EXPIRY ALERTS (SECTION I) */}
+          {erpTab === 'DOCS' && (
+            <div className="bg-white p-6 rounded-xl border border-slate-300 space-y-4">
+              <h2 className="text-lg font-bold">Vehicle Document Expiry & Verification Control (30 / 15 / 7 Days)</h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {INITIAL_VEHICLE_DOCS.map((doc) => {
+                  const badgeColor =
+                    doc.daysRemaining < 0
+                      ? 'bg-red-700 text-white'
+                      : doc.daysRemaining <= 7
+                      ? 'bg-red-100 text-red-900 border-red-500'
+                      : doc.daysRemaining <= 15
+                      ? 'bg-orange-100 text-orange-900 border-orange-500'
+                      : 'bg-amber-100 text-amber-900 border-amber-500';
+                  return (
+                    <div key={doc.id} className={`p-4 rounded-lg border-2 ${badgeColor} flex justify-between items-center`}>
+                      <div>
+                        <div className="font-mono font-bold">{doc.vehicleNo} — {doc.docType}</div>
+                        <div className="text-xs">Doc No: {doc.docNo} • Expiry: {doc.expiryDate}</div>
+                        <div className="text-xs font-bold mt-1">Verification Status: [{doc.verificationStatus}]</div>
+                      </div>
+                      <div className="text-right font-extrabold text-sm">
+                        {doc.daysRemaining < 0 ? `EXPIRED (${Math.abs(doc.daysRemaining)}d ago)` : `${doc.daysRemaining} days left`}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+
+          {/* TAB 4: DEMO LEADS INBOX */}
+          {erpTab === 'LEADS' && (
+            <div className="bg-white p-6 rounded-xl border border-slate-300 space-y-4">
+              <h2 className="text-lg font-bold">Public Website Quote Leads Inbox (DEMO)</h2>
+              {leads.map((l) => (
+                <div key={l.id} className="p-3 rounded border border-slate-300 flex flex-wrap justify-between items-center text-xs gap-2">
+                  <div>
+                    <span className="font-bold text-sm">{l.companyName}</span> • 📞 {l.phone}
+                    <div className="text-slate-600">
+                      {l.product} ({l.quantityMt}) | {l.origin} → {l.destination}
+                    </div>
+                  </div>
+                  <span className="px-2.5 py-1 rounded bg-emerald-100 text-emerald-900 font-bold">{l.status}</span>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
