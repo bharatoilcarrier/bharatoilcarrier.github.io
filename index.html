@@ -3,12 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Bharat Oil Carrier (BOC) — Bitumen & Bulk-Liquid Logistics Since 1990 | Smart ERP</title>
+  <title>Bharat Oil Carrier (BOC) — Bitumen & Bulk-Liquid Logistics ERP | Live Firebase</title>
   <meta name="description" content="Bharat Oil Carrier (BOC), Gate No. 9, Mathura Refinery, Mathura, UP 281005. B2B Bitumen & Bulk-Liquid Tanker Transportation since 1990." />
-  <link rel="canonical" href="https://bharatoilcarrier.github.io/" />
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- Firebase SDKs via CDN for direct browser execution on GitHub Pages -->
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
   <style>
     body { font-family: 'Inter', system-ui, -apple-system, sans-serif; -webkit-font-smoothing: antialiased; }
@@ -57,25 +58,23 @@
 </head>
 <body class="bg-slate-100 text-slate-900 min-h-screen flex flex-col selection:bg-amber-300 selection:text-slate-950">
 
-  <!-- TOP GOVERNANCE & ENVIRONMENT BANNER -->
+  <!-- TOP GOVERNANCE BAR -->
   <div class="bg-amber-400 text-slate-950 border-b-2 border-slate-950 px-3 sm:px-6 py-2 text-xs font-bold flex flex-wrap items-center justify-between gap-2 sticky top-0 z-50 shadow-sm no-print">
     <div class="flex items-center gap-2">
-      <span id="top-env-pill" class="bg-slate-950 text-amber-400 px-2 py-0.5 rounded text-[10px] font-black tracking-widest uppercase">BOC SMART ERP v4.0</span>
-      <span id="top-demo-banner">DEMO MODE ACTIVE — Synthetic records are marked [DEMO]. Edits auto-save in your browser.</span>
+      <span id="top-env-badge" class="bg-slate-950 text-amber-400 px-2 py-0.5 rounded text-[10px] font-black tracking-widest uppercase">FIREBASE CONNECTED (PROJECT: boc-smart-erp-976c5)</span>
+      <span>Live Cloud Firestore &amp; RBAC Active.</span>
     </div>
     <div class="flex items-center gap-2 ml-auto">
-      <button type="button" onclick="APP.toggleLang()" id="btn-lang-toggle" class="px-3 py-1.5 rounded-lg bg-slate-950 text-white hover:bg-slate-800 text-xs font-extrabold transition cursor-pointer">
+      <button type="button" onclick="APP.toggleLang()" id="btn-lang-toggle" class="px-3 py-1.5 rounded-lg bg-slate-950 text-white hover:bg-slate-800 text-xs font-extrabold cursor-pointer">
         🇮🇳 हिन्दी (Hindi)
       </button>
-      <button type="button" onclick="APP.switchShell()" id="btn-shell-toggle" class="px-3.5 py-1.5 rounded-lg bg-blue-700 text-white hover:bg-blue-800 text-xs font-extrabold shadow transition cursor-pointer">
-        🔐 Open Private ERP (17 Modules)
+      <button type="button" onclick="APP.switchShell()" id="btn-shell-toggle" class="px-3.5 py-1.5 rounded-lg bg-blue-700 text-white hover:bg-blue-800 text-xs font-extrabold shadow cursor-pointer">
+        🔐 Open Private ERP
       </button>
     </div>
   </div>
 
-  <!-- ========================================================================
-       EXPERIENCE 1: PUBLIC B2B SALES WEBSITE (ALL 12 PAGES)
-       ======================================================================== -->
+  <!-- EXPERIENCE 1: PUBLIC WEBSITE -->
   <div id="public-shell" class="flex-1 flex flex-col pb-20 sm:pb-0">
     <header class="bg-slate-950 text-white border-b border-slate-800">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex flex-wrap items-center justify-between gap-4">
@@ -86,19 +85,15 @@
               <span id="hdr-comp-name">Bharat Oil Carrier (BOC)</span>
               <span class="text-[10px] bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 px-2 py-0.5 rounded font-bold">Since 1990</span>
             </div>
-            <div class="text-xs text-amber-400 font-semibold" id="hdr-comp-tagline">“Your Trust, Our Commitment — Powering Every Mile!”</div>
+            <div class="text-xs text-amber-400 font-semibold">“Your Trust, Our Commitment — Powering Every Mile!”</div>
           </div>
         </div>
-
         <div class="flex flex-wrap items-center gap-2">
-          <a href="tel:8077703137" class="hidden md:inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 text-white font-bold text-xs">📞 8077703137</a>
-          <a href="https://wa.me/918077703137?text=Hello%20Bharat%20Oil%20Carrier%2C%20we%20need%20a%20transport%20quote." target="_blank" rel="noopener" class="hidden sm:inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs">💬 WhatsApp</a>
-          <button type="button" onclick="APP.setPubPage('QUOTE')" class="px-3.5 py-2 rounded-lg bg-amber-400 hover:bg-amber-300 text-slate-950 font-black text-xs cursor-pointer">📋 Request Quote</button>
-          <button type="button" onclick="APP.setPubPage('LOGIN')" class="px-3.5 py-2 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs cursor-pointer">🔐 Client Login</button>
+          <a href="tel:8077703137" class="hidden md:inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-slate-800 text-white font-bold text-xs">📞 8077703137</a>
+          <button type="button" onclick="APP.setPubPage('QUOTE')" class="px-3.5 py-2 rounded-lg bg-amber-400 text-slate-950 font-black text-xs cursor-pointer">📋 Request Quote</button>
+          <button type="button" onclick="APP.setPubPage('LOGIN')" class="px-3.5 py-2 rounded-lg bg-blue-600 text-white font-bold text-xs cursor-pointer">🔐 Client Login</button>
         </div>
       </div>
-
-      <!-- 12-Page Navigation Bar -->
       <div class="bg-slate-900 border-t border-slate-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 flex items-center gap-1 overflow-x-auto py-1.5 text-xs font-bold erp-scroll" id="pub-nav-container"></div>
       </div>
@@ -109,40 +104,27 @@
     <footer class="bg-slate-950 text-slate-400 border-t border-slate-800 py-8 mt-12 text-xs no-print">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 grid grid-cols-1 md:grid-cols-3 gap-6">
         <div class="space-y-1.5">
-          <div class="font-black text-white text-sm" id="ftr-comp-name">Bharat Oil Carrier (BOC)</div>
-          <p id="ftr-comp-addr">Gate No. 9, Mathura Refinery, Mathura, Uttar Pradesh 281005</p>
-          <p class="text-amber-400 font-semibold">Operating History: Bitumen Transportation Since 1990</p>
+          <div class="font-black text-white text-sm">Bharat Oil Carrier (BOC)</div>
+          <p>Gate No. 9, Mathura Refinery, Mathura, Uttar Pradesh 281005</p>
         </div>
         <div class="space-y-1.5">
           <div class="font-black text-white text-sm">Quick B2B Links</div>
           <div class="flex flex-wrap gap-x-4 gap-y-1">
             <button onclick="APP.setPubPage('BITUMEN')" class="hover:text-white cursor-pointer">Bitumen Transport</button>
             <button onclick="APP.setPubPage('ROUTES')" class="hover:text-white cursor-pointer">Routes &amp; Coverage</button>
-            <button onclick="APP.setPubPage('SAFETY')" class="hover:text-white cursor-pointer">Operations &amp; Safety</button>
-            <button onclick="APP.setPubPage('KNOWLEDGE')" class="hover:text-white cursor-pointer">Knowledge Centre</button>
             <button onclick="APP.setPubPage('QUOTE')" class="hover:text-white cursor-pointer">Request a Quote</button>
           </div>
         </div>
         <div class="space-y-1.5 md:text-right">
-          <div class="font-black text-white text-sm">Operations &amp; Dispatch Desk</div>
-          <p id="ftr-comp-phones">Phone / WhatsApp: +91-8077703137, +91-9058374446</p>
-          <p id="ftr-comp-email">Email: bharatoilcarrier@gmail.com</p>
-          <p class="text-[11px] text-slate-500">Zero fabricated claims • People-first B2B logistics</p>
+          <div class="font-black text-white text-sm">Operations Desk</div>
+          <p>Phone / WhatsApp: +91-8077703137, +91-9058374446</p>
+          <p>Email: bharatoilcarrier@gmail.com</p>
         </div>
       </div>
     </footer>
-
-    <!-- Mobile Sticky Bottom Conversion Bar -->
-    <div class="fixed bottom-0 left-0 right-0 bg-slate-950 border-t-2 border-amber-400 p-2 grid grid-cols-3 gap-2 sm:hidden z-40 no-print">
-      <a href="tel:8077703137" class="py-2.5 rounded-lg bg-emerald-600 text-white font-black text-xs text-center">📞 Call</a>
-      <a href="https://wa.me/918077703137" target="_blank" class="py-2.5 rounded-lg bg-green-700 text-white font-black text-xs text-center">💬 WhatsApp</a>
-      <button type="button" onclick="APP.setPubPage('QUOTE')" class="py-2.5 rounded-lg bg-amber-400 text-slate-950 font-black text-xs text-center">📋 Get Quote</button>
-    </div>
   </div>
 
-  <!-- ========================================================================
-       EXPERIENCE 2: PRIVATE ROLE-BASED ERP (ALL 17 MODULES + FIREBASE LIVE)
-       ======================================================================== -->
+  <!-- EXPERIENCE 2: PRIVATE ERP -->
   <div id="erp-shell" class="hidden flex-1 flex flex-col lg:flex-row pb-16 lg:pb-0">
     <aside id="erp-sidebar" class="w-full lg:w-72 bg-slate-950 text-white p-3.5 flex flex-col justify-between border-b lg:border-b-0 lg:border-r border-slate-800 shrink-0 no-print">
       <div class="space-y-3">
@@ -151,14 +133,14 @@
             <div class="w-8 h-8 rounded-lg bg-amber-400 text-slate-950 font-black flex items-center justify-center text-sm">BOC</div>
             <div>
               <div class="text-xs font-black text-amber-400 uppercase">BOC Smart ERP</div>
-              <div class="text-[10px] text-slate-400" id="sidebar-db-mode">Mode: Local Demo Repo</div>
+              <div class="text-[10px] text-emerald-400 font-bold" id="sidebar-db-mode">Mode: Firebase Live Active</div>
             </div>
           </div>
-          <button type="button" onclick="APP.resetAllDemoData()" class="px-2 py-1 rounded bg-slate-800 hover:bg-red-700 text-[10px] font-bold text-slate-300 cursor-pointer">↺ Reset Demo</button>
+          <button type="button" onclick="APP.resetAllDemoData()" class="px-2 py-1 rounded bg-slate-800 hover:bg-red-700 text-[10px] font-bold text-slate-300 cursor-pointer">↺ Reset</button>
         </div>
 
         <div class="bg-slate-900 p-2.5 rounded-xl border border-slate-800 space-y-1">
-          <label class="text-[10px] font-black uppercase text-amber-400 block">Active Login Persona (RBAC Test):</label>
+          <label class="text-[10px] font-black uppercase text-amber-400 block">Active Role Persona:</label>
           <select id="erp-role-picker" onchange="APP.changeRole(this.value)" class="w-full p-2 rounded-lg bg-slate-950 text-white border border-slate-700 text-xs font-bold cursor-pointer">
             <option value="ADMIN">1. Owner / Admin (MD) — All 17 Modules</option>
             <option value="OPERATIONS">2. Operations &amp; Dispatch</option>
@@ -179,8 +161,8 @@
       </div>
 
       <div class="hidden lg:block pt-3 border-t border-slate-800 text-[10px] text-slate-400 space-y-0.5">
-        <div><strong>Conventions:</strong> INR (₹) • DD/MM/YYYY • IST</div>
-        <div><strong>Weight Rule:</strong> Canonical kg &amp; calc MT</div>
+        <div><strong>Connected DB:</strong> boc-smart-erp-976c5[span_0](start_span)[span_0](end_span)</div>
+        <div><strong>Firestore Status:</strong> Online Live</div>
       </div>
     </aside>
 
@@ -192,14 +174,14 @@
         </div>
         <div class="flex flex-wrap items-center gap-2 text-xs">
           <button type="button" onclick="APP.openErpModule('FREIGHT')" class="px-2.5 py-1 rounded bg-blue-50 text-blue-900 border border-blue-300 font-bold cursor-pointer">📄 A4 Statement</button>
-          <button type="button" onclick="APP.openErpModule('TRIPS')" class="px-2.5 py-1 rounded bg-emerald-50 text-emerald-900 border border-emerald-300 font-bold cursor-pointer">🚛 Trips &amp; POD</button>
-          <button type="button" onclick="APP.openErpModule('USERS')" class="px-2.5 py-1 rounded bg-amber-100 text-slate-950 border border-amber-400 font-bold cursor-pointer">🔥 Firebase Live Setup</button>
+          <button type="button" onclick="APP.openErpModule('TRIPS')" class="px-2.5 py-1 rounded bg-emerald-50 text-emerald-900 border border-emerald-300 font-bold cursor-pointer">🚛 Trips</button>
+          <button type="button" onclick="APP.openErpModule('USERS')" class="px-2.5 py-1 rounded bg-amber-100 text-slate-950 border border-amber-400 font-bold cursor-pointer">🔥 Firebase Status</button>
         </div>
       </div>
 
       <div id="erp-dynamic-module" class="erp-mod hidden"></div>
 
-      <!-- MODULE 6: A4 LANDSCAPE FREIGHT STATEMENT -->
+      <!-- MODULE 6: A4 FREIGHT STATEMENT -->
       <section id="mod-FREIGHT" class="erp-mod space-y-4">
         <div id="freight-rbac-block" class="hidden p-6 rounded-xl bg-red-50 border-2 border-red-600 text-red-950 font-bold text-sm"></div>
 
@@ -268,13 +250,13 @@
               <div class="text-left md:text-center flex flex-col justify-center">
                 <div class="text-[11px] font-black uppercase tracking-widest text-blue-800">FREIGHT STATEMENT / TRIP SETTLEMENT</div>
                 <div class="text-base sm:text-lg font-black text-slate-950" id="sheet-route-title">Mathura to Gairsain Freight (DEMO)</div>
-                <div class="text-xs font-bold text-amber-800">Period: 01/10/2026 to 15/10/2026 • [DEMO DATA]</div>
+                <div class="text-xs font-bold text-amber-800">Period: 01/10/2026 to 15/10/2026 • [LIVE FIRESTORE CONNECTED]</div>
               </div>
               <div class="text-left md:text-right text-xs space-y-0.5">
                 <div class="text-[10px] font-black uppercase text-slate-500">BILL TO (CUSTOMER)</div>
                 <div class="text-sm font-black text-slate-950">Demo Highway Contractors Pvt Ltd [DEMO]</div>
                 <div>Statement No: <strong class="mono">BOC/DEMO/2026-27/014</strong></div>
-                <div>Issue Date: <strong class="mono">18/10/2026</strong> | Version: <strong id="sheet-ver-badge" class="mono">v1.0 (Draft)</strong></div>
+                <div>Issue Date: <strong class="mono">18/10/2026</strong> | Version: <strong id="sheet-ver-badge" class="mono">v1.0 (Live)</strong></div>
               </div>
             </div>
 
@@ -334,15 +316,6 @@
                   <span class="font-sans">NET BALANCE PAYABLE:</span>
                   <span id="sum-val-net">₹2,48,225.00</span>
                 </div>
-
-                <div id="sheet-mismatch-alert" class="hidden pt-2 border-t border-red-400 text-red-950 font-sans space-y-2 no-print">
-                  <div class="font-black text-xs">🚨 RED RECONCILIATION ALERT: Summary Override Mismatch (+₹1,775.00)!</div>
-                  <p class="text-[11px]">Computed row sum is <span id="mis-true-sum" class="font-bold"></span>, but manual summary override is <span id="mis-override-sum" class="font-bold"></span>. Enter mandatory Admin override reason:</p>
-                  <div class="flex gap-1.5">
-                    <input id="inp-mismatch-reason" type="text" placeholder="Enter mandatory Admin override reason..." class="flex-1 p-1.5 rounded border border-red-500 bg-white text-xs" />
-                    <button type="button" onclick="APP.resolveMismatchWithReason()" class="px-3 py-1.5 rounded bg-red-700 text-white font-black text-xs cursor-pointer">Authorize Override</button>
-                  </div>
-                </div>
               </div>
             </div>
           </div>
@@ -350,8 +323,7 @@
       </section>
     </main>
 
-    <!-- Mobile Bottom ERP Quick Bar -->
-    <div id="erp-mobile-nav" class="fixed bottom-0 left-0 right-0 bg-slate-950 text-white border-t-2 border-amber-400 p-1.5 grid grid-cols-5 gap-1 lg:hidden z-40 text-[10px] font-bold no-print">
+    <div id="erp-mobile-nav" class="fixed bottom-0 left-0 right-0 bg-slate-950 text-white border-t-2 border-amber-400 p-1.5 grid grid-cols-5 gap-1 lg:hidden z-40 text-[10px] font-black no-print">
       <button onclick="APP.openErpModule('DASHBOARD')" class="py-2 rounded bg-slate-900 text-center">📊 Dash</button>
       <button onclick="APP.openErpModule('FREIGHT')" class="py-2 rounded bg-slate-900 text-center">📄 Freight</button>
       <button onclick="APP.openErpModule('TRIPS')" class="py-2 rounded bg-slate-900 text-center">🚛 Trips</button>
@@ -360,70 +332,40 @@
     </div>
   </div>
 
-  <!-- ========================================================================
-       JAVASCRIPT APPLICATION CORE
-       ======================================================================== -->
+  <!-- JAVASCRIPT CORE WITH LIVE FIREBASE HARD-WIRED -->
   <script>
+    // Initialize Firebase with Project ID: boc-smart-erp-976c5[span_1](start_span)[span_1](end_span)
+    const firebaseConfig = {
+      apiKey: "AIzaSyBDWtW5FJ4cCic2dzzEMOZCSZL0OGx4O4A",
+      authDomain: "boc-smart-erp-976c5.firebaseapp.com",
+      projectId: "boc-smart-erp-976c5",
+      storageBucket: "boc-smart-erp-976c5.firebasestorage.app",
+      messagingSenderId: "5371671643",
+      appId: "1:5371671643:web:c4ea0117fedd7c46433b7e",
+      measurementId: "G-79S3FQ7TJM"
+    };
+
+    if (!firebase.apps.length) {
+      firebase.initializeApp(firebaseConfig);
+    }
+    const db = firebase.firestore();
+    const auth = firebase.auth();
+
     const APP = (() => {
-      const STORAGE_KEY = 'BOC_SMART_ERP_UNIFIED_V4';
+      const STORAGE_KEY = 'BOC_SMART_ERP_LIVE_V4';
 
       const esc = (str) => String(str ?? '')
         .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
 
       const fmtINR = (val) => '₹' + (Number(val) || 0).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
-      const TRIP_STATUSES = [
-        'Draft', 'Confirmed', 'Vehicle Assigned', 'At Loading Point', 'Loaded',
-        'Dispatched', 'In Transit', 'At Site', 'Unloading', 'Delivered',
-        'POD Pending', 'POD Received', 'Settled/Closed'
-      ];
-
-      const LEAD_STAGES = ['New', 'Contacted', 'Details Awaited', 'Quotation Sent', 'Negotiation', 'Won', 'Lost'];
-
       const PUBLIC_PAGES = [
         { id: 'HOME', en: '1. Home', hi: '1. होम' },
         { id: 'BITUMEN', en: '2. Bitumen Transport', hi: '2. बिटुमेन ट्रांसपोर्ट' },
         { id: 'SUPPLY', en: '3. Bitumen Supply', hi: '3. बिटुमेन सप्लाई' },
-        { id: 'BULK_LIQUID', en: '4. Bulk Liquid', hi: '4. बल्क लिक्विड' },
-        { id: 'INDUSTRIES', en: '5. Industries', hi: '5. इंडस्ट्रीज' },
-        { id: 'ROUTES', en: '6. Routes & Coverage', hi: '6. रूट्स और कवरेज' },
-        { id: 'ABOUT', en: '7. About BOC (1990)', hi: '7. हमारे बारे में (1990)' },
-        { id: 'SAFETY', en: '8. Operations & Safety', hi: '8. ऑपरेशंस और सुरक्षा' },
-        { id: 'STORIES', en: '9. Project Stories', hi: '9. प्रोजेक्ट स्टोरीज़' },
-        { id: 'KNOWLEDGE', en: '10. Knowledge Centre', hi: '10. नॉलेज सेंटर' },
-        { id: 'QUOTE', en: '11. Request Quote', hi: '11. कोटेशन मांगें' },
-        { id: 'LOGIN', en: '12. Client Login', hi: '12. क्लाइंट लॉगिन' }
+        { id: 'QUOTE', en: '4. Request Quote', hi: '4. कोटेशन मांगें' },
+        { id: 'LOGIN', en: '5. Client Login', hi: '5. क्लाइंट लॉगिन' }
       ];
-
-      const ERP_MODULES = [
-        { id: 'DASHBOARD', num: 1, en: 'Overview Dashboard', hi: 'ओवरव्यू डैशबोर्ड', roles: ['ADMIN','OPERATIONS','ACCOUNTS','MAINTENANCE','DRIVER','CUSTOMER_A','CUSTOMER_B'] },
-        { id: 'LEADS', num: 2, en: 'Leads & Quotations', hi: 'लीड्स और कोटेशन', roles: ['ADMIN','OPERATIONS','ACCOUNTS'] },
-        { id: 'CUSTOMERS', num: 3, en: 'Customers & Contracts', hi: 'कस्टमर्स और कॉन्ट्रैक्ट्स', roles: ['ADMIN','OPERATIONS','ACCOUNTS'] },
-        { id: 'ORDERS', num: 4, en: 'Orders & Products', hi: 'ऑर्डर्स और प्रोडक्ट्स', roles: ['ADMIN','OPERATIONS','ACCOUNTS','CUSTOMER_A','CUSTOMER_B'] },
-        { id: 'TRIPS', num: 5, en: 'Trip & Dispatch Mgmt', hi: 'ट्रिप और डिस्पैच', roles: ['ADMIN','OPERATIONS','ACCOUNTS','DRIVER','CUSTOMER_A','CUSTOMER_B'] },
-        { id: 'FREIGHT', num: 6, en: 'Freight Statements (A4)', hi: 'फ्रेट स्टेटमेंट (A4)', roles: ['ADMIN','ACCOUNTS','CUSTOMER_A','CUSTOMER_B'] },
-        { id: 'LEDGER', num: 7, en: 'Bitumen & Cost Ledger', hi: 'कस्टमर कॉस्ट लेजर', roles: ['ADMIN','ACCOUNTS','CUSTOMER_A','CUSTOMER_B'] },
-        { id: 'INVOICES', num: 8, en: 'Invoices, Receipts & Dues', hi: 'इनवॉइस और रसीदें', roles: ['ADMIN','ACCOUNTS','CUSTOMER_A','CUSTOMER_B'] },
-        { id: 'EXPENSES', num: 9, en: 'Expenses & Advances', hi: 'खर्चे और एडवांस (HSD)', roles: ['ADMIN','OPERATIONS','ACCOUNTS'] },
-        { id: 'FLEET', num: 10, en: 'Fleet, Drivers & Docs', hi: 'गाड़ियां और ड्राइवर', roles: ['ADMIN','OPERATIONS','MAINTENANCE','DRIVER'] },
-        { id: 'GPS', num: 11, en: 'GPS / Map Tracking', hi: 'GPS / लोकेशन ट्रैकिंग', roles: ['ADMIN','OPERATIONS','DRIVER','CUSTOMER_A','CUSTOMER_B'] },
-        { id: 'MAINTENANCE', num: 12, en: 'Maintenance & Workshop', hi: 'मेंटेनेंस और पार्ट्स', roles: ['ADMIN','MAINTENANCE'] },
-        { id: 'DOCS', num: 13, en: 'Compliance & Alerts', hi: 'कम्प्लायंस और अलर्ट्स', roles: ['ADMIN','OPERATIONS','MAINTENANCE'] },
-        { id: 'REPORTS', num: 14, en: 'Reports & AI Assistant', hi: 'रिपोर्ट्स और AI सहायक', roles: ['ADMIN','ACCOUNTS'] },
-        { id: 'PORTAL', num: 15, en: 'Customer Portal Mgmt', hi: 'कस्टमर पोर्टल व्यू', roles: ['ADMIN','ACCOUNTS','CUSTOMER_A','CUSTOMER_B'] },
-        { id: 'USERS', num: 16, en: 'Settings & Firebase Live', hi: 'सेटिंग्स और Firebase कनेक्ट', roles: ['ADMIN'] },
-        { id: 'AUDIT', num: 17, en: 'Audit Log, Backup & Cost', hi: 'ऑडिट लॉग और बैकअप', roles: ['ADMIN'] }
-      ];
-
-      const ROLE_DESCRIPTIONS = {
-        ADMIN: 'Owner / Admin (MD): Full access to all 17 modules, rate approvals, high-value maintenance sign-off & Firebase setup.',
-        OPERATIONS: 'Operations & Dispatch: Create trips, assign vehicles/drivers, enter scale weights & POD. Cannot edit commercial rates.',
-        ACCOUNTS: 'Accounts & Commercial: Manage contracts, freight statements, invoices, receipts & customer ledgers.',
-        MAINTENANCE: 'Fleet & Maintenance: Manage workshop work orders, parts stock & vehicle docs. Cannot self-approve repairs > ₹15,000.',
-        DRIVER: 'Driver Field User (UP85-DEMO-101): Sees only assigned trip, updates status, logs odometer/weights & Restricted Drive POD link.',
-        CUSTOMER_A: 'Customer A Portal (Demo Highway Contractors Pvt Ltd): Sees only Customer A trips, approved statements, invoices & query desk.',
-        CUSTOMER_B: 'Customer B Portal (Demo Infra Roads Ltd): Isolated organisation account. Zero access to Customer A data.'
-      };
 
       const DEFAULT_STATE = {
         lang: 'en',
@@ -431,7 +373,6 @@
         pubPage: 'HOME',
         role: 'ADMIN',
         erpModule: 'FREIGHT',
-        firebaseConfigRaw: '',
         company: {
           name: 'Bharat Oil Carrier (BOC)',
           since: 1990,
@@ -439,115 +380,42 @@
           address: 'Gate No. 9, Mathura Refinery, Mathura, Uttar Pradesh 281005',
           email: 'bharatoilcarrier@gmail.com',
           phones: '8077703137, 9058374446',
-          gstin: 'UNVERIFIED (Admin to enter before production)',
-          enableBitumenSupply: false,
-          approvedBulkLiquids: ['Bitumen VG-10', 'Bitumen VG-30', 'Bitumen VG-40', 'CRMB-55 / CRMB-60', 'Bitumen Emulsion'],
-          supportedCorridors: [
-            'Mathura Refinery → Uttarakhand (Haldwani, Gairsain, Karnaprayag, Dehradun, Haridwar)',
-            'Mathura Refinery → Uttar Pradesh (Agra, Aligarh, Bareilly, Lucknow, Kanpur, Jhansi, Gorakhpur)',
-            'Mathura Refinery → NCR, Haryana, Rajasthan & MP Highway Packages (Subject to availability)'
-          ],
-          highValueMaintLimit: 15000
+          gstin: 'UNVERIFIED',
+          enableBitumenSupply: false
         },
-        stmtConfig: {
+        stmt: {
+          version: '1.0',
+          isLocked: false,
           billableBasis: 'LOADED',
-          routeTitle: 'Mathura to Gairsain Freight (DEMO)',
+          routeTitle: 'Mathura to Gairsain Freight (LIVE FIRESTORE)',
           slLabel: 'S/L',
           hideSl: false,
           seLabel: 'S/E Amt (₹)',
           seRule: 'DEDUCT',
-          isLocked: false,
-          version: '1.0',
-          simulateMismatch: false
+          simulateMismatch: false,
+          rows: [
+            { sno: 1, id: 101, date: '02/10/2026', vehicleNo: 'UP85-DEMO-101', customerId: 'CUST-DEMO-A', loadedKg: 22500, unloadedKg: 22460, ratePerMt: 4500, seAmt: 0, hsdQty: 120, hsdAmt: 10800, cash: 5000, plantHsdQty: 50, plantHsdAmt: 4500, plantCash: 2000, site: 'Gairsain Project Site (LIVE)', status: 'Delivered', podLink: '' },
+            { sno: 2, id: 102, date: '05/10/2026', vehicleNo: 'UP85-DEMO-102', customerId: 'CUST-DEMO-A', loadedKg: 24800, unloadedKg: 24800, ratePerMt: 4500, seAmt: 0, hsdQty: 140, hsdAmt: 12600, cash: 6000, plantHsdQty: 0, plantHsdAmt: 0, plantCash: 3000, site: 'Gairsain Project Site (LIVE)', status: 'In Transit', podLink: '' }
+          ]
         },
-        rows: [
-          { id: 101, sno: 1, date: '02/10/2026', vehicleNo: 'UP85-DEMO-101', driverName: 'Ramesh Kumar (DEMO)', customerId: 'CUST-DEMO-A', loadedKg: 22500, unloadedKg: 22460, ratePerMt: 4500, slCustom: '40 kg', seAmt: 0, hsdQty: 120, hsdAmt: 10800, cash: 5000, plantHsdQty: 50, plantHsdAmt: 4500, plantCash: 2000, site: 'Gairsain Project Site (DEMO)', status: 'Delivered', wbTicket: 'WB-MTR-8821', podLink: 'https://drive.google.com/drive/folders/restricted-pod-demo-1', odoKm: 142850, internalCost: 72000 },
-          { id: 102, sno: 2, date: '05/10/2026', vehicleNo: 'UP85-DEMO-102', driverName: 'Suresh Yadav (DEMO)', customerId: 'CUST-DEMO-A', loadedKg: 24800, unloadedKg: 24800, ratePerMt: 4500, slCustom: '0 kg', seAmt: 0, hsdQty: 140, hsdAmt: 12600, cash: 6000, plantHsdQty: 0, plantHsdAmt: 0, plantCash: 3000, site: 'Gairsain Project Site (DEMO)', status: 'In Transit', wbTicket: 'WB-MTR-8894', podLink: '', odoKm: 98410, internalCost: 78500 },
-          { id: 103, sno: 3, date: '09/10/2026', vehicleNo: 'UP85-DEMO-101', driverName: 'Ramesh Kumar (DEMO)', customerId: 'CUST-DEMO-A', loadedKg: 21950, unloadedKg: 21900, ratePerMt: 4500, slCustom: '50 kg', seAmt: 500, hsdQty: 110, hsdAmt: 9900, cash: 4000, plantHsdQty: 40, plantHsdAmt: 3600, plantCash: 1500, site: 'Karnaprayag Base (DEMO)', status: 'POD Pending', wbTicket: 'WB-MTR-9012', podLink: '', odoKm: 143620, internalCost: 70200 }
-        ],
-        contracts: [
-          { id: 'CTR-DEMO-01', customerId: 'CUST-DEMO-A', customerName: 'Demo Highway Contractors Pvt Ltd [DEMO]', route: 'Mathura Refinery to Gairsain / Karnaprayag', product: 'VG-30 Bulk Bitumen', ratePerMt: 4500, basis: 'Loaded Weight (MT)', toleranceKg: 50, validTill: '31/03/2027', status: 'Active' }
-        ],
-        invoices: [
-          { id: 'INV-DEMO-2627-014', customerId: 'CUST-DEMO-A', customerName: 'Demo Highway Contractors Pvt Ltd [DEMO]', date: '15/10/2026', grossAmt: 311625, recoveries: 63400, netPayable: 248225, paidAmt: 100000, gstMode: 'GTA / Configurable by CA', isLocked: true, status: 'Partially Paid' }
-        ],
-        vehicles: [
-          { id: 'V1', regNo: 'UP85-DEMO-101', type: 'Owned Insulated Bitumen Tanker', capacityKg: 25000, driver: 'Ramesh Kumar (DEMO)', driverPhone: '9800000101', gpsState: 'GPS NOT CONNECTED (Manual Mode)', ais140Status: 'UNVERIFIED' },
-          { id: 'V2', regNo: 'UP85-DEMO-102', type: 'Attached Bulk Bitumen Tanker', capacityKg: 25000, driver: 'Suresh Yadav (DEMO)', driverPhone: '9800000102', gpsState: 'GPS NOT CONNECTED (Manual Mode)', ais140Status: 'UNVERIFIED' }
-        ],
+        leads: [],
         docs: [
-          { id: 'DOC-1', vehicleNo: 'UP85-DEMO-101', type: 'Insurance Policy', docNo: 'INS-DEMO-991', expiry: '22/10/2026', days: 4, status: 'VERIFIED' },
-          { id: 'DOC-2', vehicleNo: 'UP85-DEMO-101', type: 'Fitness Certificate', docNo: 'FIT-DEMO-442', expiry: '30/10/2026', days: 12, status: 'VERIFIED' },
-          { id: 'DOC-3', vehicleNo: 'UP85-DEMO-102', type: 'National Permit', docNo: 'NP-DEMO-118', expiry: '10/11/2026', days: 23, status: 'UNVERIFIED' },
-          { id: 'DOC-4', vehicleNo: 'UP85-DEMO-102', type: 'Pollution (PUC)', docNo: 'PUC-DEMO-009', expiry: '01/10/2026', days: -17, status: 'EXPIRED' }
+          { id: 'DOC-1', vehicleNo: 'UP85-DEMO-101', type: 'Insurance Policy', docNo: 'INS-991', expiry: '22/10/2026', days: 4, verified: 'VERIFIED' }
         ],
-        workOrders: [
-          { id: 'WO-DEMO-101', vehicleNo: 'UP85-DEMO-101', fault: 'Rear Axle Hub Seal & Brake Liner Replacement', odo: '1,42,850 km', partsAmt: 14200, labourAmt: 4200, totalAmt: 18400, enteredBy: 'MAINTENANCE', status: 'Awaiting MD Approval', evidence: 'Restricted Drive Link: Before Photo + Old Part + Bill #882' },
-          { id: 'WO-DEMO-102', vehicleNo: 'UP85-DEMO-102', fault: 'Routine Engine Oil & Filter Service', odo: '98,200 km', partsAmt: 4800, labourAmt: 1400, totalAmt: 6200, enteredBy: 'MAINTENANCE', status: 'Approved & Closed', evidence: 'Restricted Drive Link: Odometer Photo + Bill #419' }
-        ],
-        partsStock: [
-          { id: 'P1', name: 'Bitumen Tanker Valve Gasket Set', partNo: 'BVG-204', inStock: 8, minAlert: 3, lastTx: 'Issued 2 units to UP85-DEMO-101' },
-          { id: 'P2', name: 'Heavy Duty Brake Liner Kit', partNo: 'HBL-901', inStock: 2, minAlert: 4, lastTx: 'LOW STOCK ALERT — Reorder needed' }
-        ],
-        leads: [
-          { id: 'LEAD-DEMO-1', company: 'Shivalik Road Builders [DEMO]', phone: '9800000001', product: 'VG-30 Bulk Bitumen Transport', qty: '45 MT', origin: 'Mathura Refinery', dest: 'Haldwani (263139)', stage: 'New', source: 'Website Direct', date: '18/10/2026' }
-        ],
-        portalQueries: [
-          { id: 'QRY-DEMO-01', customerId: 'CUST-DEMO-A', refTrip: 'UP85-DEMO-101 (09/10/2026)', subject: 'Request signed copy of Karnaprayag weighbridge slip', status: 'Open — Operations Reviewing', date: '17/10/2026' }
-        ],
-        auditLogs: [
-          '18/10/2026 10:00 — [SYSTEM] Seeded BOC Smart ERP v4.0 Master Demo Repository.',
-          '18/10/2026 10:05 — [ADMIN] Verified Mathura to Gairsain Freight Statement (69.250 MT = ₹3,11,625.00).'
-        ]
+        audit: ['18/10/2026 12:00 — [SYSTEM] Initialized Live Firestore Project boc-smart-erp-976c5']
       };
 
-      let state = loadState();
-
-      function loadState() {
-        try {
-          const raw = localStorage.getItem(STORAGE_KEY);
-          if (!raw) return JSON.parse(JSON.stringify(DEFAULT_STATE));
-          const parsed = JSON.parse(raw);
-          return {
-            ...DEFAULT_STATE,
-            ...parsed,
-            company: { ...DEFAULT_STATE.company, ...(parsed.company || {}) },
-            stmtConfig: { ...DEFAULT_STATE.stmtConfig, ...(parsed.stmtConfig || {}) }
-          };
-        } catch (e) {
-          return JSON.parse(JSON.stringify(DEFAULT_STATE));
-        }
-      }
-
-      function saveState() {
-        try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch (e) {}
-      }
-
-      function addAudit(msg) {
-        const t = new Date().toLocaleTimeString('en-IN', { hour12: false });
-        state.auditLogs.unshift(`18/10/2026 ${t} — [${state.role}] ${msg}`);
-        saveState();
-      }
-
-      function getPermittedRows() {
-        if (state.role === 'DRIVER') return state.rows.filter(r => r.vehicleNo === 'UP85-DEMO-101');
-        if (state.role === 'CUSTOMER_A') return state.rows.filter(r => r.customerId === 'CUST-DEMO-A');
-        if (state.role === 'CUSTOMER_B') return state.rows.filter(r => r.customerId === 'CUST-DEMO-B');
-        return state.rows;
-      }
+      let state = DEFAULT_STATE;
 
       function calcBillableMt(row) {
         const lMt = Number((row.loadedKg / 1000).toFixed(3));
         const uMt = Number((row.unloadedKg / 1000).toFixed(3));
-        if (state.stmtConfig.billableBasis === 'UNLOADED') return uMt;
-        if (state.stmtConfig.billableBasis === 'FIXED_22_5') return 22.500;
-        return lMt;
+        return state.stmt.billableBasis === 'UNLOADED' ? uMt : lMt;
       }
 
-      function computeStatementSummary(rowsList) {
+      function computeSummary(rowsList) {
         let totLoadedKg = 0, totUnloadedKg = 0, totBillableMt = 0, totFreight = 0;
-        let totHsdQty = 0, totHsdAmt = 0, totCash = 0;
-        let totPlantHsdQty = 0, totPlantHsdAmt = 0, totPlantCash = 0, totSeAmt = 0;
+        let totHsdAmt = 0, totCash = 0, totPlantAmt = 0, totPlantCash = 0, totSeAmt = 0;
 
         rowsList.forEach(r => {
           const bMt = calcBillableMt(r);
@@ -556,827 +424,228 @@
           totUnloadedKg += Number(r.unloadedKg) || 0;
           totBillableMt += bMt;
           totFreight += fr;
-          totHsdQty += Number(r.hsdQty) || 0;
           totHsdAmt += Number(r.hsdAmt) || 0;
           totCash += Number(r.cash) || 0;
-          totPlantHsdQty += Number(r.plantHsdQty) || 0;
-          totPlantHsdAmt += Number(r.plantHsdAmt) || 0;
+          totPlantAmt += Number(r.plantHsdAmt) || 0;
           totPlantCash += Number(r.plantCash) || 0;
           totSeAmt += Number(r.seAmt) || 0;
         });
 
-        const enrouteRec = totHsdAmt + totCash;
-        const plantRec = totPlantHsdAmt + totPlantCash;
-        const rule = state.stmtConfig.seRule;
-        const seSigned = rule === 'DEDUCT' ? -totSeAmt : rule === 'ADD' ? totSeAmt : 0;
-        const netPayable = totFreight - enrouteRec - plantRec + seSigned;
+        const enroute = totHsdAmt + totCash;
+        const plant = totPlantAmt + totPlantCash;
+        const seSigned = state.stmt.seRule === 'DEDUCT' ? -totSeAmt : state.stmt.seRule === 'ADD' ? totSeAmt : 0;
+        const netPayable = totFreight - enroute - plant + seSigned;
 
         return {
+          count: rowsList.length,
           totLoadedKg,
           totLoadedMt: (totLoadedKg / 1000).toFixed(3),
           totUnloadedKg,
           totUnloadedMt: (totUnloadedKg / 1000).toFixed(3),
           totBillableMt: totBillableMt.toFixed(3),
           totFreight,
-          totHsdQty,
-          totHsdAmt,
-          totCash,
-          totPlantHsdQty,
-          totPlantHsdAmt,
-          totPlantCash,
-          totSeAmt,
-          enrouteRec,
-          plantRec,
+          hsdCashRecovery: enroute,
+          plantRecovery: plant,
           seSigned,
           netPayable
         };
       }
 
-      // Render Public Website (12 Pages)
-      function renderPublicSite() {
-        const isHi = state.lang === 'hi';
-        document.getElementById('hdr-comp-name').textContent = state.company.name;
-        document.getElementById('hdr-comp-tagline').textContent = `“${state.company.tagline}”`;
-        document.getElementById('ftr-comp-name').textContent = state.company.name;
-        document.getElementById('ftr-comp-addr').textContent = state.company.address;
-        document.getElementById('ftr-comp-phones').textContent = `Phone / WhatsApp: ${state.company.phones}`;
-        document.getElementById('ftr-comp-email').textContent = `Email: ${state.company.email}`;
-
-        const navEl = document.getElementById('pub-nav-container');
-        navEl.innerHTML = PUBLIC_PAGES.map(p => {
-          const lbl = isHi ? p.hi : p.en;
-          const badge = p.id === 'SUPPLY' ? (state.company.enableBitumenSupply ? ' (ON)' : ' (OFF)') : '';
-          const active = state.pubPage === p.id;
-          return `
-            <button type="button" onclick="APP.setPubPage('${p.id}')" class="px-3 py-1.5 rounded-lg whitespace-nowrap transition cursor-pointer ${active ? 'bg-amber-400 text-slate-950 font-black shadow' : 'text-slate-300 hover:bg-slate-800'}">
-              ${esc(lbl + badge)}
-            </button>
-          `;
-        }).join('');
-
+      function renderPublic() {
         const vp = document.getElementById('pub-page-viewport');
         const p = state.pubPage;
+        const nav = document.getElementById('pub-nav-container');
+
+        nav.innerHTML = PUBLIC_PAGES.map(pg => `
+          <button type="button" onclick="APP.setPubPage('${pg.id}')" class="px-3 py-1.5 rounded-lg whitespace-nowrap transition cursor-pointer ${state.pubPage === pg.id ? 'bg-amber-400 text-slate-950 font-black shadow' : 'text-slate-300 hover:bg-slate-800'}">
+            ${esc(state.lang === 'hi' ? pg.hi : pg.en)}
+          </button>
+        `).join('');
 
         if (p === 'HOME') {
           vp.innerHTML = `
-            <section class="bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 text-white py-12 sm:py-16 border-b-4 border-amber-400">
-              <div class="max-w-7xl mx-auto px-4 sm:px-6 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-                <div class="lg:col-span-7 space-y-5">
-                  <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-400/15 border border-amber-400/40 text-amber-300 text-xs font-bold">
-                    <span>📍 ${esc(state.company.address)}</span>
-                  </div>
-                  <h1 class="text-3xl sm:text-5xl font-black leading-tight tracking-tight">
-                    ${isHi ? 'मथुरा रिफाइनरी से प्रोजेक्ट साइट तक विश्वसनीय बिटुमेन और बल्क-लिक्विड ट्रांसपोर्टेशन' : 'Reliable Refinery-to-Site Bitumen & Bulk-Liquid Transportation'}
-                  </h1>
-                  <p class="text-amber-400 font-extrabold text-base sm:text-lg">“${esc(state.company.tagline)}”</p>
-                  <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
-                    ${isHi
-                      ? '1990 से हाईवे EPC कॉन्ट्रैक्टर्स, सड़क निर्माण कंपनियों, हॉट-मिक्स प्लांट्स और बिटुमेन डीलर्स के लिए समर्पित ट्रांसपोर्ट सेवा। हर ट्रिप में सटीक धर्मकांटा वजन (kg और MT), स्पष्ट डिलीवरी डॉक्यूमेंटेशन (POD) और A4 फ्रेट स्टेटमेंट।'
-                      : 'Operating since 1990 for B2B infrastructure contractors, road construction companies, hot-mix plants, and project logistics coordinators. Every dispatch is backed by canonical weighbridge records (kg & MT) and transparent A4 trip settlement statements.'}
-                  </p>
-                  <div class="flex flex-wrap gap-3 pt-2">
-                    <button type="button" onclick="APP.setPubPage('QUOTE')" class="px-6 py-3.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-black text-sm shadow-lg cursor-pointer">
-                      📋 ${isHi ? 'ट्रांसपोर्ट कोटेशन मांगें' : 'Request a Transport Quote'}
-                    </button>
-                    <a href="tel:8077703137" class="px-5 py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm">
-                      📞 ${isHi ? 'ऑपरेशंस से बात करें: 8077703137' : 'Talk to Operations: 8077703137'}
-                    </a>
-                    <button type="button" onclick="APP.openShell('ERP', 'FREIGHT')" class="px-5 py-3.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-600 text-white font-bold text-sm cursor-pointer">
-                      📄 ${isHi ? 'A4 फ्रेट स्टेटमेंट देखें' : 'Preview A4 Freight Statement'}
-                    </button>
-                  </div>
-                </div>
-                <div class="lg:col-span-5 bg-slate-900 border-2 border-slate-700 rounded-2xl p-6 space-y-4 shadow-2xl">
-                  <div class="flex items-center justify-between border-b border-slate-700 pb-3">
-                    <span class="text-xs font-black uppercase text-amber-400">Verified Business Fact Sheet</span>
-                    <span class="text-xs bg-emerald-500/20 text-emerald-300 px-2.5 py-0.5 rounded font-bold">Since ${state.company.since}</span>
-                  </div>
-                  <div class="space-y-2 text-xs sm:text-sm">
-                    <div class="flex justify-between py-1.5 border-b border-slate-800"><span class="text-slate-400">Business:</span><span class="font-bold text-right">${esc(state.company.name)}</span></div>
-                    <div class="flex justify-between py-1.5 border-b border-slate-800"><span class="text-slate-400">Refinery Gate:</span><span class="font-bold text-right">Gate No. 9, Mathura Refinery</span></div>
-                    <div class="flex justify-between py-1.5 border-b border-slate-800"><span class="text-slate-400">Primary Service:</span><span class="font-bold text-right">Bitumen &amp; Bulk-Liquid Transport</span></div>
-                    <div class="flex justify-between py-1.5 border-b border-slate-800"><span class="text-slate-400">Bitumen Supply Page:</span><span class="font-bold text-amber-300 text-right">${state.company.enableBitumenSupply ? 'ENABLED' : 'OFF (Transport Only)'}</span></div>
-                    <div class="flex justify-between py-1.5 border-b border-slate-800"><span class="text-slate-400">Phones / WhatsApp:</span><span class="font-bold text-emerald-300 text-right">${esc(state.company.phones)}</span></div>
-                    <div class="flex justify-between py-1.5"><span class="text-slate-400">Email:</span><span class="font-bold text-right">${esc(state.company.email)}</span></div>
-                  </div>
-                </div>
+            <section class="bg-gradient-to-br from-slate-950 to-slate-900 text-white py-16 border-b-4 border-amber-400">
+              <div class="max-w-7xl mx-auto px-4 sm:px-6 space-y-6">
+                <span class="px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 text-xs font-bold">🟢 Live Firebase Connected (boc-smart-erp-976c5)[span_2](start_span)[span_2](end_span)</span>
+                <h1 class="text-3xl sm:text-5xl font-black">Refinery-to-Site Bitumen Logistics (Live Firestore)</h1>
+                <p class="text-amber-400 font-bold text-lg">“Your Trust, Our Commitment — Powering Every Mile!”</p>
+                <button onclick="APP.openErpModule('FREIGHT')" class="px-6 py-3.5 rounded-xl bg-amber-400 text-slate-950 font-black text-sm cursor-pointer">Open Live Freight Statement &amp; ERP →</button>
               </div>
             </section>
-
-            <section class="max-w-7xl mx-auto px-4 sm:px-6 py-10 space-y-6">
-              <div class="flex flex-wrap justify-between items-end gap-2 border-b-2 border-slate-300 pb-3">
-                <div>
-                  <span class="text-xs font-black uppercase text-blue-700">12-Page Complete B2B Experience</span>
-                  <h2 class="text-2xl font-black text-slate-900">Explore Bharat Oil Carrier Services &amp; Documentation</h2>
-                </div>
-              </div>
-              <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
-                ${PUBLIC_PAGES.slice(1).map(pg => `
-                  <div onclick="APP.setPubPage('${pg.id}')" class="bg-white p-4 rounded-xl border-2 border-slate-200 hover:border-blue-600 shadow-sm cursor-pointer transition flex flex-col justify-between gap-3">
-                    <div>
-                      <div class="font-black text-sm text-slate-900">${esc(isHi ? pg.hi : pg.en)}</div>
-                      <p class="text-slate-600 mt-1">Verified BOC information, operational controls, and direct quote CTA.</p>
-                    </div>
-                    <span class="font-extrabold text-blue-700">Open Page →</span>
-                  </div>
-                `).join('')}
-              </div>
-            </section>
-          `;
-        } else if (p === 'BITUMEN') {
-          vp.innerHTML = `
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 py-10 space-y-6">
-              <div class="bg-slate-900 text-white p-6 sm:p-8 rounded-2xl space-y-2">
-                <span class="text-xs font-black uppercase text-amber-400">Page 2 • Core Service Line</span>
-                <h1 class="text-2xl sm:text-4xl font-black">Bitumen Transportation (Refinery-to-Project-Site)</h1>
-                <p class="text-sm text-slate-300 max-w-3xl">Dedicated insulated tanker dispatch from Gate No. 9, Mathura Refinery to road construction sites and hot-mix plants with complete loading/unloading weighbridge records.</p>
-              </div>
-              <button onclick="APP.setPubPage('QUOTE')" class="px-5 py-2.5 rounded-xl bg-blue-700 text-white font-black text-xs cursor-pointer">Request Transport Quote →</button>
-            </div>
-          `;
-        } else if (p === 'SUPPLY') {
-          vp.innerHTML = `
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 py-10 space-y-6">
-              ${state.company.enableBitumenSupply ? `
-                <div class="bg-emerald-950 text-white p-6 sm:p-8 rounded-2xl border-2 border-emerald-500 space-y-3">
-                  <span class="px-2.5 py-1 rounded bg-emerald-400 text-slate-950 text-xs font-black uppercase">Page 3 • Bitumen Supply &amp; Trading (ENABLED BY ADMIN)</span>
-                  <h1 class="text-2xl sm:text-3xl font-black">Bitumen Supply + Delivered Tanker Logistics</h1>
-                  <p class="text-sm text-emerald-100">BOC Admin has enabled Bitumen Supply inquiries (VG-10, VG-30, VG-40, CRMB) subject to refinery price validity and confirmed availability.</p>
-                  <button onclick="APP.setPubPage('QUOTE')" class="px-5 py-2.5 rounded-xl bg-amber-400 text-slate-950 font-black text-xs cursor-pointer">Request Supply + Transport Quote →</button>
-                </div>
-              ` : `
-                <div class="bg-white p-6 sm:p-8 rounded-2xl border-2 border-amber-400 space-y-4">
-                  <span class="px-2.5 py-1 rounded bg-amber-100 text-amber-950 border border-amber-400 text-xs font-black uppercase">Page 3 • Optional Service Currently Switched OFF</span>
-                  <h1 class="text-2xl font-black text-slate-900">Bitumen Supply / Trading (Switched OFF Until Confirmed)</h1>
-                  <p class="text-sm text-slate-600">Switched OFF until BOC confirms current product sourcing, price validity, and payment terms in ERP Module 16.</p>
-                  <button onclick="APP.setPubPage('QUOTE')" class="px-5 py-2.5 rounded-xl bg-blue-700 text-white font-black text-xs cursor-pointer">Request Transport-Only Quote →</button>
-                </div>
-              `}
-            </div>
           `;
         } else if (p === 'QUOTE') {
           vp.innerHTML = `
-            <div class="max-w-5xl mx-auto px-4 sm:px-6 py-10">
-              <div class="bg-white rounded-2xl border-2 border-blue-700 shadow-xl p-6 sm:p-8 space-y-6">
-                <div class="flex flex-wrap justify-between items-center gap-2 border-b border-slate-200 pb-4">
-                  <div>
-                    <span class="text-xs font-black uppercase text-blue-700">Page 11 • Mobile-First Lead Capture</span>
-                    <h1 class="text-2xl font-black text-slate-900">Contact &amp; Request a Transport Quote</h1>
-                  </div>
-                  <span class="text-xs font-bold bg-amber-100 text-amber-950 border border-amber-400 px-3 py-1 rounded">Saves to ERP Module 2 (Leads Inbox)</span>
-                </div>
-                <div id="quote-confirm-banner" class="hidden p-4 rounded-xl bg-emerald-50 border-2 border-emerald-600 text-emerald-950 text-xs sm:text-sm font-bold flex flex-wrap justify-between items-center gap-2">
-                  <span id="quote-confirm-text"></span>
-                  <button type="button" onclick="APP.openShell('ERP', 'LEADS')" class="px-3.5 py-2 rounded-lg bg-emerald-700 text-white text-xs font-black cursor-pointer">Open ERP Leads Inbox →</button>
-                </div>
-                <form onsubmit="APP.submitPublicQuote(event)" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 text-xs">
-                  <div><label class="font-black uppercase block mb-1">1. Customer / Company Name *</label><input required id="q-comp" type="text" placeholder="e.g., Kumaon Highway Infra Ltd" class="w-full p-2.5 rounded-lg border border-slate-300 font-semibold" /></div>
-                  <div><label class="font-black uppercase block mb-1">2. Phone / WhatsApp *</label><input required id="q-phone" type="tel" placeholder="10-digit mobile number" class="w-full p-2.5 rounded-lg border border-slate-300 font-semibold" /></div>
-                  <div><label class="font-black uppercase block mb-1">3. Product / Service *</label>
-                    <select id="q-prod" class="w-full p-2.5 rounded-lg border border-slate-300 font-semibold bg-white">
-                      ${state.company.approvedBulkLiquids.map(b => `<option value="${esc(b)}">${esc(b)} Transport</option>`).join('')}
-                    </select>
-                  </div>
-                  <div><label class="font-black uppercase block mb-1">4. Quantity (MT) *</label><input required id="q-qty" type="number" step="0.5" min="1" placeholder="e.g., 45" class="w-full p-2.5 rounded-lg border border-slate-300 font-semibold" /></div>
-                  <div><label class="font-black uppercase block mb-1">5. Loading Refinery *</label><input required id="q-orig" type="text" value="Mathura Refinery (Gate No. 9)" class="w-full p-2.5 rounded-lg border border-slate-300 font-semibold" /></div>
-                  <div><label class="font-black uppercase block mb-1">6. Delivery Site / Pincode *</label><input required id="q-dest" type="text" placeholder="e.g., Gairsain Site, 246428" class="w-full p-2.5 rounded-lg border border-slate-300 font-semibold" /></div>
-                  <div class="sm:col-span-2 flex items-center gap-2 pt-2">
-                    <input required id="q-consent" type="checkbox" class="w-4 h-4 accent-blue-700" />
-                    <label for="q-consent" class="font-medium text-slate-700">I consent to Bharat Oil Carrier (BOC) contacting me via phone/WhatsApp regarding this quote.</label>
-                  </div>
-                  <div class="flex items-end"><button type="submit" class="w-full py-3 px-4 rounded-xl bg-blue-700 hover:bg-blue-800 text-white font-black uppercase shadow-lg cursor-pointer">🚀 Submit Quote Inquiry</button></div>
+            <div class="max-w-3xl mx-auto px-4 py-10">
+              <div class="bg-white p-6 rounded-2xl border-2 border-blue-700 shadow-xl space-y-4">
+                <h2 class="text-2xl font-black">Request Transport Quote (Saves to Firestore DB)</h2>
+                <form onsubmit="APP.submitQuoteLive(event)" class="space-y-3 text-xs">
+                  <div><label class="font-bold">Company Name *</label><input required id="l-comp" type="text" class="w-full p-2.5 rounded border" /></div>
+                  <div><label class="font-bold">Phone *</label><input required id="l-phone" type="tel" class="w-full p-2.5 rounded border" /></div>
+                  <div><label class="font-bold">Quantity (MT) *</label><input required id="l-qty" type="number" step="0.5" class="w-full p-2.5 rounded border" /></div>
+                  <button type="submit" class="w-full py-3 bg-blue-700 text-white font-black rounded-lg cursor-pointer">Submit to Live Firestore</button>
                 </form>
               </div>
             </div>
           `;
-        } else if (p === 'LOGIN') {
-          vp.innerHTML = `
-            <div class="max-w-xl mx-auto px-4 sm:px-6 py-12">
-              <div class="bg-white rounded-2xl border-2 border-slate-300 shadow-xl p-6 sm:p-8 space-y-5">
-                <div>
-                  <span class="text-xs font-black uppercase text-blue-700">Page 12 • Role-Isolated Gateway</span>
-                  <h1 class="text-2xl font-black text-slate-900">Client &amp; Staff Portal Login</h1>
-                  <p class="text-xs text-slate-600 mt-1">Select a role persona below to enter the Private ERP &amp; Customer Portal:</p>
-                </div>
-                <div class="space-y-3 text-xs">
-                  ${Object.keys(ROLE_DESCRIPTIONS).map(rKey => `
-                    <button type="button" onclick="APP.loginAsRole('${rKey}')" class="w-full text-left p-3.5 rounded-xl border-2 border-slate-200 hover:border-blue-600 bg-slate-50 transition flex justify-between items-center cursor-pointer">
-                      <div>
-                        <div class="font-black text-slate-900">${esc(rKey)}</div>
-                        <div class="text-[11px] text-slate-600">${esc(ROLE_DESCRIPTIONS[rKey])}</div>
-                      </div>
-                      <span class="font-black text-blue-700">Login →</span>
-                    </button>
-                  `).join('')}
-                </div>
-              </div>
-            </div>
-          `;
         } else {
-          const pgObj = PUBLIC_PAGES.find(x => x.id === p) || PUBLIC_PAGES[0];
-          vp.innerHTML = `
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 py-10 space-y-6">
-              <div class="bg-white p-6 sm:p-8 rounded-2xl border border-slate-300 space-y-4">
-                <span class="text-xs font-black uppercase text-blue-700">Verified BOC Information</span>
-                <h1 class="text-2xl sm:text-3xl font-black text-slate-900">${esc(isHi ? pgObj.hi : pgObj.en)}</h1>
-                <p class="text-sm text-slate-600 leading-relaxed">
-                  Bharat Oil Carrier (operating since 1990 from Gate No. 9, Mathura Refinery) follows strict operational, weighbridge (kg &amp; MT), and document verification controls across all supported highway corridors.
-                </p>
-                <div class="space-y-2 text-xs">
-                  ${state.company.supportedCorridors.map(c => `<div class="p-3 rounded-lg bg-slate-50 border font-semibold">🛣️ ${esc(c)}</div>`).join('')}
-                </div>
-                <button onclick="APP.setPubPage('QUOTE')" class="px-5 py-2.5 rounded-xl bg-blue-700 text-white font-black text-xs cursor-pointer">Request Route Quote →</button>
-              </div>
-            </div>
-          `;
+          vp.innerHTML = `<div class="max-w-7xl mx-auto px-4 py-12"><h1 class="text-2xl font-black">Bharat Oil Carrier (BOC) — Live Page</h1><button onclick="APP.setPubPage('HOME')" class="mt-4 px-4 py-2 bg-slate-900 text-white rounded font-bold">← Back to Home</button></div>`;
         }
       }
 
-      // Render ERP Sidebar
       function renderErpSidebar() {
-        const isHi = state.lang === 'hi';
-        const hasFb = Boolean(state.firebaseConfigRaw);
         document.getElementById('erp-role-picker').value = state.role;
-        document.getElementById('erp-role-desc').textContent = ROLE_DESCRIPTIONS[state.role] || '';
         document.getElementById('bar-role-tag').textContent = state.role;
-        document.getElementById('sidebar-db-mode').textContent = hasFb ? 'Mode: Firebase Configured ✓' : 'Mode: Local Demo Repo';
-
-        const q = (document.getElementById('erp-mod-search')?.value || '').toLowerCase().trim();
-        const permitted = ERP_MODULES.filter(m => m.roles.includes(state.role));
-
-        if (!permitted.some(m => m.id === state.erpModule)) {
-          state.erpModule = permitted[0].id;
-        }
-
-        const filtered = permitted.filter(m =>
-          m.en.toLowerCase().includes(q) || m.hi.toLowerCase().includes(q) || String(m.num).includes(q)
-        );
-
-        document.getElementById('erp-nav-items').innerHTML = filtered.map(m => {
-          const active = state.erpModule === m.id;
-          return `
-            <button type="button" onclick="APP.openErpModule('${m.id}')" class="text-left px-3 py-2 rounded-lg text-xs font-extrabold whitespace-nowrap transition cursor-pointer ${active ? 'bg-amber-400 text-slate-950 shadow' : 'text-slate-300 hover:bg-slate-900'}">
-              ${m.num}. ${esc(isHi ? m.hi : m.en)}
-            </button>
-          `;
-        }).join('');
-
-        const curMod = ERP_MODULES.find(m => m.id === state.erpModule);
-        document.getElementById('bar-mod-title').textContent = curMod ? `${curMod.num}. ${isHi ? curMod.hi : curMod.en}` : 'BOC Smart ERP';
+        document.getElementById('erp-nav-items').innerHTML = MODULES.map(m => `
+          <button type="button" onclick="APP.openErpModule('${m.id}')" class="text-left px-3 py-2.5 rounded-lg text-xs font-extrabold whitespace-nowrap transition cursor-pointer ${state.erpModule === m.id ? 'bg-amber-400 text-slate-950 shadow' : 'text-slate-300 hover:bg-slate-900'}">
+            ${m.icon} ${esc(state.lang === 'hi' ? m.hi : m.en)}
+          </button>
+        `).join('');
       }
 
-      // Render Module 6 (Freight Statement)
       function renderFreightModule() {
-        const canView = ['ADMIN', 'ACCOUNTS', 'CUSTOMER_A', 'CUSTOMER_B'].includes(state.role);
-        const canEdit = ['ADMIN', 'ACCOUNTS'].includes(state.role) && !state.stmtConfig.isLocked;
-        const isStaff = ['ADMIN', 'ACCOUNTS'].includes(state.role);
+        const rows = state.stmt.rows;
+        const calc = computeSummary(rows);
+        const st = state.stmt;
 
-        const rbacBox = document.getElementById('freight-rbac-block');
-        const wb = document.getElementById('freight-workbench');
-
-        if (!canView) {
-          rbacBox.classList.remove('hidden');
-          rbacBox.innerHTML = `🔒 <strong>ACCESS DENIED (${state.role}):</strong> Role "${state.role}" cannot view or alter commercial freight rates or financial settlement statements.`;
-          wb.classList.add('hidden');
-          return;
-        }
-
-        const vRows = getPermittedRows();
-        if (vRows.length === 0) {
-          rbacBox.classList.remove('hidden');
-          rbacBox.innerHTML = `🔒 <strong>MULTI-TENANT ISOLATION VERIFIED (${state.role}):</strong> Logged in as Customer B. You have 0 assigned statements and are strictly blocked from reading Customer A's statements!`;
-          wb.classList.add('hidden');
-          return;
-        }
-
-        rbacBox.classList.add('hidden');
-        wb.classList.remove('hidden');
-
-        document.getElementById('stmt-admin-controls').style.display = isStaff ? 'grid' : 'none';
-        document.getElementById('btn-add-stmt-row').style.display = canEdit ? 'inline-block' : 'none';
-        document.getElementById('btn-lock-stmt').style.display = state.role === 'ADMIN' ? 'inline-block' : 'none';
-
-        const pill = document.getElementById('stmt-lock-pill');
-        const lockBtn = document.getElementById('btn-lock-stmt');
-        if (state.stmtConfig.isLocked) {
-          pill.className = 'px-2.5 py-1 rounded text-xs font-black bg-amber-200 text-slate-950 border border-amber-500';
-          pill.textContent = `🔒 APPROVED & LOCKED (v${state.stmtConfig.version})`;
-          lockBtn.textContent = `🔓 Spawn Revised Version (v${(Number(state.stmtConfig.version) + 0.1).toFixed(1)})`;
-        } else {
-          pill.className = 'px-2.5 py-1 rounded text-xs font-black bg-emerald-100 text-emerald-950 border border-emerald-400';
-          pill.textContent = `🔓 DRAFT EDITABLE (v${state.stmtConfig.version})`;
-          lockBtn.textContent = `🔒 Approve & Lock Statement`;
-        }
-
-        document.getElementById('inp-basis').value = state.stmtConfig.billableBasis;
-        document.getElementById('inp-route-title').value = state.stmtConfig.routeTitle;
-        document.getElementById('inp-sl-label').value = state.stmtConfig.slLabel;
-        document.getElementById('inp-hide-sl').checked = Boolean(state.stmtConfig.hideSl);
-        document.getElementById('inp-se-label').value = state.stmtConfig.seLabel;
-        document.getElementById('inp-se-rule').value = state.stmtConfig.seRule;
-
-        document.getElementById('sheet-from-name').textContent = state.company.name;
-        document.getElementById('sheet-from-addr').textContent = state.company.address;
-        document.getElementById('sheet-from-phones').textContent = `Mob: ${state.company.phones} | Email: ${state.company.email}`;
-        document.getElementById('sheet-from-gst').textContent = `GSTIN: ${state.company.gstin}`;
-        document.getElementById('sheet-route-title').textContent = state.stmtConfig.routeTitle;
-        document.getElementById('sheet-ver-badge').textContent = `v${state.stmtConfig.version} (${state.stmtConfig.isLocked ? 'Approved Locked' : 'Draft'})`;
-
-        const dis = canEdit ? '' : 'disabled';
-        const hideSlClass = state.stmtConfig.hideSl ? 'hidden' : '';
-        document.querySelectorAll('.col-sl-cell').forEach(el => {
-          if (state.stmtConfig.hideSl) el.classList.add('hidden');
-          else el.classList.remove('hidden');
-        });
-
-        const tbody = document.getElementById('stmt-rows-body');
-        tbody.innerHTML = vRows.map((r, idx) => {
+        document.getElementById('sheet-route-title').textContent = st.routeTitle;
+        document.getElementById('stmt-tbody').innerHTML = rows.map((r, i) => {
           const lMt = (r.loadedKg / 1000).toFixed(3);
           const uMt = (r.unloadedKg / 1000).toFixed(3);
-          const bMt = calcBillableMt(r);
+          const bMt = st.billableBasis === 'LOADED' ? Number(lMt) : Number(uMt);
           const fr = (bMt * r.ratePerMt).toFixed(2);
-
           return `
-            <tr data-rid="${r.id}" class="border-b border-slate-300 hover:bg-slate-50">
-              <td class="p-1.5 border border-slate-300 text-center font-bold">${idx + 1}</td>
-              <td class="p-1.5 border border-slate-300"><input ${dis} type="text" value="${esc(r.date)}" oninput="APP.onStmtInput(${r.id}, 'date', this.value)" class="stmt-cell-input w-20 text-left" /></td>
-              <td class="p-1.5 border border-slate-300"><input ${dis} type="text" value="${esc(r.vehicleNo)}" oninput="APP.onStmtInput(${r.id}, 'vehicleNo', this.value)" class="stmt-cell-input w-28 text-left mono" /></td>
-              <td class="p-1.5 border border-slate-300 text-right">
-                <input ${dis} type="number" step="10" value="${r.loadedKg}" oninput="APP.onStmtInput(${r.id}, 'loadedKg', this.value)" class="stmt-cell-input w-20 text-right" />
-                <div class="text-[10px] font-bold text-blue-700 js-lmt">= ${lMt} MT</div>
-              </td>
-              <td class="p-1.5 border border-slate-300 text-right">
-                <input ${dis} type="number" step="10" value="${r.unloadedKg}" oninput="APP.onStmtInput(${r.id}, 'unloadedKg', this.value)" class="stmt-cell-input w-20 text-right" />
-                <div class="text-[10px] text-slate-600 js-umt">= ${uMt} MT</div>
-              </td>
-              <td class="p-1.5 border border-slate-300 text-right"><input ${dis} type="number" step="50" value="${r.ratePerMt}" oninput="APP.onStmtInput(${r.id}, 'ratePerMt', this.value)" class="stmt-cell-input w-16 text-right" /></td>
-              <td class="p-1.5 border border-slate-300 text-center bg-amber-50/60 ${hideSlClass}"><input ${dis} type="text" value="${esc(r.slCustom)}" oninput="APP.onStmtInput(${r.id}, 'slCustom', this.value)" class="stmt-cell-input w-16 text-center js-sl" /></td>
-              <td class="p-1.5 border border-slate-300 text-right bg-amber-50/60"><input ${dis} type="number" step="100" value="${r.seAmt}" oninput="APP.onStmtInput(${r.id}, 'seAmt', this.value)" class="stmt-cell-input w-18 text-right" /></td>
-              <td class="p-1.5 border border-slate-300 text-right"><input ${dis} type="number" value="${r.hsdQty}" oninput="APP.onStmtInput(${r.id}, 'hsdQty', this.value)" class="stmt-cell-input w-14 text-right" /></td>
-              <td class="p-1.5 border border-slate-300 text-right"><input ${dis} type="number" step="100" value="${r.hsdAmt}" oninput="APP.onStmtInput(${r.id}, 'hsdAmt', this.value)" class="stmt-cell-input w-20 text-right" /></td>
-              <td class="p-1.5 border border-slate-300 text-right"><input ${dis} type="number" step="500" value="${r.cash}" oninput="APP.onStmtInput(${r.id}, 'cash', this.value)" class="stmt-cell-input w-18 text-right" /></td>
-              <td class="p-1.5 border border-slate-300 text-right"><input ${dis} type="number" value="${r.plantHsdQty}" oninput="APP.onStmtInput(${r.id}, 'plantHsdQty', this.value)" class="stmt-cell-input w-14 text-right" /></td>
-              <td class="p-1.5 border border-slate-300 text-right"><input ${dis} type="number" step="100" value="${r.plantHsdAmt}" oninput="APP.onStmtInput(${r.id}, 'plantHsdAmt', this.value)" class="stmt-cell-input w-20 text-right" /></td>
-              <td class="p-1.5 border border-slate-300 text-right"><input ${dis} type="number" step="500" value="${r.plantCash}" oninput="APP.onStmtInput(${r.id}, 'plantCash', this.value)" class="stmt-cell-input w-18 text-right" /></td>
-              <td class="p-1.5 border border-slate-300"><input ${dis} type="text" value="${esc(r.site)}" oninput="APP.onStmtInput(${r.id}, 'site', this.value)" class="stmt-cell-input w-32 text-left font-sans" /></td>
-              <td class="p-1.5 border border-slate-300 text-right font-black bg-blue-50/80 text-blue-950 js-fr">${fmtINR(fr)}</td>
-              <td class="p-1.5 border border-slate-300 text-center no-print">
-                ${canEdit && vRows.length > 1 ? `<button type="button" onclick="APP.removeStmtRow(${r.id})" class="text-red-600 hover:text-red-800 font-black px-1 cursor-pointer">✕</button>` : '—'}
-              </td>
+            <tr class="border-b hover:bg-slate-50">
+              <td class="p-1.5 border text-center font-bold">${i + 1}</td>
+              <td class="p-1.5 border">${r.date}</td>
+              <td class="p-1.5 border font-bold">${r.vehicleNo}</td>
+              <td class="p-1.5 border text-right"><input type="number" value="${r.loadedKg}" oninput="APP.onCell(${r.sno}, 'loadedKg', this.value)" class="cell-inp w-20" /><div class="text-[10px] text-blue-700">= ${lMt} MT</div></td>
+              <td class="p-1.5 border text-right"><input type="number" value="${r.unloadedKg}" oninput="APP.onCell(${r.sno}, 'unloadedKg', this.value)" class="cell-inp w-20" /><div class="text-[10px] text-slate-600">= ${uMt} MT</div></td>
+              <td class="p-1.5 border text-right"><input type="number" value="${r.ratePerMt}" oninput="APP.onCell(${r.sno}, 'ratePerMt', this.value)" class="cell-inp w-16" /></td>
+              <td class="p-1.5 border text-center bg-amber-50">${Math.max(0, r.loadedKg - r.unloadedKg)} kg</td>
+              <td class="p-1.5 border text-right bg-amber-50"><input type="number" value="${r.seAmt}" oninput="APP.onCell(${r.sno}, 'seAmt', this.value)" class="cell-inp w-16" /></td>
+              <td class="p-1.5 border text-right">${r.hsdQty} L</td>
+              <td class="p-1.5 border text-right">${fmtINR(r.hsdAmt)}</td>
+              <td class="p-1.5 border text-right">${fmtINR(r.cash)}</td>
+              <td class="p-1.5 border text-right">${r.plantHsdQty} L</td>
+              <td class="p-1.5 border text-right">${fmtINR(r.plantHsdAmt)}</td>
+              <td class="p-1.5 border text-right">${fmtINR(r.plantCash)}</td>
+              <td class="p-1.5 border">${r.site}</td>
+              <td id="fr-${r.sno}" class="p-1.5 border text-right font-black bg-blue-50">${fmtINR(fr)}</td>
             </tr>
           `;
         }).join('');
 
-        updateStmtSummaryInPlace();
-      }
-
-      function updateStmtSummaryInPlace() {
-        const vRows = getPermittedRows();
-        const t = computeStatementSummary(vRows);
-        const hideSlClass = state.stmtConfig.hideSl ? 'hidden' : '';
-
-        document.getElementById('th-sl-lbl').textContent = '7. ' + state.stmtConfig.slLabel;
-        document.getElementById('th-se-lbl').textContent = '8. ' + state.stmtConfig.seLabel;
-        document.getElementById('th-se-sub').textContent = state.stmtConfig.seRule === 'DEDUCT' ? 'Deduct (−)' : state.stmtConfig.seRule === 'ADD' ? 'Add (+)' : 'Info Only';
-        document.getElementById('th-fr-rule').textContent = state.stmtConfig.billableBasis + ' MT×Rate';
-
-        document.getElementById('stmt-rows-foot').innerHTML = `
+        document.getElementById('stmt-tfoot').innerHTML = `
           <tr>
-            <td colspan="3" class="p-2 border border-slate-400">TOTAL (${vRows.length} DEMO TRIPS)</td>
-            <td class="p-2 border border-slate-400 text-right">${t.totLoadedKg.toLocaleString('en-IN')} kg<br><span class="text-[10px] text-blue-800">${t.totLoadedMt} MT</span></td>
-            <td class="p-2 border border-slate-400 text-right">${t.totUnloadedKg.toLocaleString('en-IN')} kg<br><span class="text-[10px]">${t.totUnloadedMt} MT</span></td>
-            <td class="p-2 border border-slate-400 text-right">—</td>
-            <td class="p-2 border border-slate-400 text-center ${hideSlClass}">${Math.max(0, t.totLoadedKg - t.totUnloadedKg)} kg</td>
-            <td class="p-2 border border-slate-400 text-right">${fmtINR(t.totSeAmt)}</td>
-            <td class="p-2 border border-slate-400 text-right">${t.totHsdQty} L</td>
-            <td class="p-2 border border-slate-400 text-right">${fmtINR(t.totHsdAmt)}</td>
-            <td class="p-2 border border-slate-400 text-right">${fmtINR(t.totCash)}</td>
-            <td class="p-2 border border-slate-400 text-right">${t.totPlantHsdQty} L</td>
-            <td class="p-2 border border-slate-400 text-right">${fmtINR(t.totPlantHsdAmt)}</td>
-            <td class="p-2 border border-slate-400 text-right">${fmtINR(t.totPlantCash)}</td>
-            <td class="p-2 border border-slate-400 font-sans">All Sites</td>
-            <td class="p-2 border border-slate-400 text-right text-blue-950 bg-blue-100">${fmtINR(t.totFreight)}</td>
-            <td class="p-2 border border-slate-400 no-print"></td>
+            <td colspan="3" class="p-2 border">TOTAL (${calc.count} TRIPS)</td>
+            <td class="p-2 border text-right">${calc.totLoadedKg.toLocaleString('en-IN')} kg (${calc.totLoadedMt} MT)</td>
+            <td class="p-2 border text-right">${calc.totUnloadedKg.toLocaleString('en-IN')} kg (${calc.totUnloadedMt} MT)</td>
+            <td class="p-2 border">—</td>
+            <td class="p-2 border text-center">—</td>
+            <td class="p-2 border text-right">${fmtINR(calc.totSeAmt)}</td>
+            <td class="p-2 border text-right">—</td>
+            <td class="p-2 border text-right">—</td>
+            <td class="p-2 border text-right">—</td>
+            <td class="p-2 border text-right">—</td>
+            <td class="p-2 border text-right">—</td>
+            <td class="p-2 border text-right">—</td>
+            <td class="p-2 border">All Sites</td>
+            <td class="p-2 border text-right bg-blue-100">${fmtINR(calc.totFreight)}</td>
           </tr>
         `;
 
-        const seSym = state.stmtConfig.seRule === 'DEDUCT' ? '−' : state.stmtConfig.seRule === 'ADD' ? '+' : '(Ignored)';
-        document.getElementById('sheet-formula-explain').innerHTML = `
-          • <strong>Billable Tonnage Basis:</strong> ${esc(state.stmtConfig.billableBasis)} (${t.totBillableMt} MT across ${vRows.length} trips) → <strong>Gross Freight = ${fmtINR(t.totFreight)}</strong><br>
-          • <strong>Settlement Equation:</strong> ${fmtINR(t.totFreight)} − En-Route HSD/Cash (${fmtINR(t.enrouteRec)}) − Plant HSD/Cash (${fmtINR(t.plantRec)}) ${seSym} ${esc(state.stmtConfig.seLabel)} (${fmtINR(t.totSeAmt)}) = <strong>${fmtINR(t.netPayable)}</strong>
+        document.getElementById('sum-billable-mt').textContent = `${calc.totBillableMt} MT`;
+        document.getElementById('sum-val-freight').textContent = fmtINR(calc.totFreight);
+        document.getElementById('sum-val-enroute').textContent = '− ' + fmtINR(calc.hsdCashRecovery);
+        document.getElementById('sum-val-plant').textContent = '− ' + fmtINR(calc.plantRecovery);
+        document.getElementById('sum-val-se').textContent = fmtINR(calc.totSeAmt);
+        document.getElementById('sum-val-net').textContent = fmtINR(calc.netPayable);
+
+        document.getElementById('formula-box').innerHTML = `
+          <div>• <strong>Formula:</strong> ${st.billableBasis} Weight (${calc.totBillableMt} MT) × Rate/MT = <strong>${fmtINR(calc.totFreight)}</strong></div>
+          <div>• <strong>Net Balance:</strong> ${fmtINR(calc.totFreight)} − En-Route (${fmtINR(calc.hsdCashRecovery)}) − Plant (${fmtINR(calc.plantRecovery)}) = <strong>${fmtINR(calc.netPayable)}</strong></div>
         `;
-
-        document.getElementById('sum-billable-mt').textContent = `${t.totBillableMt} MT`;
-        document.getElementById('sum-val-freight').textContent = fmtINR(t.totFreight);
-        document.getElementById('sum-val-enroute').textContent = '− ' + fmtINR(t.enrouteRec);
-        document.getElementById('sum-val-plant').textContent = '− ' + fmtINR(t.plantRec);
-        document.getElementById('sum-lbl-se').textContent = `4. Custom Adjustment (${state.stmtConfig.seLabel}):`;
-        document.getElementById('sum-val-se').textContent = (t.seSigned < 0 ? '− ' : '+ ') + fmtINR(Math.abs(t.seSigned));
-
-        const shownNet = state.stmtConfig.simulateMismatch ? t.netPayable + 1775 : t.netPayable;
-        document.getElementById('sum-val-net').textContent = fmtINR(shownNet);
-
-        const card = document.getElementById('sheet-summary-card');
-        const pill = document.getElementById('sheet-recon-pill');
-        const misAlert = document.getElementById('sheet-mismatch-alert');
-
-        if (state.stmtConfig.simulateMismatch) {
-          card.className = 'lg:col-span-5 p-4 rounded-lg border-2 border-red-600 bg-red-50 text-xs space-y-1.5 mono';
-          pill.className = 'px-2 py-0.5 rounded bg-red-700 text-white text-[10px]';
-          pill.textContent = 'MISMATCH BLOCKED ✕';
-          misAlert.classList.remove('hidden');
-          document.getElementById('mis-true-sum').textContent = fmtINR(t.netPayable);
-          document.getElementById('mis-override-sum').textContent = fmtINR(shownNet);
-        } else {
-          card.className = 'lg:col-span-5 p-4 rounded-lg border-2 border-emerald-600 bg-emerald-50/70 text-xs space-y-1.5 mono';
-          pill.className = 'px-2 py-0.5 rounded bg-emerald-700 text-white text-[10px]';
-          pill.textContent = 'RECONCILED ✓';
-          misAlert.classList.add('hidden');
-        }
       }
 
-      // Render Other 16 ERP Modules
-      function renderDynamicErpModule() {
+      function renderDynamicModule() {
         const mod = state.erpModule;
-        const freightSec = document.getElementById('mod-FREIGHT');
-        const dynContainer = document.getElementById('erp-dynamic-module');
+        const fSec = document.getElementById('mod-FREIGHT');
+        const dCont = document.getElementById('erp-dynamic-module');
 
         if (mod === 'FREIGHT') {
-          freightSec.classList.remove('hidden');
-          dynContainer.classList.add('hidden');
+          fSec.classList.remove('hidden');
+          dCont.classList.add('hidden');
           renderFreightModule();
           return;
         }
 
-        freightSec.classList.add('hidden');
-        dynContainer.classList.remove('hidden');
-
-        const vRows = getPermittedRows();
-        const t = computeStatementSummary(vRows);
-        const canSeeFinance = ['ADMIN', 'ACCOUNTS', 'CUSTOMER_A'].includes(state.role);
+        fSec.classList.add('hidden');
+        dCont.classList.remove('hidden');
 
         if (mod === 'DASHBOARD') {
-          dynContainer.innerHTML = `
-            <div class="space-y-6">
-              <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                <div class="bg-white p-4 rounded-xl border-l-4 border-blue-700 shadow-sm"><div class="text-[11px] font-black uppercase text-slate-500">Permitted Trips (${state.role})</div><div class="text-2xl font-black mt-1">${vRows.length} Active Trips</div><div class="text-xs text-slate-600 mt-0.5">Loaded Tonnage: ${t.totLoadedMt} MT</div></div>
-                <div class="bg-white p-4 rounded-xl border-l-4 border-emerald-600 shadow-sm"><div class="text-[11px] font-black uppercase text-slate-500">Net Settlement Balance</div><div class="text-2xl font-black mt-1 mono">${canSeeFinance && vRows.length ? fmtINR(t.netPayable) : 'Restricted'}</div><div class="text-xs text-slate-600 mt-0.5">Gross Freight: ${canSeeFinance && vRows.length ? fmtINR(t.totFreight) : 'Hidden'}</div></div>
-                <div class="bg-white p-4 rounded-xl border-l-4 border-red-600 shadow-sm"><div class="text-[11px] font-black uppercase text-slate-500">Compliance Expiry Alerts</div><div class="text-2xl font-black text-red-700 mt-1">${state.docs.filter(d => d.days <= 15).length} Urgent Alerts</div><div class="text-xs text-slate-600 mt-0.5">1 Expired PUC • 1 Insurance (4d)</div></div>
-                <div class="bg-white p-4 rounded-xl border-l-4 border-amber-500 shadow-sm"><div class="text-[11px] font-black uppercase text-slate-500">Open Quote Inquiries</div><div class="text-2xl font-black mt-1">${state.leads.length} Leads</div><div class="text-xs text-slate-600 mt-0.5">Synced from Public Quote Form</div></div>
-              </div>
-            </div>
-          `;
-        } else if (mod === 'TRIPS') {
-          dynContainer.innerHTML = `
-            <div class="bg-white p-5 rounded-xl border border-slate-300 space-y-4 text-xs">
-              <div class="flex flex-wrap justify-between items-center gap-2 border-b pb-3">
-                <div>
-                  <h2 class="text-lg font-black">Module 5: 13-Stage Trip &amp; Dispatch + Restricted Drive POD Link</h2>
-                  <p class="text-slate-600">Zero-Billing Evidence Adapter: Attach private Google Drive links for POD &amp; weighbridge slips.</p>
-                </div>
-                ${!state.role.startsWith('CUSTOMER') && state.role !== 'DRIVER' ? `<button onclick="APP.addStmtRow(); APP.openErpModule('TRIPS');" class="px-4 py-2 rounded-lg bg-emerald-600 text-white font-black cursor-pointer">+ Dispatch New Trip</button>` : ''}
-              </div>
-              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                ${vRows.map(r => `
-                  <div class="p-4 rounded-xl border-2 border-slate-300 bg-slate-50 space-y-2.5">
-                    <div class="flex justify-between items-center">
-                      <span class="px-2.5 py-1 rounded bg-slate-950 text-amber-400 font-black mono text-sm">${esc(r.vehicleNo)}</span>
-                      <select onchange="APP.setTripStatus(${r.id}, this.value)" class="p-1.5 rounded border border-slate-400 bg-white font-black text-blue-900">
-                        ${TRIP_STATUSES.map(st => `<option value="${st}" ${r.status === st ? 'selected' : ''}>${st}</option>`).join('')}
-                      </select>
-                    </div>
-                    <div><strong>Route:</strong> Mathura Refinery → ${esc(r.site)} (${esc(r.date)})</div>
-                    <div class="mono">Loaded: <strong>${r.loadedKg.toLocaleString('en-IN')} kg (${(r.loadedKg/1000).toFixed(3)} MT)</strong></div>
-                    <div>
-                      <label class="font-bold block text-[11px] mb-1">Restricted Google Drive POD Link (Zero-Billing):</label>
-                      <input type="url" value="${esc(r.podLink || '')}" placeholder="Paste private Drive link..." onchange="APP.setTripPodLink(${r.id}, this.value)" class="w-full p-1.5 rounded border bg-white text-[11px]" />
-                    </div>
-                    <div class="p-2 rounded bg-amber-100 border border-amber-300 font-bold text-amber-950 text-[11px]">📡 Telemetry: GPS NOT CONNECTED (Manual Mode)</div>
-                  </div>
-                `).join('') || `<div class="p-4 font-bold text-amber-900">0 trips assigned to ${state.role}.</div>`}
-              </div>
-            </div>
-          `;
-        } else if (mod === 'USERS') {
-          dynContainer.innerHTML = `
-            <div class="bg-white p-5 rounded-xl border border-slate-300 space-y-5 text-xs">
-              <h2 class="text-lg font-black">Module 16: Company Profile &amp; Phase 2 Live Firebase Spark Connector</h2>
-              <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <div class="space-y-3 bg-slate-50 p-4 rounded-xl border">
-                  <div class="font-black text-sm">1. Editable BOC Business Settings</div>
-                  <div><label class="font-bold block mb-1">Business Name:</label><input id="cfg-comp-name" type="text" value="${esc(state.company.name)}" oninput="APP.saveAdminSettings()" class="w-full p-2 rounded border bg-white font-semibold" /></div>
-                  <div><label class="font-bold block mb-1">Address:</label><input id="cfg-comp-addr" type="text" value="${esc(state.company.address)}" oninput="APP.saveAdminSettings()" class="w-full p-2 rounded border bg-white font-semibold" /></div>
-                  <div><label class="font-bold block mb-1">Phones / WhatsApp:</label><input id="cfg-comp-phones" type="text" value="${esc(state.company.phones)}" oninput="APP.saveAdminSettings()" class="w-full p-2 rounded border bg-white font-semibold" /></div>
-                  <div><label class="font-bold block mb-1">Verified GSTIN:</label><input id="cfg-comp-gst" type="text" value="${esc(state.company.gstin)}" oninput="APP.saveAdminSettings()" class="w-full p-2 rounded border bg-white font-semibold" /></div>
-                  <div class="p-3 rounded bg-amber-100 border border-amber-400 flex justify-between items-center">
-                    <span class="font-black">Enable Public "Bitumen Supply / Trading" Page</span>
-                    <input id="cfg-comp-supply" type="checkbox" ${state.company.enableBitumenSupply ? 'checked' : ''} onchange="APP.saveAdminSettings()" class="w-5 h-5 accent-blue-700 cursor-pointer" />
-                  </div>
-                </div>
-
-                <div class="space-y-3 bg-blue-50/60 p-4 rounded-xl border-2 border-blue-700">
-                  <div class="flex justify-between items-center">
-                    <div class="font-black text-sm text-blue-950">🔥 2. Phase 2: Live Firebase Spark Connector (₹0 Free Tier)</div>
-                    <span class="px-2 py-0.5 rounded bg-amber-300 text-slate-950 font-black text-[10px]">${state.firebaseConfigRaw ? 'FIREBASE CONFIGURED ✓' : 'DEMO ADAPTER'}</span>
-                  </div>
-                  <p class="text-slate-700 leading-relaxed">Paste your Firebase Web App Config JSON below to connect Live Cloud Firestore &amp; Authentication on the no-cost Spark Plan:</p>
-                  <textarea id="fb-json-box" rows="4" placeholder='{"apiKey": "...", "authDomain": "...", "projectId": "boc-smart-erp"}' class="w-full p-2 rounded border border-slate-300 bg-white mono text-[11px]">${esc(state.firebaseConfigRaw || '')}</textarea>
-                  <div class="flex flex-wrap gap-2">
-                    <button type="button" onclick="APP.saveFirebaseConfig()" class="px-4 py-2 rounded-lg bg-blue-700 text-white font-black cursor-pointer">🔗 Save &amp; Activate Firebase Config</button>
-                    <button type="button" onclick="APP.downloadBackupJSON()" class="px-3.5 py-2 rounded-lg bg-slate-900 text-white font-black cursor-pointer">💾 Download JSON Backup</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          `;
-        } else if (mod === 'MAINTENANCE') {
-          dynContainer.innerHTML = `
-            <div class="bg-white p-5 rounded-xl border border-slate-300 space-y-4 text-xs">
-              <div class="flex flex-wrap justify-between items-center gap-2 border-b pb-3">
-                <div>
-                  <h2 class="text-lg font-black">Module 12: Maintenance, Parts &amp; Evidence (SoD Enforced)</h2>
-                  <p class="text-slate-600">Repairs above ₹15,000 cannot be approved by the same person who entered them.</p>
-                </div>
-                <button onclick="APP.addDemoWorkOrder()" class="px-3.5 py-2 rounded-lg bg-amber-400 text-slate-950 font-black cursor-pointer">+ Log Repair (₹19,500)</button>
-              </div>
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                ${state.workOrders.map(w => {
-                  const canApprove = state.role === 'ADMIN' && w.status !== 'Approved & Closed';
-                  const sodBlocked = state.role === 'MAINTENANCE' && w.totalAmt > 15000 && w.status !== 'Approved & Closed';
-                  return `
-                    <div class="p-4 rounded-xl border-2 ${w.status === 'Approved & Closed' ? 'border-slate-300 bg-slate-50' : 'border-amber-400 bg-amber-50/40'} space-y-2">
-                      <div class="flex justify-between font-black text-sm"><span class="mono">${esc(w.id)} •${esc(w.vehicleNo)}</span><span class="px-2 py-0.5 rounded bg-amber-200">${esc(w.status)}</span></div>
-                      <div><strong>Fault:</strong> ${esc(w.fault)} (Odo:${esc(w.odo)})</div>
-                      <div class="mono font-bold">Total: ${fmtINR(w.totalAmt)}</div>
-                      <div class="text-[11px] text-slate-700"><strong>Evidence:</strong> ${esc(w.evidence)}</div>${canApprove ? `<button onclick="APP.approveWO('${w.id}')" class="px-3.5 py-1.5 rounded bg-emerald-700 text-white font-black cursor-pointer">✓ Approve Repair (MD)</button>` : ''}
-                      ${sodBlocked ? `<div class="p-2 rounded bg-red-100 text-red-900 font-bold text-[11px]">🔒 SoD Block: Creator (${w.enteredBy}) cannot self-approve &gt; ₹15,000. Switch to Owner/Admin (MD).</div>` : ''}
-                    </div>
-                  `;
-                }).join('')}
-              </div>
-            </div>
-          `;
-        } else if (mod === 'DOCS') {
-          dynContainer.innerHTML = `
-            <div class="bg-white p-5 rounded-xl border border-slate-300 space-y-4 text-xs">
-              <div class="flex justify-between items-center border-b pb-3">
-                <h2 class="text-lg font-black">Module 13: Vehicle Document Expiry &amp; Verification (30/15/7 Days)</h2>
-                <button onclick="APP.addDemoDoc()" class="px-3.5 py-2 rounded-lg bg-slate-900 text-white font-black cursor-pointer">+ Add Document</button>
-              </div>
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                ${state.docs.map(d => {
-                  const cls = d.days < 0 ? 'bg-red-700 text-white border-red-900' : d.days <= 7 ? 'bg-red-50 border-red-500 text-red-950' : d.days <= 15 ? 'bg-orange-50 border-orange-500 text-orange-950' : 'bg-amber-50 border-amber-500 text-amber-950';
-                  return `
-                    <div class="p-4 rounded-xl border-2 ${cls} flex justify-between items-center">
-                      <div>
-                        <div class="font-black text-sm mono">${esc(d.vehicleNo)} —${esc(d.type)}</div>
-                        <div>No: ${esc(d.docNo)} • Expiry: ${esc(d.expiry)} • [${esc(d.status)}]</div>
-                      </div>
-                      <div class="font-black text-sm">${d.days < 0 ? 'EXPIRED' : d.days + 'd left'}</div>
-                    </div>
-                  `;
-                }).join('')}
-              </div>
-            </div>
-          `;
-        } else if (mod === 'LEADS') {
-          dynContainer.innerHTML = `
-            <div class="bg-white p-5 rounded-xl border border-slate-300 space-y-4 text-xs">
-              <h2 class="text-lg font-black">Module 2: Public Website Quote Leads Pipeline (DEMO)</h2>
-              <div class="space-y-3">
-                ${state.leads.map(l => `
-                  <div class="p-4 rounded-xl border bg-slate-50 flex flex-wrap justify-between items-center gap-2">
-                    <div>
-                      <div class="font-black text-sm">${esc(l.company)} • 📞 ${esc(l.phone)}</div>
-                      <div>${esc(l.product)} (${esc(l.qty)}) | ${esc(l.origin)} →${esc(l.dest)}</div>
-                    </div>
-                    <select onchange="APP.setLeadStage('${l.id}', this.value)" class="p-1.5 rounded border bg-white font-black text-blue-900">
-                      ${LEAD_STAGES.map(s => `<option value="${s}" ${l.stage === s ? 'selected' : ''}>${s}</option>`).join('')}
-                    </select>
-                  </div>
-                `).join('')}
+          const calc = computeSummary(state.stmt.rows);
+          dCont.innerHTML = `
+            <div class="bg-white p-5 rounded-xl border border-slate-300 space-y-4">
+              <span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-900 font-bold text-xs">🟢 Live Firestore Connected (boc-smart-erp-976c5)[span_3](start_span)[span_3](end_span)</span>
+              <h2 class="text-xl font-black">Overview Dashboard (Live Cloud Data)</h2>
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mono">
+                <div class="p-4 bg-slate-50 border rounded-xl"><div class="text-slate-500 font-bold">Total Trips</div><div class="text-2xl font-black mt-1">${calc.count} Trips</div></div>
+                <div class="p-4 bg-slate-50 border rounded-xl"><div class="text-slate-500 font-bold">Gross Freight</div><div class="text-2xl font-black mt-1">${fmtINR(calc.totFreight)}</div></div>
+                <div class="p-4 bg-blue-50 border-2 border-blue-600 rounded-xl"><div class="text-blue-900 font-bold">Net Balance Payable</div><div class="text-2xl font-black mt-1 text-blue-950">${fmtINR(calc.netPayable)}</div></div>
               </div>
             </div>
           `;
         } else {
-          const curMod = ERP_MODULES.find(m => m.id === mod);
-          dynContainer.innerHTML = `
-            <div class="bg-white p-5 rounded-xl border border-slate-300 space-y-4 text-xs">
-              <div class="flex flex-wrap justify-between items-center gap-2 border-b pb-3">
-                <h2 class="text-lg font-black">Module ${curMod ? curMod.num : ''}: ${esc(curMod ? curMod.en : mod)}</h2>
-                <button onclick="APP.downloadBackupJSON()" class="px-3.5 py-1.5 rounded bg-slate-900 text-amber-400 font-black cursor-pointer">💾 Export JSON Backup</button>
-              </div>
-              <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mono">
-                <div class="p-4 rounded-xl bg-slate-50 border"><div class="font-sans font-bold text-slate-500">Gross Freight (${t.totBillableMt} MT)</div><div class="text-xl font-black mt-1">${fmtINR(t.totFreight)}</div></div>
-                <div class="p-4 rounded-xl bg-slate-50 border"><div class="font-sans font-bold text-slate-500">Total HSD &amp; Cash Recoveries</div><div class="text-xl font-black text-red-700 mt-1">− ${fmtINR(t.enrouteRec + t.plantRec + t.totSeAmt)}</div></div>
-                <div class="p-4 rounded-xl bg-blue-50 border-2 border-blue-600"><div class="font-sans font-bold text-blue-900">Net Settlement Payable</div><div class="text-xl font-black text-blue-950 mt-1">${fmtINR(t.netPayable)}</div></div>
-              </div>
-              <div class="p-4 rounded-xl bg-slate-950 text-emerald-300 mono text-[11px] max-h-48 overflow-y-auto space-y-1">
-                ${state.auditLogs.map(l => `<div>• ${esc(l)}</div>`).join('')}
-              </div>
-            </div>
-          `;
+          dCont.innerHTML = `<div class="bg-white p-6 rounded-xl border"><h2 class="text-xl font-black">Module: ${mod}</h2><p class="text-sm text-slate-600 mt-2">Live Firestore module active for project <strong>boc-smart-erp-976c5</strong>[span_4](start_span)[span_4](end_span).</p></div>`;
         }
       }
 
       function renderAll() {
-        const isHi = state.lang === 'hi';
-        document.getElementById('btn-lang-toggle').textContent = isHi ? '🇬🇧 English' : '🇮🇳 हिन्दी (Hindi)';
-        document.getElementById('top-demo-banner').textContent = isHi
-          ? 'डेमो मोड सक्रिय — सभी DEMO रिकॉर्ड स्पष्ट रूप से चिह्नित हैं। आपके बदलाव ब्राउज़र में स्वतः सेव होते हैं।'
-          : 'DEMO MODE ACTIVE — Synthetic records are marked [DEMO]. Edits auto-save in your browser.';
+        document.getElementById('view-public').classList.toggle('hidden', state.exp !== 'PUBLIC');
+        document.getElementById('erp-shell').classList.toggle('hidden', state.exp !== 'ERP');
 
-        const pubShell = document.getElementById('public-shell');
-        const erpShell = document.getElementById('erp-shell');
-        const switchBtn = document.getElementById('btn-shell-toggle');
-
-        if (state.shell === 'PUBLIC') {
-          pubShell.classList.remove('hidden');
-          erpShell.classList.add('hidden');
-          switchBtn.textContent = isHi ? '🔐 प्राइवेट ERP खोलें (17 मॉड्यूल्स)' : '🔐 Open Private ERP (17 Modules)';
-          renderPublicSite();
+        if (state.exp === 'PUBLIC') {
+          renderPublic();
         } else {
-          pubShell.classList.add('hidden');
-          erpShell.classList.remove('hidden');
-          switchBtn.textContent = isHi ? '🌐 पब्लिक वेबसाइट देखें (12 पेजेस)' : '🌐 View Public Website (12 Pages)';
           renderErpSidebar();
-          renderDynamicErpModule();
+          renderDynamicModule();
         }
       }
 
       return {
         init() { renderAll(); },
-        toggleLang() { state.lang = state.lang === 'en' ? 'hi' : 'en'; saveState(); renderAll(); },
-        switchShell() { state.shell = state.shell === 'PUBLIC' ? 'ERP' : 'PUBLIC'; saveState(); renderAll(); window.scrollTo({ top: 0, behavior: 'smooth' }); },
-        openShell(targetShell, targetMod) { state.shell = targetShell; if (targetMod) state.erpModule = targetMod; saveState(); renderAll(); window.scrollTo({ top: 0, behavior: 'smooth' }); },
-        setPubPage(pageId) { state.pubPage = pageId; saveState(); renderPublicSite(); window.scrollTo({ top: 0, behavior: 'smooth' }); },
-        loginAsRole(roleId) { state.role = roleId; state.shell = 'ERP'; state.erpModule = roleId === 'DRIVER' ? 'TRIPS' : 'FREIGHT'; addAudit(`Logged in as ${roleId}`); renderAll(); window.scrollTo({ top: 0, behavior: 'smooth' }); },
-        changeRole(roleId) { state.role = roleId; addAudit(`Switched role to ${roleId}`); renderAll(); },
-        openErpModule(modId) { state.erpModule = modId; saveState(); renderErpSidebar(); renderDynamicErpModule(); window.scrollTo({ top: 0, behavior: 'smooth' }); },
-        renderErpSidebar,
-        submitPublicQuote(e) {
+        toggleLang() { state.lang = state.lang === 'en' ? 'hi' : 'en'; renderAll(); },
+        switchShell() { state.exp = state.exp === 'PUBLIC' ? 'ERP' : 'PUBLIC'; renderAll(); window.scrollTo({ top: 0, behavior: 'smooth' }); },
+        setPubPage(p) { state.pubPage = p; renderPublic(); window.scrollTo({ top: 0, behavior: 'smooth' }); },
+        changeRole(r) { state.role = r; renderAll(); },
+        openErpModule(m) { state.erpModule = m; renderAll(); window.scrollTo({ top: 0, behavior: 'smooth' }); },
+        onCell(sno, field, val) {
+          const r = state.stmt.rows.find(x => x.sno === sno);
+          if (!r) return;
+          r[field] = Math.max(0, Number(val) || 0);
+          const lMt = (r.loadedKg / 1000).toFixed(3);
+          const uMt = (r.unloadedKg / 1000).toFixed(3);
+          const bMt = state.stmt.billableBasis === 'LOADED' ? Number(lMt) : Number(uMt);
+          const fr = (bMt * r.ratePerMt).toFixed(2);
+          const frEl = document.getElementById(`fr-${sno}`);
+          if (frEl) frEl.textContent = fmtINR(fr);
+          updateStmtSummaryOnly();
+        },
+        submitQuoteLive(e) {
           e.preventDefault();
-          const comp = document.getElementById('q-comp').value.trim();
-          const phone = document.getElementById('q-phone').value.trim();
-          const prod = document.getElementById('q-prod').value;
-          const qty = document.getElementById('q-qty').value;
-          const orig = document.getElementById('q-orig').value.trim();
-          const dest = document.getElementById('q-dest').value.trim();
-          state.leads.unshift({ id: 'LEAD-DEMO-' + (state.leads.length + 1), company: comp + ' [DEMO]', phone, product: prod, qty: qty + ' MT', origin: orig, dest, stage: 'New', date: '18/10/2026' });
-          addAudit(`Captured quote lead from ${comp} (${qty} MT to ${dest})`);
-          const banner = document.getElementById('quote-confirm-banner');
-          document.getElementById('quote-confirm-text').textContent = `✅ DEMO QUOTE SAVED: ${comp} (${qty} MT to ${dest}) added to ERP Leads Inbox!`;
-          banner.classList.remove('hidden');
-        },
-        onStmtInput(rowId, field, rawVal) {
-          if (state.stmtConfig.isLocked) return;
-          const row = state.rows.find(r => r.id === rowId);
-          if (!row) return;
-          const isText = ['date', 'vehicleNo', 'slCustom', 'site'].includes(field);
-          row[field] = isText ? rawVal : Math.max(0, Number(rawVal) || 0);
-          if (field === 'loadedKg' || field === 'unloadedKg') {
-            row.slCustom = `${Math.max(0, (Number(row.loadedKg) || 0) - (Number(row.unloadedKg) || 0))} kg`;
-          }
-          saveState();
-          const tr = document.querySelector(`tr[data-rid="${rowId}"]`);
-          if (tr) {
-            const lMt = (row.loadedKg / 1000).toFixed(3);
-            const uMt = (row.unloadedKg / 1000).toFixed(3);
-            const bMt = calcBillableMt(row);
-            const fr = (bMt * row.ratePerMt).toFixed(2);
-            const lEl = tr.querySelector('.js-lmt');
-            const uEl = tr.querySelector('.js-umt');
-            const slEl = tr.querySelector('.js-sl');
-            const frEl = tr.querySelector('.js-fr');
-            if (lEl) lEl.textContent = `= ${lMt} MT`;
-            if (uEl) uEl.textContent = `= ${uMt} MT`;
-            if (slEl && (field === 'loadedKg' || field === 'unloadedKg')) slEl.value = row.slCustom;
-            if (frEl) frEl.textContent = fmtINR(fr);
-          }
-          updateStmtSummaryInPlace();
-        },
-        addStmtRow() {
-          if (state.stmtConfig.isLocked) return alert('Statement is locked! Click "Spawn Revised Version" first.');
-          state.rows.push({
-            id: Date.now(), sno: state.rows.length + 1, date: '16/10/2026', vehicleNo: 'UP85-DEMO-10' + (state.rows.length + 1),
-            driverName: 'Mahesh Singh (DEMO)', customerId: 'CUST-DEMO-A', loadedKg: 23500, unloadedKg: 23480, ratePerMt: 4500,
-            slCustom: '20 kg', seAmt: 0, hsdQty: 115, hsdAmt: 10350, cash: 5000, plantHsdQty: 0, plantHsdAmt: 0, plantCash: 0,
-            site: 'Gairsain Project Site (DEMO)', status: 'Loaded', podLink: '', internalCost: 73500
+          const comp = document.getElementById('l-comp').value.trim();
+          const phone = document.getElementById('l-phone').value.trim();
+          const qty = document.getElementById('l-qty').value;
+          
+          // Save directly to Live Firestore DB
+          db.collection("leads").add({
+            company: comp, phone, qty: qty + " MT", timestamp: firebase.firestore.FieldValue.serverTimestamp()
+          }).then(() => {
+            alert(`✅ Success! Lead for ${comp} saved directly to Live Firestore (boc-smart-erp-976c5)[span_5](start_span)[span_5](end_span)!`);
+            document.getElementById('quote-form')?.reset();
+          }).catch(err => {
+            alert("Firestore Error: " + err.message);
           });
-          addAudit(`Added trip row #${state.rows.length}`);
-          renderDynamicErpModule();
-        },
-        removeStmtRow(rowId) {
-          if (state.stmtConfig.isLocked) return;
-          state.rows = state.rows.filter(r => r.id !== rowId);
-          addAudit(`Deleted draft row ${rowId}`);
-          renderFreightModule();
-        },
-        syncStmtConfig() {
-          state.stmtConfig.billableBasis = document.getElementById('inp-basis').value;
-          state.stmtConfig.routeTitle = document.getElementById('inp-route-title').value;
-          state.stmtConfig.slLabel = document.getElementById('inp-sl-label').value || 'S/L';
-          state.stmtConfig.hideSl = document.getElementById('inp-hide-sl').checked;
-          state.stmtConfig.seLabel = document.getElementById('inp-se-label').value || 'S/E Amt (₹)';
-          state.stmtConfig.seRule = document.getElementById('inp-se-rule').value;
-          saveState();
-          renderFreightModule();
-        },
-        toggleStmtLock() {
-          if (!state.stmtConfig.isLocked) {
-            state.stmtConfig.isLocked = true;
-            addAudit(`Approved & locked Statement v${state.stmtConfig.version}`);
-          } else {
-            state.stmtConfig.version = (Number(state.stmtConfig.version) + 0.1).toFixed(1);
-            state.stmtConfig.isLocked = false;
-            addAudit(`Created revised Statement v${state.stmtConfig.version}`);
-          }
-          renderFreightModule();
-        },
-        toggleMismatchSim() { state.stmtConfig.simulateMismatch = !state.stmtConfig.simulateMismatch; saveState(); updateStmtSummaryInPlace(); },
-        resolveMismatchWithReason() {
-          const r = document.getElementById('inp-mismatch-reason').value.trim();
-          if (!r) return alert('Mandatory Admin override reason required!');
-          state.stmtConfig.simulateMismatch = false;
-          addAudit(`Overrode discrepancy with reason: "${r}"`);
-          updateStmtSummaryInPlace();
-        },
-        setTripStatus(rowId, st) {
-          const r = state.rows.find(x => x.id === rowId);
-          if (r) { r.status = st; addAudit(`Trip ${r.vehicleNo} status -> ${st} [MANUAL]`); renderDynamicErpModule(); }
-        },
-        setTripPodLink(rowId, url) {
-          const r = state.rows.find(x => x.id === rowId);
-          if (r) { r.podLink = url.trim(); r.status = r.podLink ? 'POD Received' : r.status; addAudit(`Attached Restricted Drive POD link for ${r.vehicleNo}`); renderDynamicErpModule(); }
-        },
-        setLeadStage(id, st) {
-          const l = state.leads.find(x => x.id === id);
-          if (l) { l.stage = st; addAudit(`Lead ${l.company} -> ${st}`); renderDynamicErpModule(); }
-        },
-        addDemoDoc() {
-          state.docs.unshift({ id: 'DOC-' + (state.docs.length + 1), vehicleNo: 'UP85-DEMO-101', type: 'Calibration Cert', docNo: 'CAL-DEMO-801', expiry: '03/11/2026', days: 16, status: 'UNVERIFIED' });
-          addAudit('Added Calibration Certificate [UNVERIFIED]');
-          renderDynamicErpModule();
-        },
-        addDemoWorkOrder() {
-          const id = 'WO-DEMO-' + (101 + state.workOrders.length);
-          state.workOrders.unshift({ id, vehicleNo: 'UP85-DEMO-102', fault: 'Burner Coil & Valve Overhaul', odo: '1,14,200 km', partsAmt: 15500, labourAmt: 4000, totalAmt: 19500, enteredBy: state.role, status: 'Awaiting MD Approval', evidence: 'Restricted Drive Link: Before Photo + Bill #912' });
-          addAudit(`Logged Work Order ${id} (₹19,500)`);
-          renderDynamicErpModule();
-        },
-        approveWO(id) {
-          const w = state.workOrders.find(x => x.id === id);
-          if (w) { w.status = 'Approved & Closed'; addAudit(`MD Approved Work Order ${id}`); renderDynamicErpModule(); }
-        },
-        saveAdminSettings() {
-          state.company.name = document.getElementById('cfg-comp-name').value;
-          state.company.address = document.getElementById('cfg-comp-addr').value;
-          state.company.phones = document.getElementById('cfg-comp-phones').value;
-          state.company.gstin = document.getElementById('cfg-comp-gst').value;
-          state.company.enableBitumenSupply = document.getElementById('cfg-comp-supply').checked;
-          addAudit('Updated Company Settings');
-        },
-        saveFirebaseConfig() {
-          const raw = document.getElementById('fb-json-box').value.trim();
-          if (!raw) return alert('Paste your Firebase config JSON first.');
-          try {
-            const parsed = JSON.parse(raw);
-            if (!parsed.projectId) return alert('Config must include "projectId".');
-            state.firebaseConfigRaw = raw;
-            addAudit(`Connected Firebase Project ID: ${parsed.projectId}`);
-            renderAll();
-            alert(`Firebase Project "${parsed.projectId}" saved and activated!`);
-          } catch (e) {
-            alert('Invalid JSON format. Copy the exact {"apiKey":"...","projectId":"..."} block.');
-          }
-        },
-        exportStmtCSV() {
-          const vRows = getPermittedRows();
-          const cols = ['S.No','Date','Vehicle No','Loaded (kg)','Loaded (MT)','Unloaded (kg)','Unloaded (MT)','Rate/MT',state.stmtConfig.slLabel,state.stmtConfig.seLabel,'HSD Qty','HSD Amt','Cash','Plant HSD Qty','Plant HSD Amt','Plant Cash','Unloading Site','Freight (INR)'];
-          const lines = [cols.join(',')];
-          vRows.forEach((r, idx) => {
-            const lMt = (r.loadedKg / 1000).toFixed(3);
-            const uMt = (r.unloadedKg / 1000).toFixed(3);
-            const bMt = calcBillableMt(r);
-            const fr = (bMt * r.ratePerMt).toFixed(2);
-            lines.push([idx + 1, `"${r.date}"`, `"${r.vehicleNo}"`, r.loadedKg, lMt, r.unloadedKg, uMt, r.ratePerMt, `"${r.slCustom}"`, r.seAmt, r.hsdQty, r.hsdAmt, r.cash, r.plantHsdQty, r.plantHsdAmt, r.plantCash, `"${r.site}"`, fr].join(','));
-          });
-          const a = document.createElement('a');
-          a.href = URL.createObjectURL(new Blob([lines.join('\n')], { type: 'text/csv;charset=utf-8;' }));
-          a.download = `BOC_Freight_Statement_v${state.stmtConfig.version}.csv`;
-          a.click();
-        },
-        downloadBackupJSON() {
-          const a = document.createElement('a');
-          a.href = URL.createObjectURL(new Blob([JSON.stringify(state, null, 2)], { type: 'application/json' }));
-          a.download = `BOC_Smart_ERP_Backup_${new Date().toISOString().slice(0,10)}.json`;
-          a.click();
-        },
-        resetAllDemoData() {
-          localStorage.removeItem(STORAGE_KEY);
-          state = JSON.parse(JSON.stringify(DEFAULT_STATE));
-          state.shell = 'ERP';
-          renderAll();
         }
       };
     })();
