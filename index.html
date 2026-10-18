@@ -3,502 +3,344 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Bharat Oil Carrier (BOC) — Bitumen & Bulk-Liquid Logistics ERP</title>
-  <meta name="description" content="Bharat Oil Carrier (BOC) — Operating Since 1990 from Gate No. 9, Mathura Refinery. B2B Bitumen & Bulk-Liquid Tanker Transportation." />
+  <title>Bharat Oil Carrier (BOC) — Bitumen & Bulk-Liquid Logistics Since 1990 | Smart ERP</title>
+  <meta name="description" content="Bharat Oil Carrier (BOC), Gate No. 9, Mathura Refinery, Mathura, UP 281005. B2B Bitumen & Bulk-Liquid Tanker Transportation since 1990." />
+  <link rel="canonical" href="https://bharatoilcarrier.github.io/" />
   <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
   <style>
-    body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
+    body { font-family: 'Inter', system-ui, -apple-system, sans-serif; -webkit-font-smoothing: antialiased; }
     .mono { font-family: 'JetBrains Mono', monospace; font-variant-numeric: tabular-nums; }
+    .erp-scroll::-webkit-scrollbar { height: 8px; width: 6px; }
+    .erp-scroll::-webkit-scrollbar-track { background: #e2e8f0; border-radius: 4px; }
+    .erp-scroll::-webkit-scrollbar-thumb { background: #64748b; border-radius: 4px; }
 
-    .cell-inp {
-      width: 100%;
-      text-align: right;
-      padding: 3px 5px;
+    .stmt-cell-input {
+      background: #ffffff;
       border: 1px solid #cbd5e1;
       border-radius: 4px;
-      background: #ffffff;
-      font-family: 'JetBrains Mono', monospace;
+      padding: 2px 5px;
+      font-size: 11px;
       font-weight: 700;
-      font-size: 11.5px;
       color: #0f172a;
     }
-    .cell-inp:focus {
+    .stmt-cell-input:focus {
       outline: none;
       border-color: #1d4ed8;
       background: #eff6ff;
       box-shadow: 0 0 0 2px rgba(29, 78, 216, 0.2);
     }
-    .cell-inp:disabled {
-      border-color: transparent;
+    .stmt-cell-input:disabled {
       background: transparent;
-      padding: 0;
+      border-color: transparent;
       color: #0f172a;
+      padding: 0;
     }
 
     @media print {
       @page { size: A4 landscape; margin: 6mm; }
-      body { background: #ffffff !important; color: #000000 !important; }
+      html, body { background: #ffffff !important; color: #000000 !important; margin: 0 !important; padding: 0 !important; }
       .no-print { display: none !important; }
-      .print-sheet {
-        border: 1.5px solid #000000 !important;
-        box-shadow: none !important;
-        padding: 6px !important;
-        margin: 0 !important;
-        width: 100% !important;
-      }
-      .print-wrap { overflow: visible !important; }
-      table.stmt-tbl { width: 100% !important; min-width: 0 !important; border-collapse: collapse !important; font-size: 8.5pt !important; }
-      table.stmt-tbl th, table.stmt-tbl td { border: 1px solid #000000 !important; padding: 3px 4px !important; }
-      table.stmt-tbl thead { display: table-header-group; }
-      .cell-inp { border: none !important; background: transparent !important; padding: 0 !important; width: auto !important; }
+      #public-shell, #erp-sidebar, #erp-topbar, #erp-mobile-nav { display: none !important; }
+      #erp-shell, #erp-main, #mod-FREIGHT { display: block !important; width: 100% !important; margin: 0 !important; padding: 0 !important; }
+      .erp-mod:not(#mod-FREIGHT) { display: none !important; }
+      #a4-statement-sheet { border: 1.5px solid #000 !important; box-shadow: none !important; border-radius: 0 !important; padding: 4mm !important; width: 100% !important; }
+      .erp-scroll { overflow: visible !important; }
+      table.print-grid { width: 100% !important; min-width: 0 !important; border-collapse: collapse !important; font-size: 8pt !important; }
+      table.print-grid th, table.print-grid td { border: 1px solid #000 !important; padding: 2.5px 3.5px !important; }
+      table.print-grid thead { display: table-header-group; }
+      .stmt-cell-input { border: none !important; background: transparent !important; padding: 0 !important; width: auto !important; box-shadow: none !important; }
     }
   </style>
 </head>
-<body class="bg-slate-100 text-slate-900 min-h-screen flex flex-col">
+<body class="bg-slate-100 text-slate-900 min-h-screen flex flex-col selection:bg-amber-300 selection:text-slate-950">
 
-  <!-- TOP GOVERNANCE & ENVIRONMENT BAR -->
-  <div id="top-env-bar" class="bg-amber-400 text-slate-950 border-b-2 border-slate-950 px-3 sm:px-6 py-2 text-xs font-extrabold flex flex-wrap items-center justify-between gap-2 sticky top-0 z-50 no-print shadow-sm">
+  <!-- TOP GOVERNANCE & ENVIRONMENT BANNER -->
+  <div class="bg-amber-400 text-slate-950 border-b-2 border-slate-950 px-3 sm:px-6 py-2 text-xs font-bold flex flex-wrap items-center justify-between gap-2 sticky top-0 z-50 shadow-sm no-print">
     <div class="flex items-center gap-2">
-      <span id="env-badge" class="bg-slate-950 text-amber-400 px-2 py-0.5 rounded text-[10px] font-black tracking-widest uppercase">DEMO MODE</span>
-      <span id="env-msg">Synthetic DEMO data active. Auto-saves in browser. Connect Firebase in Settings for Live Mode.</span>
+      <span id="top-env-pill" class="bg-slate-950 text-amber-400 px-2 py-0.5 rounded text-[10px] font-black tracking-widest uppercase">BOC SMART ERP v4.0</span>
+      <span id="top-demo-banner">DEMO MODE ACTIVE — Synthetic records are marked [DEMO]. Edits auto-save in your browser.</span>
     </div>
     <div class="flex items-center gap-2 ml-auto">
-      <button type="button" onclick="BOC.toggleLang()" id="btn-lang" class="px-3 py-1.5 rounded-lg bg-slate-950 text-white hover:bg-slate-800 text-xs font-black cursor-pointer">
+      <button type="button" onclick="APP.toggleLang()" id="btn-lang-toggle" class="px-3 py-1.5 rounded-lg bg-slate-950 text-white hover:bg-slate-800 text-xs font-extrabold transition cursor-pointer">
         🇮🇳 हिन्दी (Hindi)
       </button>
-      <button type="button" onclick="BOC.toggleExp()" id="btn-exp" class="px-3.5 py-1.5 rounded-lg bg-blue-700 text-white hover:bg-blue-800 text-xs font-black shadow cursor-pointer">
-        🔐 Open Private ERP & Portal
+      <button type="button" onclick="APP.switchShell()" id="btn-shell-toggle" class="px-3.5 py-1.5 rounded-lg bg-blue-700 text-white hover:bg-blue-800 text-xs font-extrabold shadow transition cursor-pointer">
+        🔐 Open Private ERP (17 Modules)
       </button>
     </div>
   </div>
 
   <!-- ========================================================================
-       EXPERIENCE 1: PUBLIC B2B SALES WEBSITE
+       EXPERIENCE 1: PUBLIC B2B SALES WEBSITE (ALL 12 PAGES)
        ======================================================================== -->
-  <div id="view-public" class="flex-1 flex flex-col pb-20 sm:pb-0">
-    <header class="bg-slate-950 text-white border-b border-slate-800 sticky top-[41px] z-40 no-print">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3.5 flex flex-wrap items-center justify-between gap-4">
-        <div class="flex items-center gap-3 cursor-pointer" onclick="BOC.setPubPage('HOME')">
-          <div class="w-11 h-11 rounded-xl bg-amber-400 text-slate-950 flex items-center justify-center font-black text-lg border-2 border-white">BOC</div>
+  <div id="public-shell" class="flex-1 flex flex-col pb-20 sm:pb-0">
+    <header class="bg-slate-950 text-white border-b border-slate-800">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex flex-wrap items-center justify-between gap-4">
+        <div onclick="APP.setPubPage('HOME')" class="flex items-center gap-3.5 cursor-pointer group">
+          <div class="w-12 h-12 rounded-xl bg-amber-400 text-slate-950 flex items-center justify-center font-black text-xl shadow-md">BOC</div>
           <div>
-            <div class="text-lg sm:text-xl font-black tracking-tight leading-none" id="pub-comp-title">Bharat Oil Carrier</div>
-            <div class="text-[11px] text-amber-400 font-bold mt-1">Bitumen & Bulk-Liquid Logistics • Since 1990</div>
+            <div class="text-lg sm:text-xl font-black tracking-tight text-white flex items-center gap-2">
+              <span id="hdr-comp-name">Bharat Oil Carrier (BOC)</span>
+              <span class="text-[10px] bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 px-2 py-0.5 rounded font-bold">Since 1990</span>
+            </div>
+            <div class="text-xs text-amber-400 font-semibold" id="hdr-comp-tagline">“Your Trust, Our Commitment — Powering Every Mile!”</div>
           </div>
         </div>
 
-        <nav class="flex items-center gap-1 sm:gap-2 overflow-x-auto py-1">
-          <button type="button" onclick="BOC.setPubPage('HOME')" data-p="HOME" class="pub-tab px-3 py-1.5 rounded-lg text-xs font-extrabold whitespace-nowrap">Home</button>
-          <button type="button" onclick="BOC.setPubPage('SERVICES')" data-p="SERVICES" class="pub-tab px-3 py-1.5 rounded-lg text-xs font-extrabold whitespace-nowrap">Services & Fleet</button>
-          <button type="button" onclick="BOC.setPubPage('SAFETY')" data-p="SAFETY" class="pub-tab px-3 py-1.5 rounded-lg text-xs font-extrabold whitespace-nowrap">Operations & Routes</button>
-          <button type="button" onclick="BOC.setPubPage('KNOWLEDGE')" data-p="KNOWLEDGE" class="pub-tab px-3 py-1.5 rounded-lg text-xs font-extrabold whitespace-nowrap">Knowledge Centre</button>
-          <button type="button" onclick="BOC.setPubPage('QUOTE')" data-p="QUOTE" class="pub-tab px-3 py-1.5 rounded-lg text-xs font-extrabold whitespace-nowrap bg-amber-400 text-slate-950">Request Quote</button>
-        </nav>
-
-        <div class="hidden lg:flex items-center gap-2">
-          <a href="tel:8077703137" class="px-3 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs">📞 8077703137</a>
-          <button type="button" onclick="BOC.openErp('FREIGHT')" class="px-3.5 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-600 text-amber-300 font-black text-xs cursor-pointer">
-            🔐 Client / Staff Login
-          </button>
+        <div class="flex flex-wrap items-center gap-2">
+          <a href="tel:8077703137" class="hidden md:inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 text-white font-bold text-xs">📞 8077703137</a>
+          <a href="https://wa.me/918077703137?text=Hello%20Bharat%20Oil%20Carrier%2C%20we%20need%20a%20transport%20quote." target="_blank" rel="noopener" class="hidden sm:inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs">💬 WhatsApp</a>
+          <button type="button" onclick="APP.setPubPage('QUOTE')" class="px-3.5 py-2 rounded-lg bg-amber-400 hover:bg-amber-300 text-slate-950 font-black text-xs cursor-pointer">📋 Request Quote</button>
+          <button type="button" onclick="APP.setPubPage('LOGIN')" class="px-3.5 py-2 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs cursor-pointer">🔐 Client Login</button>
         </div>
+      </div>
+
+      <!-- 12-Page Navigation Bar -->
+      <div class="bg-slate-900 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 flex items-center gap-1 overflow-x-auto py-1.5 text-xs font-bold erp-scroll" id="pub-nav-container"></div>
       </div>
     </header>
 
-    <!-- PUBLIC PAGE: HOME -->
-    <div id="pub-HOME" class="pub-sec space-y-12 pb-12">
-      <section class="bg-gradient-to-b from-slate-900 to-slate-950 text-white py-12 sm:py-16 border-b-4 border-amber-400">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-          <div class="lg:col-span-7 space-y-5">
-            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-400/15 border border-amber-400/40 text-amber-300 text-xs font-extrabold">
-              <span>📍 Gate No. 9, Mathura Refinery, Mathura, UP 281005</span>
-            </div>
-            <h1 class="text-3xl sm:text-5xl font-black leading-tight" id="hero-h1">
-              Reliable Refinery-to-Site Bitumen & Bulk-Liquid Transportation
-            </h1>
-            <p class="text-amber-400 font-extrabold text-base sm:text-xl">
-              “Your Trust, Our Commitment — Powering Every Mile!”
-            </p>
-            <p class="text-slate-300 text-sm sm:text-base leading-relaxed max-w-2xl" id="hero-desc">
-              Serving highway EPC contractors, road construction companies, hot-mix plants, and bitumen procurement teams since 1990. Every trip is backed by canonical weighbridge documentation (kg & MT), disciplined dispatch, and transparent A4 settlement statements.
-            </p>
-            <div class="flex flex-wrap gap-3 pt-2">
-              <button type="button" onclick="BOC.setPubPage('QUOTE')" class="px-6 py-3.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-black text-sm shadow-lg cursor-pointer">
-                📋 Request a Transport Quote
-              </button>
-              <a href="https://wa.me/918077703137?text=Hello%20Bharat%20Oil%20Carrier%2C%20we%20need%20a%20transport%20quote." target="_blank" rel="noopener" class="px-5 py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-black text-sm">
-                💬 WhatsApp Operations
-              </a>
-              <a href="tel:9058374446" class="px-5 py-3.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-600 text-white font-bold text-sm">
-                📞 Call: 9058374446
-              </a>
-            </div>
-          </div>
+    <main id="pub-page-viewport" class="flex-1"></main>
 
-          <div class="lg:col-span-5 bg-slate-900 border-2 border-slate-700 rounded-2xl p-6 space-y-4 shadow-2xl">
-            <div class="flex items-center justify-between border-b border-slate-700 pb-3">
-              <span class="text-xs font-black uppercase text-amber-400">Verified Company Profile</span>
-              <span class="text-xs bg-emerald-500/20 text-emerald-300 px-2.5 py-0.5 rounded font-black">Since 1990</span>
-            </div>
-            <div class="space-y-2.5 text-xs sm:text-sm">
-              <div class="flex justify-between py-1.5 border-b border-slate-800"><span class="text-slate-400">Business:</span><span class="font-bold text-right" id="box-name">Bharat Oil Carrier (BOC)</span></div>
-              <div class="flex justify-between py-1.5 border-b border-slate-800"><span class="text-slate-400">Refinery Hub:</span><span class="font-bold text-right" id="box-addr">Gate No. 9, Mathura Refinery, UP 281005</span></div>
-              <div class="flex justify-between py-1.5 border-b border-slate-800"><span class="text-slate-400">Phone / WhatsApp:</span><span class="font-bold text-amber-300 text-right" id="box-phones">8077703137, 9058374446</span></div>
-              <div class="flex justify-between py-1.5 border-b border-slate-800"><span class="text-slate-400">Email:</span><span class="font-bold text-right" id="box-email">bharatoilcarrier@gmail.com</span></div>
-              <div class="flex justify-between py-1.5"><span class="text-slate-400">Billing Standard:</span><span class="font-bold text-emerald-300 text-right">Canonical kg & MT • Reconciled Statements</span></div>
-            </div>
+    <footer class="bg-slate-950 text-slate-400 border-t border-slate-800 py-8 mt-12 text-xs no-print">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="space-y-1.5">
+          <div class="font-black text-white text-sm" id="ftr-comp-name">Bharat Oil Carrier (BOC)</div>
+          <p id="ftr-comp-addr">Gate No. 9, Mathura Refinery, Mathura, Uttar Pradesh 281005</p>
+          <p class="text-amber-400 font-semibold">Operating History: Bitumen Transportation Since 1990</p>
+        </div>
+        <div class="space-y-1.5">
+          <div class="font-black text-white text-sm">Quick B2B Links</div>
+          <div class="flex flex-wrap gap-x-4 gap-y-1">
+            <button onclick="APP.setPubPage('BITUMEN')" class="hover:text-white cursor-pointer">Bitumen Transport</button>
+            <button onclick="APP.setPubPage('ROUTES')" class="hover:text-white cursor-pointer">Routes &amp; Coverage</button>
+            <button onclick="APP.setPubPage('SAFETY')" class="hover:text-white cursor-pointer">Operations &amp; Safety</button>
+            <button onclick="APP.setPubPage('KNOWLEDGE')" class="hover:text-white cursor-pointer">Knowledge Centre</button>
+            <button onclick="APP.setPubPage('QUOTE')" class="hover:text-white cursor-pointer">Request a Quote</button>
           </div>
         </div>
-      </section>
-
-      <section class="max-w-7xl mx-auto px-4 sm:px-6 grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div class="bg-white p-6 rounded-2xl border-2 border-slate-200 shadow-sm space-y-2">
-          <div class="text-xs font-black uppercase text-blue-700">01 • Refinery-to-Site Logistics</div>
-          <h3 class="text-lg font-black">Bitumen Tanker Dispatch</h3>
-          <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">Specialized movement of bulk bitumen (VG-10, VG-30, VG-40, Emulsion, CRMB) from Mathura Refinery to road construction and hot-mix plant sites.</p>
-        </div>
-        <div class="bg-white p-6 rounded-2xl border-2 border-slate-200 shadow-sm space-y-2">
-          <div class="text-xs font-black uppercase text-amber-700">02 • Transparent Settlement</div>
-          <h3 class="text-lg font-black">Exact kg & MT Freight Math</h3>
-          <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">Scale weights stored in kilograms (kg) and converted to Metric Tonnes (1,000 kg = 1.000 MT) with full reconciliation of HSD and cash advances.</p>
-        </div>
-        <div class="bg-white p-6 rounded-2xl border-2 border-slate-200 shadow-sm space-y-2">
-          <div class="text-xs font-black uppercase text-emerald-700">03 • Client Portal Isolation</div>
-          <h3 class="text-lg font-black">Dedicated Customer Login</h3>
-          <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">Each customer sees only their own organization's trips, weighbridge tickets, PODs, and approved commercial statements.</p>
-        </div>
-      </section>
-    </div>
-
-    <!-- PUBLIC PAGE: SERVICES -->
-    <div id="pub-SERVICES" class="pub-sec hidden max-w-7xl mx-auto px-4 sm:px-6 py-10 space-y-6">
-      <h1 class="text-2xl sm:text-3xl font-black">Bitumen & Bulk-Liquid Transportation Services</h1>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div class="bg-white p-6 rounded-2xl border border-slate-300 space-y-3">
-          <span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-900 text-xs font-black">ACTIVE SERVICE</span>
-          <h2 class="text-xl font-black">Bulk Bitumen Transportation (Since 1990)</h2>
-          <p class="text-xs sm:text-sm text-slate-600">Refinery-to-site transportation with calibrated insulated tankers, loading/unloading weighbridge verification, and signed POD workflow.</p>
-        </div>
-        <div class="bg-white p-6 rounded-2xl border border-slate-300 space-y-3">
-          <span class="px-2 py-0.5 rounded bg-blue-100 text-blue-900 text-xs font-black">VERIFIED CATEGORIES ONLY</span>
-          <h2 class="text-xl font-black">Bulk Liquid & Highway Project Logistics</h2>
-          <p class="text-xs sm:text-sm text-slate-600">Dedicated B2B contract logistics for road contractors and infrastructure projects from Mathura Refinery across Northern & Central India.</p>
+        <div class="space-y-1.5 md:text-right">
+          <div class="font-black text-white text-sm">Operations &amp; Dispatch Desk</div>
+          <p id="ftr-comp-phones">Phone / WhatsApp: +91-8077703137, +91-9058374446</p>
+          <p id="ftr-comp-email">Email: bharatoilcarrier@gmail.com</p>
+          <p class="text-[11px] text-slate-500">Zero fabricated claims • People-first B2B logistics</p>
         </div>
       </div>
-      <div id="pub-supply-card" class="p-6 rounded-2xl border-2 border-amber-400 bg-amber-50 space-y-2"></div>
-    </div>
+    </footer>
 
-    <!-- PUBLIC PAGE: SAFETY & ROUTES -->
-    <div id="pub-SAFETY" class="pub-sec hidden max-w-7xl mx-auto px-4 sm:px-6 py-10 space-y-6">
-      <h1 class="text-2xl sm:text-3xl font-black">Operations, Safety, Documentation & Service Corridors</h1>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-xs sm:text-sm">
-        <div class="bg-white p-6 rounded-2xl border border-slate-300 space-y-2">
-          <h3 class="font-black text-base">1. Pre-Dispatch Compliance Check</h3>
-          <p class="text-slate-600">Verification of RC, Fitness, Insurance, PUC, National/State Permits, and Calibration expiry before loading assignment.</p>
-        </div>
-        <div class="bg-white p-6 rounded-2xl border border-slate-300 space-y-2">
-          <h3 class="font-black text-base">2. Honest Telemetry Policy</h3>
-          <p class="text-slate-600">No fake moving truck icons. Trips show LIVE only when a hardware VLT/AIS-140 device is active; otherwise manual milestones are clearly labelled Manual.</p>
-        </div>
-        <div class="bg-white p-6 rounded-2xl border border-slate-300 space-y-2">
-          <h3 class="font-black text-base">3. Supported Corridors</h3>
-          <p class="text-slate-600">Originating from Gate No. 9, Mathura Refinery to UP, Uttarakhand (Gairsain, Karnaprayag, Haldwani), Rajasthan, Haryana, NCR & MP subject to availability.</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- PUBLIC PAGE: KNOWLEDGE -->
-    <div id="pub-KNOWLEDGE" class="pub-sec hidden max-w-7xl mx-auto px-4 sm:px-6 py-10 space-y-6">
-      <h1 class="text-2xl sm:text-3xl font-black">Knowledge Centre — Bitumen Logistics & Billing Guides</h1>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs sm:text-sm">
-        <div class="bg-white p-6 rounded-2xl border border-slate-300 space-y-2">
-          <span class="text-blue-700 font-black uppercase text-xs">Guide 01</span>
-          <h3 class="font-black text-base">Understanding Loaded Weight vs. Unloaded Weight Contracts</h3>
-          <p class="text-slate-600">How recording raw scale weights in kilograms (kg) and converting to Metric Tonnes (MT) eliminates rounding errors and commercial disputes.</p>
-        </div>
-        <div class="bg-white p-6 rounded-2xl border border-slate-300 space-y-2">
-          <span class="text-blue-700 font-black uppercase text-xs">Guide 02</span>
-          <h3 class="font-black text-base">Reconciling En-Route HSD, Plant HSD & Cash Advances</h3>
-          <p class="text-slate-600">Best practices for logging diesel litres, fuel slips, and plant cash advances against each trip prior to final settlement approval.</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- PUBLIC PAGE: QUOTE FORM -->
-    <div id="pub-QUOTE" class="pub-sec hidden max-w-5xl mx-auto px-4 sm:px-6 py-10">
-      <div class="bg-white rounded-2xl border-2 border-blue-700 shadow-xl p-6 sm:p-8 space-y-6">
-        <div class="border-b border-slate-200 pb-4 flex flex-wrap justify-between items-center gap-2">
-          <div>
-            <span class="text-xs font-black uppercase text-blue-700">Direct Operations Desk</span>
-            <h1 class="text-2xl font-black">Request a Transport Quote</h1>
-          </div>
-          <span class="text-xs bg-amber-100 text-amber-900 border border-amber-400 px-2.5 py-1 rounded font-bold">Saves to ERP Leads Inbox</span>
-        </div>
-
-        <div id="quote-ok-box" class="hidden p-4 rounded-xl bg-emerald-50 border-2 border-emerald-600 text-emerald-950 text-xs sm:text-sm font-bold flex flex-wrap items-center justify-between gap-2">
-          <span id="quote-ok-msg"></span>
-          <button type="button" onclick="BOC.openErp('LEADS')" class="px-3 py-1.5 rounded bg-emerald-700 text-white text-xs font-black cursor-pointer">View in ERP Leads Inbox →</button>
-        </div>
-
-        <form id="quote-form" onsubmit="BOC.submitQuote(event)" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          <div>
-            <label class="block text-xs font-black uppercase text-slate-700 mb-1">Company / Contractor Name *</label>
-            <input required id="q-comp" type="text" placeholder="e.g., Shivalik Roadways" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm" />
-          </div>
-          <div>
-            <label class="block text-xs font-black uppercase text-slate-700 mb-1">Phone / WhatsApp *</label>
-            <input required id="q-phone" type="tel" placeholder="10-digit mobile" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm" />
-          </div>
-          <div>
-            <label class="block text-xs font-black uppercase text-slate-700 mb-1">Product *</label>
-            <select id="q-prod" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm bg-white">
-              <option value="VG-30 Bitumen Bulk Tanker">VG-30 Bitumen Bulk Tanker</option>
-              <option value="VG-40 Bitumen Bulk Tanker">VG-40 Bitumen Bulk Tanker</option>
-              <option value="VG-10 / Emulsion / CRMB">VG-10 / Emulsion / CRMB</option>
-              <option value="Bulk Liquid Transport">Bulk Liquid Transport</option>
-            </select>
-          </div>
-          <div>
-            <label class="block text-xs font-black uppercase text-slate-700 mb-1">Quantity (MT) *</label>
-            <input required id="q-qty" type="number" step="0.5" min="1" placeholder="e.g., 45" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm" />
-          </div>
-          <div>
-            <label class="block text-xs font-black uppercase text-slate-700 mb-1">Loading Refinery *</label>
-            <input required id="q-orig" type="text" value="Mathura Refinery" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm" />
-          </div>
-          <div>
-            <label class="block text-xs font-black uppercase text-slate-700 mb-1">Delivery Site & Pincode *</label>
-            <input required id="q-dest" type="text" placeholder="e.g., Gairsain Site, UK" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm" />
-          </div>
-          <div class="sm:col-span-2 flex items-center gap-2 pt-2">
-            <input required id="q-consent" type="checkbox" class="w-4 h-4 accent-blue-700" />
-            <label for="q-consent" class="text-xs text-slate-700">I consent to Bharat Oil Carrier contacting me via phone/WhatsApp regarding this transport quote.</label>
-          </div>
-          <div class="flex items-end">
-            <button type="submit" class="w-full py-2.5 px-4 rounded-xl bg-blue-700 hover:bg-blue-800 text-white font-black text-sm shadow cursor-pointer">🚀 Submit Quote Inquiry</button>
-          </div>
-        </form>
-      </div>
-    </div>
-
-    <!-- Mobile Sticky Bar -->
+    <!-- Mobile Sticky Bottom Conversion Bar -->
     <div class="fixed bottom-0 left-0 right-0 bg-slate-950 border-t-2 border-amber-400 p-2 grid grid-cols-3 gap-2 sm:hidden z-40 no-print">
-      <a href="tel:8077703137" class="py-2 rounded-lg bg-emerald-600 text-white font-black text-xs text-center">📞 Call</a>
-      <a href="https://wa.me/918077703137" target="_blank" class="py-2 rounded-lg bg-green-700 text-white font-black text-xs text-center">💬 WhatsApp</a>
-      <button type="button" onclick="BOC.setPubPage('QUOTE')" class="py-2 rounded-lg bg-amber-400 text-slate-950 font-black text-xs text-center">📋 Quote</button>
+      <a href="tel:8077703137" class="py-2.5 rounded-lg bg-emerald-600 text-white font-black text-xs text-center">📞 Call</a>
+      <a href="https://wa.me/918077703137" target="_blank" class="py-2.5 rounded-lg bg-green-700 text-white font-black text-xs text-center">💬 WhatsApp</a>
+      <button type="button" onclick="APP.setPubPage('QUOTE')" class="py-2.5 rounded-lg bg-amber-400 text-slate-950 font-black text-xs text-center">📋 Get Quote</button>
     </div>
   </div>
 
   <!-- ========================================================================
-       EXPERIENCE 2: PRIVATE ERP & CUSTOMER PORTAL
+       EXPERIENCE 2: PRIVATE ROLE-BASED ERP (ALL 17 MODULES + FIREBASE LIVE)
        ======================================================================== -->
-  <div id="view-erp" class="hidden flex-1 flex flex-col lg:flex-row">
-    <aside class="w-full lg:w-72 bg-slate-950 text-white p-4 flex flex-col justify-between border-b lg:border-b-0 lg:border-r border-slate-800 no-print shrink-0">
-      <div class="space-y-4">
-        <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+  <div id="erp-shell" class="hidden flex-1 flex flex-col lg:flex-row pb-16 lg:pb-0">
+    <aside id="erp-sidebar" class="w-full lg:w-72 bg-slate-950 text-white p-3.5 flex flex-col justify-between border-b lg:border-b-0 lg:border-r border-slate-800 shrink-0 no-print">
+      <div class="space-y-3">
+        <div class="flex items-center justify-between border-b border-slate-800 pb-2.5">
           <div class="flex items-center gap-2">
-            <div class="w-8 h-8 rounded-lg bg-amber-400 text-slate-950 flex items-center justify-center font-black text-sm">BOC</div>
+            <div class="w-8 h-8 rounded-lg bg-amber-400 text-slate-950 font-black flex items-center justify-center text-sm">BOC</div>
             <div>
-              <div class="text-xs font-black uppercase text-amber-400">BOC Smart ERP</div>
-              <div class="text-[11px] text-slate-400" id="sidebar-db-mode">Mode: Local Demo Repo</div>
+              <div class="text-xs font-black text-amber-400 uppercase">BOC Smart ERP</div>
+              <div class="text-[10px] text-slate-400" id="sidebar-db-mode">Mode: Local Demo Repo</div>
             </div>
           </div>
-          <button type="button" onclick="BOC.resetDemo()" class="px-2 py-1 rounded bg-slate-800 hover:bg-red-700 text-[11px] font-bold text-slate-300 cursor-pointer">↺ Reset</button>
+          <button type="button" onclick="APP.resetAllDemoData()" class="px-2 py-1 rounded bg-slate-800 hover:bg-red-700 text-[10px] font-bold text-slate-300 cursor-pointer">↺ Reset Demo</button>
         </div>
 
-        <div class="bg-slate-900 p-3 rounded-xl border border-slate-700 space-y-1.5">
-          <label class="text-[10px] font-black uppercase text-amber-400 block">Active Role Persona (Test RBAC):</label>
-          <select id="role-sel" onchange="BOC.setRole(this.value)" class="w-full p-2 rounded-lg bg-slate-950 text-white border border-slate-600 text-xs font-bold">
-            <option value="ADMIN">1. Owner / Admin (MD) — Full Access</option>
-            <option value="OPERATIONS">2. Operations & Dispatch</option>
-            <option value="ACCOUNTS">3. Accounts & Commercial</option>
-            <option value="MAINTENANCE">4. Fleet & Maintenance</option>
-            <option value="DRIVER">5. Driver (UP85-DEMO-101 Only)</option>
-            <option value="CUSTOMER_A">6A. Customer A (Demo Highway Ltd)</option>
-            <option value="CUSTOMER_B">6B. Customer B (Isolated Client)</option>
+        <div class="bg-slate-900 p-2.5 rounded-xl border border-slate-800 space-y-1">
+          <label class="text-[10px] font-black uppercase text-amber-400 block">Active Login Persona (RBAC Test):</label>
+          <select id="erp-role-picker" onchange="APP.changeRole(this.value)" class="w-full p-2 rounded-lg bg-slate-950 text-white border border-slate-700 text-xs font-bold cursor-pointer">
+            <option value="ADMIN">1. Owner / Admin (MD) — All 17 Modules</option>
+            <option value="OPERATIONS">2. Operations &amp; Dispatch</option>
+            <option value="ACCOUNTS">3. Accounts &amp; Commercial</option>
+            <option value="MAINTENANCE">4. Fleet &amp; Maintenance</option>
+            <option value="DRIVER">5. Driver Field App (UP85-DEMO-101)</option>
+            <option value="CUSTOMER_A">6A. Customer A Portal (Demo Highway Ltd)</option>
+            <option value="CUSTOMER_B">6B. Customer B Portal (Isolated Org)</option>
           </select>
-          <div id="role-desc" class="text-[11px] text-slate-400 leading-snug pt-0.5"></div>
+          <div id="erp-role-desc" class="text-[10px] text-slate-400 leading-snug pt-0.5"></div>
         </div>
 
-        <nav id="erp-nav" class="flex lg:flex-col gap-1 overflow-x-auto pb-1 lg:pb-0"></nav>
+        <div>
+          <input id="erp-mod-search" type="text" oninput="APP.renderErpSidebar()" placeholder="🔍 Search 17 ERP modules..." class="w-full px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-700 text-xs text-white placeholder-slate-400 focus:outline-none focus:border-amber-400" />
+        </div>
+
+        <nav id="erp-nav-items" class="flex lg:flex-col gap-1 overflow-x-auto lg:overflow-y-auto lg:max-h-[58vh] pb-1 lg:pb-0 erp-scroll"></nav>
       </div>
 
-      <div class="hidden lg:block pt-4 border-t border-slate-800 text-[11px] text-slate-400 space-y-1">
-        <div><strong>Timezone:</strong> Asia/Kolkata (DD/MM/YYYY)</div>
-        <div><strong>Weights:</strong> Canonical kg & calc MT</div>
-        <div><strong>Evidence:</strong> Restricted Drive Link Adapter</div>
+      <div class="hidden lg:block pt-3 border-t border-slate-800 text-[10px] text-slate-400 space-y-0.5">
+        <div><strong>Conventions:</strong> INR (₹) • DD/MM/YYYY • IST</div>
+        <div><strong>Weight Rule:</strong> Canonical kg &amp; calc MT</div>
       </div>
     </aside>
 
-    <main class="flex-1 p-3 sm:p-6 overflow-x-hidden space-y-6">
-
-      <!-- MODULE: DASHBOARD -->
-      <section id="mod-DASHBOARD" class="erp-sec hidden space-y-6">
-        <div class="bg-white p-4 rounded-xl border border-slate-300 flex flex-wrap justify-between items-center gap-2">
-          <div>
-            <span class="text-[11px] font-black uppercase text-blue-700">Role-Filtered Operational Summary</span>
-            <h1 class="text-xl font-black">Executive Dashboard</h1>
-          </div>
-          <button type="button" onclick="BOC.openErp('FREIGHT')" class="px-4 py-2 rounded-lg bg-blue-700 text-white text-xs font-black cursor-pointer">📄 Open A4 Freight Statement</button>
+    <main id="erp-main" class="flex-1 p-3 sm:p-5 overflow-x-hidden space-y-4">
+      <div id="erp-topbar" class="bg-white p-3 rounded-xl border border-slate-300 shadow-sm flex flex-wrap items-center justify-between gap-2 no-print">
+        <div class="flex items-center gap-2">
+          <span id="bar-role-tag" class="px-2.5 py-1 rounded bg-slate-900 text-amber-400 text-xs font-black">ADMIN</span>
+          <h1 id="bar-mod-title" class="text-sm sm:text-base font-black text-slate-900">6. Freight / Settlement Statements (A4)</h1>
         </div>
-        <div id="dash-kpis" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"></div>
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div class="bg-white p-5 rounded-xl border border-slate-300 space-y-3">
-            <h3 class="text-xs font-black uppercase text-slate-800">🛡️ Vehicle Document Expiry Alerts (30/15/7 Days)</h3>
-            <div id="dash-docs" class="space-y-2 text-xs"></div>
-          </div>
-          <div class="bg-white p-5 rounded-xl border border-slate-300 space-y-3">
-            <h3 class="text-xs font-black uppercase text-slate-800">🤖 Permission-Filtered Business Assistant</h3>
-            <div class="flex flex-wrap gap-1.5">
-              <button type="button" onclick="BOC.askAssistant('OVERDUE')" class="px-2.5 py-1.5 rounded bg-slate-100 hover:bg-blue-50 border border-slate-300 text-xs font-bold cursor-pointer">Pending Statements?</button>
-              <button type="button" onclick="BOC.askAssistant('DOCS')" class="px-2.5 py-1.5 rounded bg-slate-100 hover:bg-blue-50 border border-slate-300 text-xs font-bold cursor-pointer">Expiring Vehicle Docs?</button>
-              <button type="button" onclick="BOC.askAssistant('MARGIN')" class="px-2.5 py-1.5 rounded bg-slate-100 hover:bg-blue-50 border border-slate-300 text-xs font-bold cursor-pointer">Route Settlement Summary</button>
-            </div>
-            <div id="ai-box" class="p-3 rounded-lg bg-slate-900 text-emerald-300 mono text-xs">Click a question above to query authorized records.</div>
-          </div>
+        <div class="flex flex-wrap items-center gap-2 text-xs">
+          <button type="button" onclick="APP.openErpModule('FREIGHT')" class="px-2.5 py-1 rounded bg-blue-50 text-blue-900 border border-blue-300 font-bold cursor-pointer">📄 A4 Statement</button>
+          <button type="button" onclick="APP.openErpModule('TRIPS')" class="px-2.5 py-1 rounded bg-emerald-50 text-emerald-900 border border-emerald-300 font-bold cursor-pointer">🚛 Trips &amp; POD</button>
+          <button type="button" onclick="APP.openErpModule('USERS')" class="px-2.5 py-1 rounded bg-amber-100 text-slate-950 border border-amber-400 font-bold cursor-pointer">🔥 Firebase Live Setup</button>
         </div>
-      </section>
+      </div>
 
-      <!-- MODULE: A4 FREIGHT STATEMENT -->
-      <section id="mod-FREIGHT" class="erp-sec hidden space-y-4">
-        <div id="freight-denied" class="hidden p-6 rounded-xl bg-red-50 border-2 border-red-600 text-red-950 font-bold text-sm"></div>
+      <div id="erp-dynamic-module" class="erp-mod hidden"></div>
 
-        <div id="freight-wrap" class="space-y-4">
-          <div class="bg-white p-4 rounded-xl border-2 border-slate-300 shadow-sm space-y-4 no-print">
-            <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 pb-3">
-              <div>
-                <div class="flex items-center gap-2">
-                  <span class="text-xs font-black uppercase text-blue-700">A4 Landscape Settlement Engine</span>
-                  <span id="lock-pill" class="px-2 py-0.5 rounded text-[10px] font-black uppercase"></span>
-                </div>
-                <h2 class="text-lg font-black">Freight Statement / Trip Settlement</h2>
+      <!-- MODULE 6: A4 LANDSCAPE FREIGHT STATEMENT -->
+      <section id="mod-FREIGHT" class="erp-mod space-y-4">
+        <div id="freight-rbac-block" class="hidden p-6 rounded-xl bg-red-50 border-2 border-red-600 text-red-950 font-bold text-sm"></div>
+
+        <div id="freight-workbench" class="space-y-4">
+          <div class="bg-white p-4 rounded-xl border-2 border-slate-300 shadow-sm space-y-3 no-print">
+            <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 pb-2.5">
+              <div class="flex items-center gap-2">
+                <span id="stmt-lock-pill" class="px-2.5 py-1 rounded text-xs font-black bg-emerald-100 text-emerald-950 border border-emerald-400">🔓 DRAFT EDITABLE (v1.0)</span>
+                <span class="text-xs text-slate-600">Type in any cell below—MT &amp; Net Balance recalculate in-place without losing focus.</span>
               </div>
-              <div class="flex flex-wrap gap-2">
-                <button type="button" id="btn-add-row" onclick="BOC.addRow()" class="px-3 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs cursor-pointer">+ Add Trip Row</button>
-                <button type="button" id="btn-lock-stmt" onclick="BOC.toggleLock()" class="px-3 py-2 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs cursor-pointer">🔒 Approve & Lock</button>
-                <button type="button" onclick="BOC.exportCsv()" class="px-3 py-2 rounded-lg bg-slate-800 text-white font-black text-xs cursor-pointer">📥 Export CSV</button>
-                <button type="button" onclick="window.print()" class="px-4 py-2 rounded-lg bg-blue-700 text-white font-black text-xs shadow cursor-pointer">🖨️ Print A4 Landscape</button>
+              <div class="flex flex-wrap gap-1.5">
+                <button type="button" id="btn-add-stmt-row" onclick="APP.addStmtRow()" class="px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold text-xs shadow cursor-pointer">+ Add Trip Row</button>
+                <button type="button" id="btn-lock-stmt" onclick="APP.toggleStmtLock()" class="px-3 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-amber-400 font-extrabold text-xs cursor-pointer">🔒 Approve &amp; Lock Statement</button>
+                <button type="button" onclick="APP.exportStmtCSV()" class="px-3 py-1.5 rounded-lg bg-slate-200 hover:bg-slate-300 text-slate-900 font-extrabold text-xs cursor-pointer">📥 Export CSV</button>
+                <button type="button" onclick="window.print()" class="px-3.5 py-1.5 rounded-lg bg-blue-700 hover:bg-blue-800 text-white font-extrabold text-xs shadow cursor-pointer">🖨️ Print A4 Landscape</button>
               </div>
             </div>
 
-            <div id="stmt-controls" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 text-xs bg-slate-50 p-3 rounded-lg border border-slate-200">
+            <div id="stmt-admin-controls" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 text-xs bg-slate-50 p-3 rounded-lg border border-slate-200">
               <div>
-                <label class="font-extrabold block mb-1">1. Billable Weight Basis:</label>
-                <select id="cfg-basis" onchange="BOC.updateConfig()" class="w-full p-1.5 rounded border border-slate-300 bg-white font-bold">
+                <label class="font-bold block mb-1 text-slate-700">1. Billable Weight Basis:</label>
+                <select id="inp-basis" onchange="APP.syncStmtConfig()" class="w-full p-1.5 rounded border border-slate-300 bg-white font-bold">
                   <option value="LOADED">Loaded Weight (MT)</option>
                   <option value="UNLOADED">Unloaded Weight (MT)</option>
+                  <option value="FIXED_22_5">Fixed Contract 22.500 MT/Trip</option>
                 </select>
               </div>
               <div>
-                <label class="font-extrabold block mb-1">2. Route Title:</label>
-                <input id="cfg-title" type="text" oninput="BOC.updateConfig()" class="w-full p-1.5 rounded border border-slate-300 bg-white font-semibold" />
+                <label class="font-bold block mb-1 text-slate-700">2. Route / Statement Title:</label>
+                <input id="inp-route-title" type="text" value="Mathura to Gairsain Freight (DEMO)" oninput="APP.syncStmtConfig()" class="w-full p-1.5 rounded border border-slate-300 bg-white font-semibold" />
               </div>
               <div>
-                <label class="font-extrabold block mb-1">3. Col 7 Label (S/L):</label>
-                <input id="cfg-sl" type="text" oninput="BOC.updateConfig()" class="w-full p-1.5 rounded border border-slate-300 bg-white font-semibold" />
-              </div>
-              <div>
-                <label class="font-extrabold block mb-1">4. Col 8 (S/E) & Rule:</label>
+                <label class="font-bold block mb-1 text-slate-700">3. Custom Col 7 (S/L) Label:</label>
                 <div class="flex gap-1">
-                  <input id="cfg-se" type="text" oninput="BOC.updateConfig()" class="w-1/2 p-1.5 rounded border border-slate-300 bg-white font-semibold" />
-                  <select id="cfg-serule" onchange="BOC.updateConfig()" class="w-1/2 p-1.5 rounded border border-slate-300 bg-white font-bold">
+                  <input id="inp-sl-label" type="text" value="S/L" oninput="APP.syncStmtConfig()" class="w-2/3 p-1.5 rounded border border-slate-300 bg-white font-semibold" />
+                  <label class="flex items-center gap-1 text-[10px] font-bold"><input id="inp-hide-sl" type="checkbox" onchange="APP.syncStmtConfig()" />Hide</label>
+                </div>
+              </div>
+              <div>
+                <label class="font-bold block mb-1 text-slate-700">4. Custom Col 8 (S/E) &amp; Rule:</label>
+                <div class="flex gap-1">
+                  <input id="inp-se-label" type="text" value="S/E Amt (₹)" oninput="APP.syncStmtConfig()" class="w-1/2 p-1.5 rounded border border-slate-300 bg-white font-semibold" />
+                  <select id="inp-se-rule" onchange="APP.syncStmtConfig()" class="w-1/2 p-1.5 rounded border border-slate-300 bg-white font-bold">
                     <option value="DEDUCT">Deduct (−)</option>
                     <option value="ADD">Add (+)</option>
-                    <option value="IGNORE">Info Only</option>
+                    <option value="IGNORE">Info Only (0)</option>
                   </select>
                 </div>
               </div>
               <div>
-                <label class="font-extrabold block mb-1">5. Reconciliation Test:</label>
-                <button type="button" onclick="BOC.toggleMismatch()" class="w-full p-1.5 rounded border border-red-600 text-red-700 font-black hover:bg-red-50 cursor-pointer">⚠️ Simulate Mismatch</button>
+                <label class="font-bold block mb-1 text-slate-700">5. Reconciliation Check:</label>
+                <button type="button" onclick="APP.toggleMismatchSim()" class="w-full p-1.5 rounded border border-red-600 text-red-700 font-extrabold hover:bg-red-50 cursor-pointer">⚠️ Simulate Mismatch</button>
               </div>
             </div>
           </div>
 
-          <!-- PRINTABLE A4 SHEET -->
-          <div class="bg-white p-4 sm:p-6 rounded-xl border-2 border-slate-400 shadow-md space-y-4 print-sheet">
-            <div class="grid grid-cols-1 md:grid-cols-12 gap-3 border-b-2 border-slate-950 pb-3">
-              <div class="md:col-span-4 space-y-0.5">
+          <div id="a4-statement-sheet" class="bg-white p-4 sm:p-6 rounded-xl border-2 border-slate-400 shadow-md space-y-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 border-b-2 border-slate-950 pb-3">
+              <div>
                 <div class="text-[10px] font-black uppercase text-slate-500">BILL FROM (CARRIER)</div>
-                <div class="text-base sm:text-lg font-black text-slate-950" id="p-from-name">Bharat Oil Carrier (BOC)</div>
-                <div class="text-xs text-slate-700" id="p-from-addr">Gate No. 9, Mathura Refinery, Mathura, UP 281005</div>
-                <div class="text-xs font-bold text-slate-800" id="p-from-ph">Ph: 8077703137, 9058374446 • bharatoilcarrier@gmail.com</div>
-                <div class="text-[11px] text-slate-600" id="p-from-gst">GSTIN: UNVERIFIED</div>
+                <div class="text-lg font-black text-slate-950" id="sheet-from-name">Bharat Oil Carrier (BOC)</div>
+                <div class="text-xs text-slate-700" id="sheet-from-addr">Gate No. 9, Mathura Refinery, Mathura, Uttar Pradesh 281005</div>
+                <div class="text-xs text-slate-800 font-semibold" id="sheet-from-phones">Mob: 8077703137, 9058374446 | Email: bharatoilcarrier@gmail.com</div>
+                <div class="text-[11px] text-slate-600" id="sheet-from-gst">GSTIN: UNVERIFIED (Admin Configurable)</div>
               </div>
-              <div class="md:col-span-4 flex flex-col items-start md:items-center justify-center text-left md:text-center border-y md:border-y-0 md:border-x border-slate-300 py-2 md:py-0 px-2">
-                <span class="text-[10px] font-black uppercase tracking-widest text-blue-800">FREIGHT / TRIP SETTLEMENT STATEMENT</span>
-                <div class="text-base font-black text-slate-950 mt-0.5" id="p-route">Mathura to Gairsain Freight (DEMO)</div>
-                <div class="text-xs font-bold text-amber-800">Period: 01/10/2026 to 15/10/2026</div>
-                <span class="mt-1 px-2 py-0.5 rounded bg-amber-300 text-slate-950 text-[10px] font-black" id="p-ver">VERSION v1.0</span>
+              <div class="text-left md:text-center flex flex-col justify-center">
+                <div class="text-[11px] font-black uppercase tracking-widest text-blue-800">FREIGHT STATEMENT / TRIP SETTLEMENT</div>
+                <div class="text-base sm:text-lg font-black text-slate-950" id="sheet-route-title">Mathura to Gairsain Freight (DEMO)</div>
+                <div class="text-xs font-bold text-amber-800">Period: 01/10/2026 to 15/10/2026 • [DEMO DATA]</div>
               </div>
-              <div class="md:col-span-4 text-left md:text-right text-xs space-y-0.5">
+              <div class="text-left md:text-right text-xs space-y-0.5">
                 <div class="text-[10px] font-black uppercase text-slate-500">BILL TO (CUSTOMER)</div>
                 <div class="text-sm font-black text-slate-950">Demo Highway Contractors Pvt Ltd [DEMO]</div>
-                <div class="mono">Statement No: <strong>BOC/DEMO/26-27/014</strong></div>
-                <div class="mono">Issue Date: <strong>18/10/2026</strong></div>
+                <div>Statement No: <strong class="mono">BOC/DEMO/2026-27/014</strong></div>
+                <div>Issue Date: <strong class="mono">18/10/2026</strong> | Version: <strong id="sheet-ver-badge" class="mono">v1.0 (Draft)</strong></div>
               </div>
             </div>
 
-            <div class="overflow-x-auto print-wrap">
-              <table class="w-full min-w-[1150px] border-collapse border border-slate-400 text-xs stmt-tbl">
+            <div class="erp-scroll overflow-x-auto">
+              <table class="w-full min-w-[1180px] border-collapse border border-slate-400 text-[11px] print-grid">
                 <thead>
-                  <tr class="bg-slate-200 text-slate-950 font-black">
-                    <th class="p-1.5 border border-slate-400 text-center w-9">S.No</th>
-                    <th class="p-1.5 border border-slate-400 text-left w-24">Date</th>
-                    <th class="p-1.5 border border-slate-400 text-left w-32">Vehicle No.</th>
-                    <th class="p-1.5 border border-slate-400 text-right w-28">Loaded Wt<br><span class="text-[10px] font-normal">(kg & MT)</span></th>
-                    <th class="p-1.5 border border-slate-400 text-right w-28">Unloaded Wt<br><span class="text-[10px] font-normal">(kg & MT)</span></th>
-                    <th class="p-1.5 border border-slate-400 text-right w-20">Rate/MT<br><span class="text-[10px] font-normal">(₹)</span></th>
-                    <th class="p-1.5 border border-slate-400 text-center bg-amber-50 w-16" id="th-sl">S/L</th>
-                    <th class="p-1.5 border border-slate-400 text-right bg-amber-50 w-24" id="th-se">S/E Amt (₹)</th>
-                    <th class="p-1.5 border border-slate-400 text-right w-16">HSD Qty<br><span class="text-[10px] font-normal">(L)</span></th>
-                    <th class="p-1.5 border border-slate-400 text-right w-24">HSD Amt<br><span class="text-[10px] font-normal">(₹)</span></th>
-                    <th class="p-1.5 border border-slate-400 text-right w-20">Cash<br><span class="text-[10px] font-normal">(₹)</span></th>
-                    <th class="p-1.5 border border-slate-400 text-right w-16">Plant HSD<br><span class="text-[10px] font-normal">Qty (L)</span></th>
-                    <th class="p-1.5 border border-slate-400 text-right w-24">Plant HSD<br><span class="text-[10px] font-normal">Amt (₹)</span></th>
-                    <th class="p-1.5 border border-slate-400 text-right w-20">Plant Cash<br><span class="text-[10px] font-normal">(₹)</span></th>
-                    <th class="p-1.5 border border-slate-400 text-left">Unloading Site</th>
-                    <th class="p-1.5 border border-slate-400 text-right bg-blue-50 w-28">Freight (₹)</th>
+                  <tr class="bg-slate-200 text-slate-950 font-extrabold">
+                    <th class="p-1.5 border border-slate-400 text-center w-8">1<br><span class="text-[9px] font-normal">S.No</span></th>
+                    <th class="p-1.5 border border-slate-400 text-left w-24">2<br><span class="text-[9px] font-normal">Date</span></th>
+                    <th class="p-1.5 border border-slate-400 text-left w-32">3<br><span class="text-[9px] font-normal">Vehicle No.</span></th>
+                    <th class="p-1.5 border border-slate-400 text-right w-28">4. Loaded Wt<br><span class="text-[9px] font-normal">(kg &amp; MT)</span></th>
+                    <th class="p-1.5 border border-slate-400 text-right w-28">5. Unloaded Wt<br><span class="text-[9px] font-normal">(kg &amp; MT)</span></th>
+                    <th class="p-1.5 border border-slate-400 text-right w-20">6. Rate/MT<br><span class="text-[9px] font-normal">(₹)</span></th>
+                    <th class="p-1.5 border border-slate-400 text-center bg-amber-50 w-20 col-sl-cell"><span id="th-sl-lbl">7. S/L</span><br><span class="text-[9px] font-normal">Custom</span></th>
+                    <th class="p-1.5 border border-slate-400 text-right bg-amber-50 w-24"><span id="th-se-lbl">8. S/E Amt (₹)</span><br><span id="th-se-sub" class="text-[9px] font-normal">Deduct (−)</span></th>
+                    <th class="p-1.5 border border-slate-400 text-right w-16">9. HSD<br><span class="text-[9px] font-normal">Qty (L)</span></th>
+                    <th class="p-1.5 border border-slate-400 text-right w-22">10. HSD<br><span class="text-[9px] font-normal">Amt (₹)</span></th>
+                    <th class="p-1.5 border border-slate-400 text-right w-20">11. Cash<br><span class="text-[9px] font-normal">Adv (₹)</span></th>
+                    <th class="p-1.5 border border-slate-400 text-right w-18">12. Plant<br><span class="text-[9px] font-normal">HSD (L)</span></th>
+                    <th class="p-1.5 border border-slate-400 text-right w-22">13. Plant<br><span class="text-[9px] font-normal">HSD (₹)</span></th>
+                    <th class="p-1.5 border border-slate-400 text-right w-20">14. Plant<br><span class="text-[9px] font-normal">Cash (₹)</span></th>
+                    <th class="p-1.5 border border-slate-400 text-left w-36">15. Unloading Site<br><span class="text-[9px] font-normal">Destination</span></th>
+                    <th class="p-1.5 border border-slate-400 text-right bg-blue-50 w-28">16. Freight (₹)<br><span id="th-fr-rule" class="text-[9px] font-normal text-blue-800">Loaded MT×Rate</span></th>
+                    <th class="p-1.5 border border-slate-400 text-center w-8 no-print">Del</th>
                   </tr>
                 </thead>
-                <tbody id="stmt-tbody" class="mono"></tbody>
-                <tfoot id="stmt-tfoot" class="bg-slate-200 font-black text-slate-950 mono"></tfoot>
+                <tbody id="stmt-rows-body" class="mono"></tbody>
+                <tfoot id="stmt-rows-foot" class="bg-slate-200 font-black text-slate-950 mono"></tfoot>
               </table>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 pt-2">
-              <div class="lg:col-span-7 p-3.5 rounded-lg bg-slate-50 border border-slate-300 text-xs space-y-2 flex flex-col justify-between">
-                <div class="space-y-1.5">
-                  <div class="font-black uppercase text-blue-900">Visible Contract Formula & Weight Conversion Rule:</div>
-                  <div id="formula-box" class="mono text-slate-800 bg-white p-2 rounded border border-slate-200"></div>
-                  <div class="text-[11px] text-slate-600">
-                    • Raw weights stored in canonical kilograms (kg) and converted to Metric Tonnes (22,500 kg = 22.500 MT).<br>
-                    • Approved statements are version-locked; adjustments create a new version with actor & reason history.
-                  </div>
+              <div class="lg:col-span-7 p-3.5 rounded-lg bg-slate-50 border border-slate-300 text-xs space-y-2">
+                <div class="font-black uppercase text-blue-900">Visible Contract Formula &amp; Governance Notes:</div>
+                <div id="sheet-formula-explain" class="mono text-slate-800 leading-relaxed"></div>
+                <div class="text-[11px] text-slate-600">
+                  • Canonical Weight Rule: Scale weights stored in exact kilograms (kg); Metric Tonnes (MT) = kg ÷ 1,000.<br>
+                  • Approved statements are locked; corrections generate a new version with actor &amp; reason audit history.
                 </div>
-                <div class="grid grid-cols-3 gap-4 pt-6 text-[11px] font-bold text-slate-700">
+                <div class="grid grid-cols-3 gap-4 pt-5 text-[11px] font-bold text-slate-700">
                   <div class="border-t border-slate-400 pt-1">Prepared By (Accounts)</div>
                   <div class="border-t border-slate-400 pt-1 text-center">Verified By (Operations)</div>
                   <div class="border-t border-slate-400 pt-1 text-right">Approved By (For Bharat Oil Carrier)</div>
                 </div>
               </div>
 
-              <div id="sum-card" class="lg:col-span-5 p-4 rounded-lg border-2 border-emerald-600 bg-emerald-50/60 text-xs space-y-2 mono">
-                <div class="font-sans font-black uppercase text-slate-900 border-b border-slate-300 pb-1.5 flex justify-between items-center">
+              <div id="sheet-summary-card" class="lg:col-span-5 p-4 rounded-lg border-2 border-emerald-600 bg-emerald-50/70 text-xs space-y-1.5 mono">
+                <div class="font-sans font-black uppercase text-slate-900 border-b border-slate-300 pb-1 flex justify-between items-center">
                   <span>Settlement Reconciliation Summary</span>
-                  <span id="recon-pill" class="px-2 py-0.5 rounded bg-emerald-700 text-white text-[10px]">RECONCILED ✓</span>
+                  <span id="sheet-recon-pill" class="px-2 py-0.5 rounded bg-emerald-700 text-white text-[10px]">RECONCILED ✓</span>
                 </div>
-                <div class="flex justify-between"><span>1. Total Gross Freight (<span id="s-basis"></span>):</span><span class="font-bold" id="s-freight">₹0.00</span></div>
-                <div class="flex justify-between text-red-800"><span>2. Less: En-Route HSD & Cash Recovery:</span><span class="font-bold" id="s-hsdcash">− ₹0.00</span></div>
-                <div class="flex justify-between text-red-800"><span>3. Less: Plant HSD & Plant Cash Recovery:</span><span class="font-bold" id="s-plant">− ₹0.00</span></div>
-                <div class="flex justify-between text-slate-800"><span id="s-se-lbl">4. Custom Column:</span><span class="font-bold" id="s-se-val">₹0.00</span></div>
-                <div class="flex justify-between text-base font-black text-blue-950 border-t-2 border-slate-900 pt-2">
-                  <span>NET BALANCE PAYABLE:</span><span id="s-net">₹0.00</span>
+                <div class="flex justify-between"><span class="font-sans">1. Total Gross Freight (<span id="sum-billable-mt">69.250 MT</span>):</span><span class="font-bold" id="sum-val-freight">₹3,11,625.00</span></div>
+                <div class="flex justify-between text-red-800"><span class="font-sans">2. Less: En-Route HSD &amp; Cash Recovery:</span><span class="font-bold" id="sum-val-enroute">− ₹48,300.00</span></div>
+                <div class="flex justify-between text-red-800"><span class="font-sans">3. Less: Plant HSD &amp; Plant Cash Recovery:</span><span class="font-bold" id="sum-val-plant">− ₹14,600.00</span></div>
+                <div class="flex justify-between text-slate-800"><span class="font-sans" id="sum-lbl-se">4. Custom Adjustment (S/E Amt):</span><span class="font-bold" id="sum-val-se">− ₹500.00</span></div>
+                <div class="flex justify-between text-base font-black text-blue-950 border-t-2 border-slate-950 pt-2">
+                  <span class="font-sans">NET BALANCE PAYABLE:</span>
+                  <span id="sum-val-net">₹2,48,225.00</span>
                 </div>
-                <div id="mismatch-box" class="hidden pt-2 border-t border-red-400 text-red-950 font-sans space-y-2">
-                  <div class="font-black text-xs text-red-700">🚨 RED RECONCILIATION ALERT: Summary Mismatch (+₹1,775.00)!</div>
-                  <div class="flex gap-1.5 no-print">
-                    <input id="override-inp" type="text" placeholder="Mandatory Admin override reason..." class="flex-1 p-1.5 rounded border border-red-500 bg-white text-xs" />
-                    <button type="button" onclick="BOC.resolveMismatch()" class="px-2.5 py-1.5 rounded bg-red-700 text-white font-black text-xs cursor-pointer">Log Override</button>
+
+                <div id="sheet-mismatch-alert" class="hidden pt-2 border-t border-red-400 text-red-950 font-sans space-y-2 no-print">
+                  <div class="font-black text-xs">🚨 RED RECONCILIATION ALERT: Summary Override Mismatch (+₹1,775.00)!</div>
+                  <p class="text-[11px]">Computed row sum is <span id="mis-true-sum" class="font-bold"></span>, but manual summary override is <span id="mis-override-sum" class="font-bold"></span>. Enter mandatory Admin override reason:</p>
+                  <div class="flex gap-1.5">
+                    <input id="inp-mismatch-reason" type="text" placeholder="Enter mandatory Admin override reason..." class="flex-1 p-1.5 rounded border border-red-500 bg-white text-xs" />
+                    <button type="button" onclick="APP.resolveMismatchWithReason()" class="px-3 py-1.5 rounded bg-red-700 text-white font-black text-xs cursor-pointer">Authorize Override</button>
                   </div>
                 </div>
               </div>
@@ -506,818 +348,1040 @@
           </div>
         </div>
       </section>
-
-      <!-- MODULE: TRIPS & POD EVIDENCE -->
-      <section id="mod-TRIPS" class="erp-sec hidden space-y-4">
-        <div class="bg-white p-5 rounded-xl border border-slate-300 space-y-4">
-          <div class="flex flex-wrap justify-between items-center gap-2 border-b border-slate-200 pb-3">
-            <div>
-              <h2 class="text-xl font-black">Trips, Weighments & Restricted Drive POD Links</h2>
-              <p class="text-xs text-slate-600">13-stage workflow + Zero-Billing Restricted Google Drive Evidence Link Adapter.</p>
-            </div>
-            <button type="button" onclick="BOC.addRow(); BOC.openErp('TRIPS');" class="px-4 py-2 rounded-lg bg-emerald-600 text-white text-xs font-black cursor-pointer">+ Dispatch New Trip</button>
-          </div>
-          <div id="trips-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
-        </div>
-      </section>
-
-      <!-- MODULE: LEADS -->
-      <section id="mod-LEADS" class="erp-sec hidden space-y-4">
-        <div class="bg-white p-5 rounded-xl border border-slate-300 space-y-4">
-          <h2 class="text-xl font-black">Leads & Quotations Pipeline</h2>
-          <div id="leads-list" class="space-y-3"></div>
-        </div>
-      </section>
-
-      <!-- MODULE: ACCOUNTS & LEDGER -->
-      <section id="mod-ACCOUNTS" class="erp-sec hidden space-y-4">
-        <div class="bg-white p-5 rounded-xl border border-slate-300 space-y-4">
-          <h2 class="text-xl font-black">Customer Commercial Ledger vs. Internal BOC Cost Ledger</h2>
-          <div id="accounts-box" class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs"></div>
-        </div>
-      </section>
-
-      <!-- MODULE: VEHICLE DOCS -->
-      <section id="mod-DOCS" class="erp-sec hidden space-y-4">
-        <div class="bg-white p-5 rounded-xl border border-slate-300 space-y-4">
-          <div class="flex justify-between items-center border-b border-slate-200 pb-3">
-            <h2 class="text-xl font-black">Vehicle Documents & Expiry Control (30/15/7 Days)</h2>
-            <button type="button" onclick="BOC.addDoc()" class="px-3.5 py-2 rounded-lg bg-blue-700 text-white text-xs font-black cursor-pointer">+ Add Document</button>
-          </div>
-          <div id="docs-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
-        </div>
-      </section>
-
-      <!-- MODULE: MAINTENANCE -->
-      <section id="mod-MAINTENANCE" class="erp-sec hidden space-y-4">
-        <div class="bg-white p-5 rounded-xl border border-slate-300 space-y-4">
-          <div class="flex justify-between items-center border-b border-slate-200 pb-3">
-            <div>
-              <h2 class="text-xl font-black">Maintenance, Workshop, Parts & Evidence (SoD Enforced)</h2>
-              <p class="text-xs text-slate-600">Repairs above ₹15,000 cannot be approved by the same person who entered them.</p>
-            </div>
-            <button type="button" onclick="BOC.addWorkOrder()" class="px-3.5 py-2 rounded-lg bg-amber-500 text-slate-950 text-xs font-black cursor-pointer">+ Log Repair (₹19,500)</button>
-          </div>
-          <div id="maint-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs"></div>
-        </div>
-      </section>
-
-      <!-- MODULE: SETTINGS + PHASE 2 LIVE FIREBASE CONNECTOR -->
-      <section id="mod-SETTINGS" class="erp-sec hidden space-y-6">
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <!-- Company Profile -->
-          <div class="bg-white p-5 rounded-xl border border-slate-300 space-y-4 text-xs">
-            <h3 class="text-base font-black uppercase border-b border-slate-200 pb-2">⚙️ 1. Editable Company Profile</h3>
-            <div class="space-y-3">
-              <div><label class="font-bold block mb-1">Business Name:</label><input id="set-name" type="text" oninput="BOC.saveSettings()" class="w-full p-2 rounded border border-slate-300" /></div>
-              <div><label class="font-bold block mb-1">Address:</label><input id="set-addr" type="text" oninput="BOC.saveSettings()" class="w-full p-2 rounded border border-slate-300" /></div>
-              <div class="grid grid-cols-2 gap-2">
-                <div><label class="font-bold block mb-1">Phones:</label><input id="set-ph" type="text" oninput="BOC.saveSettings()" class="w-full p-2 rounded border border-slate-300" /></div>
-                <div><label class="font-bold block mb-1">GSTIN:</label><input id="set-gst" type="text" oninput="BOC.saveSettings()" class="w-full p-2 rounded border border-slate-300" /></div>
-              </div>
-              <div class="flex items-center gap-2 pt-1">
-                <input id="set-supply" type="checkbox" onchange="BOC.saveSettings()" class="w-4 h-4 accent-blue-700" />
-                <label for="set-supply" class="font-bold">Enable "Bitumen Supply / Trading" on Public Website</label>
-              </div>
-            </div>
-          </div>
-
-          <!-- Phase 2 Live Firebase Connector -->
-          <div class="bg-white p-5 rounded-xl border-2 border-blue-700 space-y-3 text-xs">
-            <div class="flex justify-between items-center border-b border-slate-200 pb-2">
-              <h3 class="text-base font-black uppercase text-blue-900">🔥 2. Phase 2: Live Firebase Spark Connector (₹0 Free Tier)</h3>
-              <span id="fb-status-pill" class="px-2 py-0.5 rounded bg-amber-200 text-slate-950 font-black text-[10px]">DEMO ADAPTER</span>
-            </div>
-            <p class="text-slate-600 leading-relaxed">
-              Paste your Firebase Web App Config JSON below to switch from Demo Mode to Live Cloud Firestore & Authentication on the free Spark Plan.
-            </p>
-            <textarea id="fb-config-input" rows="4" placeholder='{"apiKey": "...", "authDomain": "...", "projectId": "boc-smart-erp"}' class="w-full p-2 rounded border border-slate-300 mono text-[11px]"></textarea>
-            <div class="flex flex-wrap gap-2">
-              <button type="button" onclick="BOC.saveFirebaseConfig()" class="px-4 py-2 rounded-lg bg-blue-700 text-white font-black cursor-pointer">🔗 Save & Activate Firebase Config</button>
-              <button type="button" onclick="BOC.downloadBackup()" class="px-3.5 py-2 rounded-lg bg-slate-900 text-white font-black cursor-pointer">💾 Download JSON Backup</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Audit Log -->
-        <div class="bg-white p-5 rounded-xl border border-slate-300 space-y-2 text-xs">
-          <h3 class="text-sm font-black uppercase">📜 Immutable Audit Log</h3>
-          <div id="audit-box" class="max-h-48 overflow-y-auto space-y-1 mono text-[11px] bg-slate-950 text-emerald-300 p-3 rounded-lg"></div>
-        </div>
-      </section>
-
     </main>
+
+    <!-- Mobile Bottom ERP Quick Bar -->
+    <div id="erp-mobile-nav" class="fixed bottom-0 left-0 right-0 bg-slate-950 text-white border-t-2 border-amber-400 p-1.5 grid grid-cols-5 gap-1 lg:hidden z-40 text-[10px] font-bold no-print">
+      <button onclick="APP.openErpModule('DASHBOARD')" class="py-2 rounded bg-slate-900 text-center">📊 Dash</button>
+      <button onclick="APP.openErpModule('FREIGHT')" class="py-2 rounded bg-slate-900 text-center">📄 Freight</button>
+      <button onclick="APP.openErpModule('TRIPS')" class="py-2 rounded bg-slate-900 text-center">🚛 Trips</button>
+      <button onclick="APP.openErpModule('USERS')" class="py-2 rounded bg-slate-900 text-center">🔥 Firebase</button>
+      <button onclick="window.scrollTo({top:0,behavior:'smooth'})" class="py-2 rounded bg-amber-400 text-slate-950 font-black text-center">☰ All 17</button>
+    </div>
   </div>
 
   <!-- ========================================================================
-       JAVASCRIPT ENGINE (ZERO FOCUS-LOSS, FULL RBAC, FIREBASE ADAPTER READY)
+       JAVASCRIPT APPLICATION CORE
        ======================================================================== -->
   <script>
-    const STORAGE_KEY = 'BOC_MASTER_ERP_V4';
-    const TRIP_STATUSES = ['Draft', 'Confirmed', 'Vehicle Assigned', 'At Loading Point', 'Loaded', 'Dispatched', 'In Transit', 'At Site', 'Unloading', 'Delivered', 'POD Pending', 'POD Received', 'Settled/Closed'];
+    const APP = (() => {
+      const STORAGE_KEY = 'BOC_SMART_ERP_UNIFIED_V4';
 
-    const MODULES = [
-      { id: 'DASHBOARD', icon: '📊', en: '1. Overview Dashboard', hi: '1. डैशबोर्ड (Overview)', roles: ['ADMIN', 'OPERATIONS', 'ACCOUNTS', 'MAINTENANCE', 'DRIVER', 'CUSTOMER_A', 'CUSTOMER_B'] },
-      { id: 'FREIGHT', icon: '📄', en: '2. Freight Statement (A4)', hi: '2. फ्रेट स्टेटमेंट (A4 बिल)', roles: ['ADMIN', 'ACCOUNTS', 'CUSTOMER_A', 'CUSTOMER_B', 'OPERATIONS'] },
-      { id: 'TRIPS', icon: '🚛', en: '3. Trips & POD Links', hi: '3. ट्रिप और POD प्रूफ', roles: ['ADMIN', 'OPERATIONS', 'ACCOUNTS', 'DRIVER', 'CUSTOMER_A', 'CUSTOMER_B'] },
-      { id: 'LEADS', icon: '📥', en: '4. Leads & Quotations', hi: '4. लीड्स और कोटेशन', roles: ['ADMIN', 'OPERATIONS', 'ACCOUNTS'] },
-      { id: 'ACCOUNTS', icon: '💳', en: '5. Customer Ledger', hi: '5. कस्टमर खाता और बिलिंग', roles: ['ADMIN', 'ACCOUNTS', 'CUSTOMER_A', 'CUSTOMER_B'] },
-      { id: 'DOCS', icon: '🛡️', en: '6. Vehicle Docs & Expiry', hi: '6. गाड़ियां और काग़ज़ात एक्सपायरी', roles: ['ADMIN', 'OPERATIONS', 'MAINTENANCE', 'DRIVER'] },
-      { id: 'MAINTENANCE', icon: '🔧', en: '7. Maintenance & Proof', hi: '7. मेंटेनेंस और बिल प्रूफ', roles: ['ADMIN', 'MAINTENANCE', 'ACCOUNTS'] },
-      { id: 'SETTINGS', icon: '⚙️', en: '8. Settings & Firebase Live', hi: '8. सेटिंग्स और लाइव डेटाबेस', roles: ['ADMIN'] }
-    ];
+      const esc = (str) => String(str ?? '')
+        .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
 
-    const ROLE_HINTS = {
-      ADMIN: 'Owner / MD: Full access to rates, statement locking, maintenance approvals & Firebase config.',
-      OPERATIONS: 'Operations: Can manage trips & weights. Cannot alter commercial rates or lock statements.',
-      ACCOUNTS: 'Accounts: Can edit freight statements, HSD/Cash recoveries & customer ledgers.',
-      MAINTENANCE: 'Fleet & Maintenance: Can log repairs & vehicle docs. Cannot self-approve repairs > ₹15,000.',
-      DRIVER: 'Driver Sandbox: Sees ONLY assigned vehicle (UP85-DEMO-101) trips & uploads POD links.',
-      CUSTOMER_A: 'Customer A Portal: Sees ONLY Demo Highway Contractors Pvt Ltd trips & statements.',
-      CUSTOMER_B: 'Customer B Portal: Strictly isolated tenant. Cannot view Customer A records.'
-    };
+      const fmtINR = (val) => '₹' + (Number(val) || 0).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
-    function defaultState() {
-      return {
+      const TRIP_STATUSES = [
+        'Draft', 'Confirmed', 'Vehicle Assigned', 'At Loading Point', 'Loaded',
+        'Dispatched', 'In Transit', 'At Site', 'Unloading', 'Delivered',
+        'POD Pending', 'POD Received', 'Settled/Closed'
+      ];
+
+      const LEAD_STAGES = ['New', 'Contacted', 'Details Awaited', 'Quotation Sent', 'Negotiation', 'Won', 'Lost'];
+
+      const PUBLIC_PAGES = [
+        { id: 'HOME', en: '1. Home', hi: '1. होम' },
+        { id: 'BITUMEN', en: '2. Bitumen Transport', hi: '2. बिटुमेन ट्रांसपोर्ट' },
+        { id: 'SUPPLY', en: '3. Bitumen Supply', hi: '3. बिटुमेन सप्लाई' },
+        { id: 'BULK_LIQUID', en: '4. Bulk Liquid', hi: '4. बल्क लिक्विड' },
+        { id: 'INDUSTRIES', en: '5. Industries', hi: '5. इंडस्ट्रीज' },
+        { id: 'ROUTES', en: '6. Routes & Coverage', hi: '6. रूट्स और कवरेज' },
+        { id: 'ABOUT', en: '7. About BOC (1990)', hi: '7. हमारे बारे में (1990)' },
+        { id: 'SAFETY', en: '8. Operations & Safety', hi: '8. ऑपरेशंस और सुरक्षा' },
+        { id: 'STORIES', en: '9. Project Stories', hi: '9. प्रोजेक्ट स्टोरीज़' },
+        { id: 'KNOWLEDGE', en: '10. Knowledge Centre', hi: '10. नॉलेज सेंटर' },
+        { id: 'QUOTE', en: '11. Request Quote', hi: '11. कोटेशन मांगें' },
+        { id: 'LOGIN', en: '12. Client Login', hi: '12. क्लाइंट लॉगिन' }
+      ];
+
+      const ERP_MODULES = [
+        { id: 'DASHBOARD', num: 1, en: 'Overview Dashboard', hi: 'ओवरव्यू डैशबोर्ड', roles: ['ADMIN','OPERATIONS','ACCOUNTS','MAINTENANCE','DRIVER','CUSTOMER_A','CUSTOMER_B'] },
+        { id: 'LEADS', num: 2, en: 'Leads & Quotations', hi: 'लीड्स और कोटेशन', roles: ['ADMIN','OPERATIONS','ACCOUNTS'] },
+        { id: 'CUSTOMERS', num: 3, en: 'Customers & Contracts', hi: 'कस्टमर्स और कॉन्ट्रैक्ट्स', roles: ['ADMIN','OPERATIONS','ACCOUNTS'] },
+        { id: 'ORDERS', num: 4, en: 'Orders & Products', hi: 'ऑर्डर्स और प्रोडक्ट्स', roles: ['ADMIN','OPERATIONS','ACCOUNTS','CUSTOMER_A','CUSTOMER_B'] },
+        { id: 'TRIPS', num: 5, en: 'Trip & Dispatch Mgmt', hi: 'ट्रिप और डिस्पैच', roles: ['ADMIN','OPERATIONS','ACCOUNTS','DRIVER','CUSTOMER_A','CUSTOMER_B'] },
+        { id: 'FREIGHT', num: 6, en: 'Freight Statements (A4)', hi: 'फ्रेट स्टेटमेंट (A4)', roles: ['ADMIN','ACCOUNTS','CUSTOMER_A','CUSTOMER_B'] },
+        { id: 'LEDGER', num: 7, en: 'Bitumen & Cost Ledger', hi: 'कस्टमर कॉस्ट लेजर', roles: ['ADMIN','ACCOUNTS','CUSTOMER_A','CUSTOMER_B'] },
+        { id: 'INVOICES', num: 8, en: 'Invoices, Receipts & Dues', hi: 'इनवॉइस और रसीदें', roles: ['ADMIN','ACCOUNTS','CUSTOMER_A','CUSTOMER_B'] },
+        { id: 'EXPENSES', num: 9, en: 'Expenses & Advances', hi: 'खर्चे और एडवांस (HSD)', roles: ['ADMIN','OPERATIONS','ACCOUNTS'] },
+        { id: 'FLEET', num: 10, en: 'Fleet, Drivers & Docs', hi: 'गाड़ियां और ड्राइवर', roles: ['ADMIN','OPERATIONS','MAINTENANCE','DRIVER'] },
+        { id: 'GPS', num: 11, en: 'GPS / Map Tracking', hi: 'GPS / लोकेशन ट्रैकिंग', roles: ['ADMIN','OPERATIONS','DRIVER','CUSTOMER_A','CUSTOMER_B'] },
+        { id: 'MAINTENANCE', num: 12, en: 'Maintenance & Workshop', hi: 'मेंटेनेंस और पार्ट्स', roles: ['ADMIN','MAINTENANCE'] },
+        { id: 'DOCS', num: 13, en: 'Compliance & Alerts', hi: 'कम्प्लायंस और अलर्ट्स', roles: ['ADMIN','OPERATIONS','MAINTENANCE'] },
+        { id: 'REPORTS', num: 14, en: 'Reports & AI Assistant', hi: 'रिपोर्ट्स और AI सहायक', roles: ['ADMIN','ACCOUNTS'] },
+        { id: 'PORTAL', num: 15, en: 'Customer Portal Mgmt', hi: 'कस्टमर पोर्टल व्यू', roles: ['ADMIN','ACCOUNTS','CUSTOMER_A','CUSTOMER_B'] },
+        { id: 'USERS', num: 16, en: 'Settings & Firebase Live', hi: 'सेटिंग्स और Firebase कनेक्ट', roles: ['ADMIN'] },
+        { id: 'AUDIT', num: 17, en: 'Audit Log, Backup & Cost', hi: 'ऑडिट लॉग और बैकअप', roles: ['ADMIN'] }
+      ];
+
+      const ROLE_DESCRIPTIONS = {
+        ADMIN: 'Owner / Admin (MD): Full access to all 17 modules, rate approvals, high-value maintenance sign-off & Firebase setup.',
+        OPERATIONS: 'Operations & Dispatch: Create trips, assign vehicles/drivers, enter scale weights & POD. Cannot edit commercial rates.',
+        ACCOUNTS: 'Accounts & Commercial: Manage contracts, freight statements, invoices, receipts & customer ledgers.',
+        MAINTENANCE: 'Fleet & Maintenance: Manage workshop work orders, parts stock & vehicle docs. Cannot self-approve repairs > ₹15,000.',
+        DRIVER: 'Driver Field User (UP85-DEMO-101): Sees only assigned trip, updates status, logs odometer/weights & Restricted Drive POD link.',
+        CUSTOMER_A: 'Customer A Portal (Demo Highway Contractors Pvt Ltd): Sees only Customer A trips, approved statements, invoices & query desk.',
+        CUSTOMER_B: 'Customer B Portal (Demo Infra Roads Ltd): Isolated organisation account. Zero access to Customer A data.'
+      };
+
+      const DEFAULT_STATE = {
         lang: 'en',
-        exp: 'PUBLIC',
+        shell: 'PUBLIC',
         pubPage: 'HOME',
         role: 'ADMIN',
-        mod: 'FREIGHT',
+        erpModule: 'FREIGHT',
         firebaseConfigRaw: '',
         company: {
           name: 'Bharat Oil Carrier (BOC)',
+          since: 1990,
+          tagline: 'Your Trust, Our Commitment — Powering Every Mile!',
           address: 'Gate No. 9, Mathura Refinery, Mathura, Uttar Pradesh 281005',
-          phones: '8077703137, 9058374446',
           email: 'bharatoilcarrier@gmail.com',
-          gstin: 'UNVERIFIED (Admin Configurable)',
-          enableSupply: false
+          phones: '8077703137, 9058374446',
+          gstin: 'UNVERIFIED (Admin to enter before production)',
+          enableBitumenSupply: false,
+          approvedBulkLiquids: ['Bitumen VG-10', 'Bitumen VG-30', 'Bitumen VG-40', 'CRMB-55 / CRMB-60', 'Bitumen Emulsion'],
+          supportedCorridors: [
+            'Mathura Refinery → Uttarakhand (Haldwani, Gairsain, Karnaprayag, Dehradun, Haridwar)',
+            'Mathura Refinery → Uttar Pradesh (Agra, Aligarh, Bareilly, Lucknow, Kanpur, Jhansi, Gorakhpur)',
+            'Mathura Refinery → NCR, Haryana, Rajasthan & MP Highway Packages (Subject to availability)'
+          ],
+          highValueMaintLimit: 15000
         },
-        stmt: {
-          version: '1.0',
-          isLocked: false,
+        stmtConfig: {
           billableBasis: 'LOADED',
           routeTitle: 'Mathura to Gairsain Freight (DEMO)',
           slLabel: 'S/L',
+          hideSl: false,
           seLabel: 'S/E Amt (₹)',
           seRule: 'DEDUCT',
-          simulateMismatch: false,
-          rows: [
-            { sno: 1, date: '02/10/2026', vehicleNo: 'UP85-DEMO-101', customerId: 'CUST-DEMO-A', loadedKg: 22500, unloadedKg: 22460, ratePerMt: 4500, seAmt: 0, hsdQty: 120, hsdAmt: 10800, cash: 5000, plantHsdQty: 50, plantHsdAmt: 4500, plantCash: 2000, site: 'Gairsain Project Site (DEMO)', status: 'Delivered', podLink: 'https://drive.google.com/drive/folders/restricted-pod-demo-1' },
-            { sno: 2, date: '05/10/2026', vehicleNo: 'UP85-DEMO-102', customerId: 'CUST-DEMO-A', loadedKg: 24800, unloadedKg: 24800, ratePerMt: 4500, seAmt: 0, hsdQty: 140, hsdAmt: 12600, cash: 6000, plantHsdQty: 0, plantHsdAmt: 0, plantCash: 3000, site: 'Gairsain Project Site (DEMO)', status: 'In Transit', podLink: '' },
-            { sno: 3, date: '09/10/2026', vehicleNo: 'UP85-DEMO-101', customerId: 'CUST-DEMO-A', loadedKg: 21950, unloadedKg: 21900, ratePerMt: 4500, seAmt: 500, hsdQty: 110, hsdAmt: 9900, cash: 4000, plantHsdQty: 40, plantHsdAmt: 3600, plantCash: 1500, site: 'Karnaprayag Base (DEMO)', status: 'POD Pending', podLink: '' }
-          ]
+          isLocked: false,
+          version: '1.0',
+          simulateMismatch: false
         },
-        leads: [
-          { id: 'LEAD-101', company: 'Shivalik Road Builders [DEMO]', phone: '9800000001', product: 'VG-30 Bitumen Bulk Tanker', qty: '45 MT', origin: 'Mathura Refinery', dest: 'Haldwani (263139)', stage: 'Quotation Sent' }
+        rows: [
+          { id: 101, sno: 1, date: '02/10/2026', vehicleNo: 'UP85-DEMO-101', driverName: 'Ramesh Kumar (DEMO)', customerId: 'CUST-DEMO-A', loadedKg: 22500, unloadedKg: 22460, ratePerMt: 4500, slCustom: '40 kg', seAmt: 0, hsdQty: 120, hsdAmt: 10800, cash: 5000, plantHsdQty: 50, plantHsdAmt: 4500, plantCash: 2000, site: 'Gairsain Project Site (DEMO)', status: 'Delivered', wbTicket: 'WB-MTR-8821', podLink: 'https://drive.google.com/drive/folders/restricted-pod-demo-1', odoKm: 142850, internalCost: 72000 },
+          { id: 102, sno: 2, date: '05/10/2026', vehicleNo: 'UP85-DEMO-102', driverName: 'Suresh Yadav (DEMO)', customerId: 'CUST-DEMO-A', loadedKg: 24800, unloadedKg: 24800, ratePerMt: 4500, slCustom: '0 kg', seAmt: 0, hsdQty: 140, hsdAmt: 12600, cash: 6000, plantHsdQty: 0, plantHsdAmt: 0, plantCash: 3000, site: 'Gairsain Project Site (DEMO)', status: 'In Transit', wbTicket: 'WB-MTR-8894', podLink: '', odoKm: 98410, internalCost: 78500 },
+          { id: 103, sno: 3, date: '09/10/2026', vehicleNo: 'UP85-DEMO-101', driverName: 'Ramesh Kumar (DEMO)', customerId: 'CUST-DEMO-A', loadedKg: 21950, unloadedKg: 21900, ratePerMt: 4500, slCustom: '50 kg', seAmt: 500, hsdQty: 110, hsdAmt: 9900, cash: 4000, plantHsdQty: 40, plantHsdAmt: 3600, plantCash: 1500, site: 'Karnaprayag Base (DEMO)', status: 'POD Pending', wbTicket: 'WB-MTR-9012', podLink: '', odoKm: 143620, internalCost: 70200 }
+        ],
+        contracts: [
+          { id: 'CTR-DEMO-01', customerId: 'CUST-DEMO-A', customerName: 'Demo Highway Contractors Pvt Ltd [DEMO]', route: 'Mathura Refinery to Gairsain / Karnaprayag', product: 'VG-30 Bulk Bitumen', ratePerMt: 4500, basis: 'Loaded Weight (MT)', toleranceKg: 50, validTill: '31/03/2027', status: 'Active' }
+        ],
+        invoices: [
+          { id: 'INV-DEMO-2627-014', customerId: 'CUST-DEMO-A', customerName: 'Demo Highway Contractors Pvt Ltd [DEMO]', date: '15/10/2026', grossAmt: 311625, recoveries: 63400, netPayable: 248225, paidAmt: 100000, gstMode: 'GTA / Configurable by CA', isLocked: true, status: 'Partially Paid' }
+        ],
+        vehicles: [
+          { id: 'V1', regNo: 'UP85-DEMO-101', type: 'Owned Insulated Bitumen Tanker', capacityKg: 25000, driver: 'Ramesh Kumar (DEMO)', driverPhone: '9800000101', gpsState: 'GPS NOT CONNECTED (Manual Mode)', ais140Status: 'UNVERIFIED' },
+          { id: 'V2', regNo: 'UP85-DEMO-102', type: 'Attached Bulk Bitumen Tanker', capacityKg: 25000, driver: 'Suresh Yadav (DEMO)', driverPhone: '9800000102', gpsState: 'GPS NOT CONNECTED (Manual Mode)', ais140Status: 'UNVERIFIED' }
         ],
         docs: [
-          { id: 'DOC-1', vehicleNo: 'UP85-DEMO-101', type: 'Insurance Policy', docNo: 'INS-DEMO-991', expiry: '22/10/2026', days: 4, verified: 'VERIFIED' },
-          { id: 'DOC-2', vehicleNo: 'UP85-DEMO-101', type: 'Fitness Certificate', docNo: 'FIT-DEMO-442', expiry: '30/10/2026', days: 12, verified: 'VERIFIED' },
-          { id: 'DOC-3', vehicleNo: 'UP85-DEMO-102', type: 'National Permit', docNo: 'NP-DEMO-118', expiry: '10/11/2026', days: 23, verified: 'UNVERIFIED' },
-          { id: 'DOC-4', vehicleNo: 'UP85-DEMO-102', type: 'Pollution (PUC)', docNo: 'PUC-DEMO-009', expiry: '01/10/2026', days: -17, verified: 'EXPIRED' }
+          { id: 'DOC-1', vehicleNo: 'UP85-DEMO-101', type: 'Insurance Policy', docNo: 'INS-DEMO-991', expiry: '22/10/2026', days: 4, status: 'VERIFIED' },
+          { id: 'DOC-2', vehicleNo: 'UP85-DEMO-101', type: 'Fitness Certificate', docNo: 'FIT-DEMO-442', expiry: '30/10/2026', days: 12, status: 'VERIFIED' },
+          { id: 'DOC-3', vehicleNo: 'UP85-DEMO-102', type: 'National Permit', docNo: 'NP-DEMO-118', expiry: '10/11/2026', days: 23, status: 'UNVERIFIED' },
+          { id: 'DOC-4', vehicleNo: 'UP85-DEMO-102', type: 'Pollution (PUC)', docNo: 'PUC-DEMO-009', expiry: '01/10/2026', days: -17, status: 'EXPIRED' }
         ],
         workOrders: [
-          { id: 'WO-DEMO-1', vehicleNo: 'UP85-DEMO-101', issue: 'Rear Axle Hub Seal & Brake Liner Overhaul', cost: 18400, createdBy: 'MAINTENANCE', status: 'Awaiting MD Approval', evidence: 'Restricted Drive Link: Before Photo + Vendor Bill #882' },
-          { id: 'WO-DEMO-2', vehicleNo: 'UP85-DEMO-102', issue: 'Routine Engine Oil & Filter Service', cost: 6200, createdBy: 'MAINTENANCE', status: 'Approved & Closed', evidence: 'Restricted Drive Link: Odometer Photo + Receipt' }
+          { id: 'WO-DEMO-101', vehicleNo: 'UP85-DEMO-101', fault: 'Rear Axle Hub Seal & Brake Liner Replacement', odo: '1,42,850 km', partsAmt: 14200, labourAmt: 4200, totalAmt: 18400, enteredBy: 'MAINTENANCE', status: 'Awaiting MD Approval', evidence: 'Restricted Drive Link: Before Photo + Old Part + Bill #882' },
+          { id: 'WO-DEMO-102', vehicleNo: 'UP85-DEMO-102', fault: 'Routine Engine Oil & Filter Service', odo: '98,200 km', partsAmt: 4800, labourAmt: 1400, totalAmt: 6200, enteredBy: 'MAINTENANCE', status: 'Approved & Closed', evidence: 'Restricted Drive Link: Odometer Photo + Bill #419' }
         ],
-        audit: [
-          '18/10/2026 11:00 — [SYSTEM] Initialized BOC Master ERP (Phase 1 + Phase 2 Ready).',
-          '18/10/2026 11:02 — [ADMIN] Verified Mathura to Gairsain Freight Statement (₹2,48,225.00).'
+        partsStock: [
+          { id: 'P1', name: 'Bitumen Tanker Valve Gasket Set', partNo: 'BVG-204', inStock: 8, minAlert: 3, lastTx: 'Issued 2 units to UP85-DEMO-101' },
+          { id: 'P2', name: 'Heavy Duty Brake Liner Kit', partNo: 'HBL-901', inStock: 2, minAlert: 4, lastTx: 'LOW STOCK ALERT — Reorder needed' }
+        ],
+        leads: [
+          { id: 'LEAD-DEMO-1', company: 'Shivalik Road Builders [DEMO]', phone: '9800000001', product: 'VG-30 Bulk Bitumen Transport', qty: '45 MT', origin: 'Mathura Refinery', dest: 'Haldwani (263139)', stage: 'New', source: 'Website Direct', date: '18/10/2026' }
+        ],
+        portalQueries: [
+          { id: 'QRY-DEMO-01', customerId: 'CUST-DEMO-A', refTrip: 'UP85-DEMO-101 (09/10/2026)', subject: 'Request signed copy of Karnaprayag weighbridge slip', status: 'Open — Operations Reviewing', date: '17/10/2026' }
+        ],
+        auditLogs: [
+          '18/10/2026 10:00 — [SYSTEM] Seeded BOC Smart ERP v4.0 Master Demo Repository.',
+          '18/10/2026 10:05 — [ADMIN] Verified Mathura to Gairsain Freight Statement (69.250 MT = ₹3,11,625.00).'
         ]
       };
-    }
 
-    const BOC = {
-      state: null,
+      let state = loadState();
 
-      init() {
+      function loadState() {
         try {
           const raw = localStorage.getItem(STORAGE_KEY);
-          this.state = raw ? { ...defaultState(), ...JSON.parse(raw) } : defaultState();
+          if (!raw) return JSON.parse(JSON.stringify(DEFAULT_STATE));
+          const parsed = JSON.parse(raw);
+          return {
+            ...DEFAULT_STATE,
+            ...parsed,
+            company: { ...DEFAULT_STATE.company, ...(parsed.company || {}) },
+            stmtConfig: { ...DEFAULT_STATE.stmtConfig, ...(parsed.stmtConfig || {}) }
+          };
         } catch (e) {
-          this.state = defaultState();
+          return JSON.parse(JSON.stringify(DEFAULT_STATE));
         }
-        this.renderAll();
-      },
+      }
 
-      save() {
-        try { localStorage.setItem(STORAGE_KEY, JSON.stringify(this.state)); } catch (e) {}
-      },
+      function saveState() {
+        try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch (e) {}
+      }
 
-      log(action) {
+      function addAudit(msg) {
         const t = new Date().toLocaleTimeString('en-IN', { hour12: false });
-        this.state.audit.unshift(`18/10/2026 ${t} — [${this.state.role}] ${action}`);
-        this.save();
-      },
+        state.auditLogs.unshift(`18/10/2026 ${t} — [${state.role}] ${msg}`);
+        saveState();
+      }
 
-      fmtINR(n) {
-        return '₹' + Number(n || 0).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-      },
+      function getPermittedRows() {
+        if (state.role === 'DRIVER') return state.rows.filter(r => r.vehicleNo === 'UP85-DEMO-101');
+        if (state.role === 'CUSTOMER_A') return state.rows.filter(r => r.customerId === 'CUST-DEMO-A');
+        if (state.role === 'CUSTOMER_B') return state.rows.filter(r => r.customerId === 'CUST-DEMO-B');
+        return state.rows;
+      }
 
-      resetDemo() {
-        localStorage.removeItem(STORAGE_KEY);
-        this.state = defaultState();
-        this.state.exp = 'ERP';
-        this.renderAll();
-      },
+      function calcBillableMt(row) {
+        const lMt = Number((row.loadedKg / 1000).toFixed(3));
+        const uMt = Number((row.unloadedKg / 1000).toFixed(3));
+        if (state.stmtConfig.billableBasis === 'UNLOADED') return uMt;
+        if (state.stmtConfig.billableBasis === 'FIXED_22_5') return 22.500;
+        return lMt;
+      }
 
-      toggleLang() {
-        this.state.lang = this.state.lang === 'en' ? 'hi' : 'en';
-        this.save();
-        this.renderAll();
-      },
+      function computeStatementSummary(rowsList) {
+        let totLoadedKg = 0, totUnloadedKg = 0, totBillableMt = 0, totFreight = 0;
+        let totHsdQty = 0, totHsdAmt = 0, totCash = 0;
+        let totPlantHsdQty = 0, totPlantHsdAmt = 0, totPlantCash = 0, totSeAmt = 0;
 
-      toggleExp() {
-        this.state.exp = this.state.exp === 'PUBLIC' ? 'ERP' : 'PUBLIC';
-        this.save();
-        this.renderAll();
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      },
-
-      setPubPage(p) {
-        this.state.pubPage = p;
-        this.save();
-        this.renderPublic();
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      },
-
-      openErp(modId) {
-        this.state.exp = 'ERP';
-        if (modId) this.state.mod = modId;
-        this.save();
-        this.renderAll();
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      },
-
-      setRole(r) {
-        this.state.role = r;
-        const allowed = MODULES.filter(m => m.roles.includes(r)).map(m => m.id);
-        if (!allowed.includes(this.state.mod)) this.state.mod = allowed[0] || 'DASHBOARD';
-        this.log(`Switched active test role to ${r}`);
-        this.renderAll();
-      },
-
-      visibleRows() {
-        const r = this.state.role;
-        const rows = this.state.stmt.rows;
-        if (r === 'DRIVER') return rows.filter(x => x.vehicleNo === 'UP85-DEMO-101');
-        if (r === 'CUSTOMER_A') return rows.filter(x => x.customerId === 'CUST-DEMO-A');
-        if (r === 'CUSTOMER_B') return rows.filter(x => x.customerId === 'CUST-DEMO-B');
-        return rows;
-      },
-
-      canEditStmt() {
-        if (this.state.stmt.isLocked) return false;
-        return this.state.role === 'ADMIN' || this.state.role === 'ACCOUNTS';
-      },
-
-      onCellEdit(sno, field, val) {
-        if (!this.canEditStmt()) return;
-        const row = this.state.stmt.rows.find(x => x.sno === sno);
-        if (!row) return;
-        row[field] = Math.max(0, Number(val) || 0);
-        this.save();
-
-        const lMt = (row.loadedKg / 1000).toFixed(3);
-        const uMt = (row.unloadedKg / 1000).toFixed(3);
-        const bMt = this.state.stmt.billableBasis === 'LOADED' ? Number(lMt) : Number(uMt);
-        const fr = Number((bMt * row.ratePerMt).toFixed(2));
-        const sl = Math.max(0, row.loadedKg - row.unloadedKg);
-
-        const elL = document.getElementById(`lmt-${sno}`);
-        const elU = document.getElementById(`umt-${sno}`);
-        const elSl = document.getElementById(`sl-${sno}`);
-        const elFr = document.getElementById(`fr-${sno}`);
-        if (elL) elL.textContent = `= ${lMt} MT`;
-        if (elU) elU.textContent = `= ${uMt} MT`;
-        if (elSl) elSl.textContent = `${sl} kg`;
-        if (elFr) elFr.textContent = this.fmtINR(fr);
-
-        this.updateStmtSummaryOnly();
-      },
-
-      calcSummary() {
-        const rows = this.visibleRows();
-        const st = this.state.stmt;
-        let lKg = 0, uKg = 0, fr = 0, hQty = 0, hAmt = 0, cash = 0, pQty = 0, pAmt = 0, pCash = 0, se = 0;
-        rows.forEach(r => {
-          const lMt = Number((r.loadedKg / 1000).toFixed(3));
-          const uMt = Number((r.unloadedKg / 1000).toFixed(3));
-          const bMt = st.billableBasis === 'LOADED' ? lMt : uMt;
-          const rowFr = Number((bMt * r.ratePerMt).toFixed(2));
-          lKg += r.loadedKg; uKg += r.unloadedKg; fr += rowFr;
-          hQty += r.hsdQty; hAmt += r.hsdAmt; cash += r.cash;
-          pQty += r.plantHsdQty; pAmt += r.plantHsdAmt; pCash += r.plantCash;
-          se += r.seAmt;
+        rowsList.forEach(r => {
+          const bMt = calcBillableMt(r);
+          const fr = Number((bMt * r.ratePerMt).toFixed(2));
+          totLoadedKg += Number(r.loadedKg) || 0;
+          totUnloadedKg += Number(r.unloadedKg) || 0;
+          totBillableMt += bMt;
+          totFreight += fr;
+          totHsdQty += Number(r.hsdQty) || 0;
+          totHsdAmt += Number(r.hsdAmt) || 0;
+          totCash += Number(r.cash) || 0;
+          totPlantHsdQty += Number(r.plantHsdQty) || 0;
+          totPlantHsdAmt += Number(r.plantHsdAmt) || 0;
+          totPlantCash += Number(r.plantCash) || 0;
+          totSeAmt += Number(r.seAmt) || 0;
         });
-        const hsdCash = hAmt + cash;
-        const plantRec = pAmt + pCash;
-        const seSigned = st.seRule === 'DEDUCT' ? -se : st.seRule === 'ADD' ? se : 0;
-        const net = fr - hsdCash - plantRec + seSigned;
-        return { count: rows.length, lKg, lMt: (lKg/1000).toFixed(3), uKg, uMt: (uKg/1000).toFixed(3), fr, hQty, hAmt, cash, pQty, pAmt, pCash, se, hsdCash, plantRec, seSigned, net };
-      },
 
-      updateStmtSummaryOnly() {
-        const t = this.calcSummary();
-        const st = this.state.stmt;
-        const tf = document.getElementById('stmt-tfoot');
-        if (tf) {
-          tf.innerHTML = `
-            <tr>
-              <td colspan="3" class="p-1.5 border border-slate-400">TOTAL (${t.count} TRIPS)</td>
-              <td class="p-1.5 border border-slate-400 text-right">${t.lKg.toLocaleString('en-IN')} kg<br><span class="text-[10px] text-blue-800">(${t.lMt} MT)</span></td>
-              <td class="p-1.5 border border-slate-400 text-right">${t.uKg.toLocaleString('en-IN')} kg<br><span class="text-[10px]">(${t.uMt} MT)</span></td>
-              <td class="p-1.5 border border-slate-400 text-right">—</td>
-              <td class="p-1.5 border border-slate-400 text-center">${Math.max(0, t.lKg - t.uKg)} kg</td>
-              <td class="p-1.5 border border-slate-400 text-right">${this.fmtINR(t.se)}</td>
-              <td class="p-1.5 border border-slate-400 text-right">${t.hQty} L</td>
-              <td class="p-1.5 border border-slate-400 text-right">${this.fmtINR(t.hAmt)}</td>
-              <td class="p-1.5 border border-slate-400 text-right">${this.fmtINR(t.cash)}</td>
-              <td class="p-1.5 border border-slate-400 text-right">${t.pQty} L</td>
-              <td class="p-1.5 border border-slate-400 text-right">${this.fmtINR(t.pAmt)}</td>
-              <td class="p-1.5 border border-slate-400 text-right">${this.fmtINR(t.pCash)}</td>
-              <td class="p-1.5 border border-slate-400 font-sans">All Sites</td>
-              <td class="p-1.5 border border-slate-400 text-right text-blue-950 bg-blue-100">${this.fmtINR(t.fr)}</td>
-            </tr>
+        const enrouteRec = totHsdAmt + totCash;
+        const plantRec = totPlantHsdAmt + totPlantCash;
+        const rule = state.stmtConfig.seRule;
+        const seSigned = rule === 'DEDUCT' ? -totSeAmt : rule === 'ADD' ? totSeAmt : 0;
+        const netPayable = totFreight - enrouteRec - plantRec + seSigned;
+
+        return {
+          totLoadedKg,
+          totLoadedMt: (totLoadedKg / 1000).toFixed(3),
+          totUnloadedKg,
+          totUnloadedMt: (totUnloadedKg / 1000).toFixed(3),
+          totBillableMt: totBillableMt.toFixed(3),
+          totFreight,
+          totHsdQty,
+          totHsdAmt,
+          totCash,
+          totPlantHsdQty,
+          totPlantHsdAmt,
+          totPlantCash,
+          totSeAmt,
+          enrouteRec,
+          plantRec,
+          seSigned,
+          netPayable
+        };
+      }
+
+      // Render Public Website (12 Pages)
+      function renderPublicSite() {
+        const isHi = state.lang === 'hi';
+        document.getElementById('hdr-comp-name').textContent = state.company.name;
+        document.getElementById('hdr-comp-tagline').textContent = `“${state.company.tagline}”`;
+        document.getElementById('ftr-comp-name').textContent = state.company.name;
+        document.getElementById('ftr-comp-addr').textContent = state.company.address;
+        document.getElementById('ftr-comp-phones').textContent = `Phone / WhatsApp: ${state.company.phones}`;
+        document.getElementById('ftr-comp-email').textContent = `Email: ${state.company.email}`;
+
+        const navEl = document.getElementById('pub-nav-container');
+        navEl.innerHTML = PUBLIC_PAGES.map(p => {
+          const lbl = isHi ? p.hi : p.en;
+          const badge = p.id === 'SUPPLY' ? (state.company.enableBitumenSupply ? ' (ON)' : ' (OFF)') : '';
+          const active = state.pubPage === p.id;
+          return `
+            <button type="button" onclick="APP.setPubPage('${p.id}')" class="px-3 py-1.5 rounded-lg whitespace-nowrap transition cursor-pointer ${active ? 'bg-amber-400 text-slate-950 font-black shadow' : 'text-slate-300 hover:bg-slate-800'}">
+              ${esc(lbl + badge)}
+            </button>
+          `;
+        }).join('');
+
+        const vp = document.getElementById('pub-page-viewport');
+        const p = state.pubPage;
+
+        if (p === 'HOME') {
+          vp.innerHTML = `
+            <section class="bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 text-white py-12 sm:py-16 border-b-4 border-amber-400">
+              <div class="max-w-7xl mx-auto px-4 sm:px-6 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                <div class="lg:col-span-7 space-y-5">
+                  <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-400/15 border border-amber-400/40 text-amber-300 text-xs font-bold">
+                    <span>📍 ${esc(state.company.address)}</span>
+                  </div>
+                  <h1 class="text-3xl sm:text-5xl font-black leading-tight tracking-tight">
+                    ${isHi ? 'मथुरा रिफाइनरी से प्रोजेक्ट साइट तक विश्वसनीय बिटुमेन और बल्क-लिक्विड ट्रांसपोर्टेशन' : 'Reliable Refinery-to-Site Bitumen & Bulk-Liquid Transportation'}
+                  </h1>
+                  <p class="text-amber-400 font-extrabold text-base sm:text-lg">“${esc(state.company.tagline)}”</p>
+                  <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+                    ${isHi
+                      ? '1990 से हाईवे EPC कॉन्ट्रैक्टर्स, सड़क निर्माण कंपनियों, हॉट-मिक्स प्लांट्स और बिटुमेन डीलर्स के लिए समर्पित ट्रांसपोर्ट सेवा। हर ट्रिप में सटीक धर्मकांटा वजन (kg और MT), स्पष्ट डिलीवरी डॉक्यूमेंटेशन (POD) और A4 फ्रेट स्टेटमेंट।'
+                      : 'Operating since 1990 for B2B infrastructure contractors, road construction companies, hot-mix plants, and project logistics coordinators. Every dispatch is backed by canonical weighbridge records (kg & MT) and transparent A4 trip settlement statements.'}
+                  </p>
+                  <div class="flex flex-wrap gap-3 pt-2">
+                    <button type="button" onclick="APP.setPubPage('QUOTE')" class="px-6 py-3.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-black text-sm shadow-lg cursor-pointer">
+                      📋 ${isHi ? 'ट्रांसपोर्ट कोटेशन मांगें' : 'Request a Transport Quote'}
+                    </button>
+                    <a href="tel:8077703137" class="px-5 py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm">
+                      📞 ${isHi ? 'ऑपरेशंस से बात करें: 8077703137' : 'Talk to Operations: 8077703137'}
+                    </a>
+                    <button type="button" onclick="APP.openShell('ERP', 'FREIGHT')" class="px-5 py-3.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-600 text-white font-bold text-sm cursor-pointer">
+                      📄 ${isHi ? 'A4 फ्रेट स्टेटमेंट देखें' : 'Preview A4 Freight Statement'}
+                    </button>
+                  </div>
+                </div>
+                <div class="lg:col-span-5 bg-slate-900 border-2 border-slate-700 rounded-2xl p-6 space-y-4 shadow-2xl">
+                  <div class="flex items-center justify-between border-b border-slate-700 pb-3">
+                    <span class="text-xs font-black uppercase text-amber-400">Verified Business Fact Sheet</span>
+                    <span class="text-xs bg-emerald-500/20 text-emerald-300 px-2.5 py-0.5 rounded font-bold">Since ${state.company.since}</span>
+                  </div>
+                  <div class="space-y-2 text-xs sm:text-sm">
+                    <div class="flex justify-between py-1.5 border-b border-slate-800"><span class="text-slate-400">Business:</span><span class="font-bold text-right">${esc(state.company.name)}</span></div>
+                    <div class="flex justify-between py-1.5 border-b border-slate-800"><span class="text-slate-400">Refinery Gate:</span><span class="font-bold text-right">Gate No. 9, Mathura Refinery</span></div>
+                    <div class="flex justify-between py-1.5 border-b border-slate-800"><span class="text-slate-400">Primary Service:</span><span class="font-bold text-right">Bitumen &amp; Bulk-Liquid Transport</span></div>
+                    <div class="flex justify-between py-1.5 border-b border-slate-800"><span class="text-slate-400">Bitumen Supply Page:</span><span class="font-bold text-amber-300 text-right">${state.company.enableBitumenSupply ? 'ENABLED' : 'OFF (Transport Only)'}</span></div>
+                    <div class="flex justify-between py-1.5 border-b border-slate-800"><span class="text-slate-400">Phones / WhatsApp:</span><span class="font-bold text-emerald-300 text-right">${esc(state.company.phones)}</span></div>
+                    <div class="flex justify-between py-1.5"><span class="text-slate-400">Email:</span><span class="font-bold text-right">${esc(state.company.email)}</span></div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <section class="max-w-7xl mx-auto px-4 sm:px-6 py-10 space-y-6">
+              <div class="flex flex-wrap justify-between items-end gap-2 border-b-2 border-slate-300 pb-3">
+                <div>
+                  <span class="text-xs font-black uppercase text-blue-700">12-Page Complete B2B Experience</span>
+                  <h2 class="text-2xl font-black text-slate-900">Explore Bharat Oil Carrier Services &amp; Documentation</h2>
+                </div>
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
+                ${PUBLIC_PAGES.slice(1).map(pg => `
+                  <div onclick="APP.setPubPage('${pg.id}')" class="bg-white p-4 rounded-xl border-2 border-slate-200 hover:border-blue-600 shadow-sm cursor-pointer transition flex flex-col justify-between gap-3">
+                    <div>
+                      <div class="font-black text-sm text-slate-900">${esc(isHi ? pg.hi : pg.en)}</div>
+                      <p class="text-slate-600 mt-1">Verified BOC information, operational controls, and direct quote CTA.</p>
+                    </div>
+                    <span class="font-extrabold text-blue-700">Open Page →</span>
+                  </div>
+                `).join('')}
+              </div>
+            </section>
+          `;
+        } else if (p === 'BITUMEN') {
+          vp.innerHTML = `
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 py-10 space-y-6">
+              <div class="bg-slate-900 text-white p-6 sm:p-8 rounded-2xl space-y-2">
+                <span class="text-xs font-black uppercase text-amber-400">Page 2 • Core Service Line</span>
+                <h1 class="text-2xl sm:text-4xl font-black">Bitumen Transportation (Refinery-to-Project-Site)</h1>
+                <p class="text-sm text-slate-300 max-w-3xl">Dedicated insulated tanker dispatch from Gate No. 9, Mathura Refinery to road construction sites and hot-mix plants with complete loading/unloading weighbridge records.</p>
+              </div>
+              <button onclick="APP.setPubPage('QUOTE')" class="px-5 py-2.5 rounded-xl bg-blue-700 text-white font-black text-xs cursor-pointer">Request Transport Quote →</button>
+            </div>
+          `;
+        } else if (p === 'SUPPLY') {
+          vp.innerHTML = `
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 py-10 space-y-6">
+              ${state.company.enableBitumenSupply ? `
+                <div class="bg-emerald-950 text-white p-6 sm:p-8 rounded-2xl border-2 border-emerald-500 space-y-3">
+                  <span class="px-2.5 py-1 rounded bg-emerald-400 text-slate-950 text-xs font-black uppercase">Page 3 • Bitumen Supply &amp; Trading (ENABLED BY ADMIN)</span>
+                  <h1 class="text-2xl sm:text-3xl font-black">Bitumen Supply + Delivered Tanker Logistics</h1>
+                  <p class="text-sm text-emerald-100">BOC Admin has enabled Bitumen Supply inquiries (VG-10, VG-30, VG-40, CRMB) subject to refinery price validity and confirmed availability.</p>
+                  <button onclick="APP.setPubPage('QUOTE')" class="px-5 py-2.5 rounded-xl bg-amber-400 text-slate-950 font-black text-xs cursor-pointer">Request Supply + Transport Quote →</button>
+                </div>
+              ` : `
+                <div class="bg-white p-6 sm:p-8 rounded-2xl border-2 border-amber-400 space-y-4">
+                  <span class="px-2.5 py-1 rounded bg-amber-100 text-amber-950 border border-amber-400 text-xs font-black uppercase">Page 3 • Optional Service Currently Switched OFF</span>
+                  <h1 class="text-2xl font-black text-slate-900">Bitumen Supply / Trading (Switched OFF Until Confirmed)</h1>
+                  <p class="text-sm text-slate-600">Switched OFF until BOC confirms current product sourcing, price validity, and payment terms in ERP Module 16.</p>
+                  <button onclick="APP.setPubPage('QUOTE')" class="px-5 py-2.5 rounded-xl bg-blue-700 text-white font-black text-xs cursor-pointer">Request Transport-Only Quote →</button>
+                </div>
+              `}
+            </div>
+          `;
+        } else if (p === 'QUOTE') {
+          vp.innerHTML = `
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 py-10">
+              <div class="bg-white rounded-2xl border-2 border-blue-700 shadow-xl p-6 sm:p-8 space-y-6">
+                <div class="flex flex-wrap justify-between items-center gap-2 border-b border-slate-200 pb-4">
+                  <div>
+                    <span class="text-xs font-black uppercase text-blue-700">Page 11 • Mobile-First Lead Capture</span>
+                    <h1 class="text-2xl font-black text-slate-900">Contact &amp; Request a Transport Quote</h1>
+                  </div>
+                  <span class="text-xs font-bold bg-amber-100 text-amber-950 border border-amber-400 px-3 py-1 rounded">Saves to ERP Module 2 (Leads Inbox)</span>
+                </div>
+                <div id="quote-confirm-banner" class="hidden p-4 rounded-xl bg-emerald-50 border-2 border-emerald-600 text-emerald-950 text-xs sm:text-sm font-bold flex flex-wrap justify-between items-center gap-2">
+                  <span id="quote-confirm-text"></span>
+                  <button type="button" onclick="APP.openShell('ERP', 'LEADS')" class="px-3.5 py-2 rounded-lg bg-emerald-700 text-white text-xs font-black cursor-pointer">Open ERP Leads Inbox →</button>
+                </div>
+                <form onsubmit="APP.submitPublicQuote(event)" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 text-xs">
+                  <div><label class="font-black uppercase block mb-1">1. Customer / Company Name *</label><input required id="q-comp" type="text" placeholder="e.g., Kumaon Highway Infra Ltd" class="w-full p-2.5 rounded-lg border border-slate-300 font-semibold" /></div>
+                  <div><label class="font-black uppercase block mb-1">2. Phone / WhatsApp *</label><input required id="q-phone" type="tel" placeholder="10-digit mobile number" class="w-full p-2.5 rounded-lg border border-slate-300 font-semibold" /></div>
+                  <div><label class="font-black uppercase block mb-1">3. Product / Service *</label>
+                    <select id="q-prod" class="w-full p-2.5 rounded-lg border border-slate-300 font-semibold bg-white">
+                      ${state.company.approvedBulkLiquids.map(b => `<option value="${esc(b)}">${esc(b)} Transport</option>`).join('')}
+                    </select>
+                  </div>
+                  <div><label class="font-black uppercase block mb-1">4. Quantity (MT) *</label><input required id="q-qty" type="number" step="0.5" min="1" placeholder="e.g., 45" class="w-full p-2.5 rounded-lg border border-slate-300 font-semibold" /></div>
+                  <div><label class="font-black uppercase block mb-1">5. Loading Refinery *</label><input required id="q-orig" type="text" value="Mathura Refinery (Gate No. 9)" class="w-full p-2.5 rounded-lg border border-slate-300 font-semibold" /></div>
+                  <div><label class="font-black uppercase block mb-1">6. Delivery Site / Pincode *</label><input required id="q-dest" type="text" placeholder="e.g., Gairsain Site, 246428" class="w-full p-2.5 rounded-lg border border-slate-300 font-semibold" /></div>
+                  <div class="sm:col-span-2 flex items-center gap-2 pt-2">
+                    <input required id="q-consent" type="checkbox" class="w-4 h-4 accent-blue-700" />
+                    <label for="q-consent" class="font-medium text-slate-700">I consent to Bharat Oil Carrier (BOC) contacting me via phone/WhatsApp regarding this quote.</label>
+                  </div>
+                  <div class="flex items-end"><button type="submit" class="w-full py-3 px-4 rounded-xl bg-blue-700 hover:bg-blue-800 text-white font-black uppercase shadow-lg cursor-pointer">🚀 Submit Quote Inquiry</button></div>
+                </form>
+              </div>
+            </div>
+          `;
+        } else if (p === 'LOGIN') {
+          vp.innerHTML = `
+            <div class="max-w-xl mx-auto px-4 sm:px-6 py-12">
+              <div class="bg-white rounded-2xl border-2 border-slate-300 shadow-xl p-6 sm:p-8 space-y-5">
+                <div>
+                  <span class="text-xs font-black uppercase text-blue-700">Page 12 • Role-Isolated Gateway</span>
+                  <h1 class="text-2xl font-black text-slate-900">Client &amp; Staff Portal Login</h1>
+                  <p class="text-xs text-slate-600 mt-1">Select a role persona below to enter the Private ERP &amp; Customer Portal:</p>
+                </div>
+                <div class="space-y-3 text-xs">
+                  ${Object.keys(ROLE_DESCRIPTIONS).map(rKey => `
+                    <button type="button" onclick="APP.loginAsRole('${rKey}')" class="w-full text-left p-3.5 rounded-xl border-2 border-slate-200 hover:border-blue-600 bg-slate-50 transition flex justify-between items-center cursor-pointer">
+                      <div>
+                        <div class="font-black text-slate-900">${esc(rKey)}</div>
+                        <div class="text-[11px] text-slate-600">${esc(ROLE_DESCRIPTIONS[rKey])}</div>
+                      </div>
+                      <span class="font-black text-blue-700">Login →</span>
+                    </button>
+                  `).join('')}
+                </div>
+              </div>
+            </div>
+          `;
+        } else {
+          const pgObj = PUBLIC_PAGES.find(x => x.id === p) || PUBLIC_PAGES[0];
+          vp.innerHTML = `
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 py-10 space-y-6">
+              <div class="bg-white p-6 sm:p-8 rounded-2xl border border-slate-300 space-y-4">
+                <span class="text-xs font-black uppercase text-blue-700">Verified BOC Information</span>
+                <h1 class="text-2xl sm:text-3xl font-black text-slate-900">${esc(isHi ? pgObj.hi : pgObj.en)}</h1>
+                <p class="text-sm text-slate-600 leading-relaxed">
+                  Bharat Oil Carrier (operating since 1990 from Gate No. 9, Mathura Refinery) follows strict operational, weighbridge (kg &amp; MT), and document verification controls across all supported highway corridors.
+                </p>
+                <div class="space-y-2 text-xs">
+                  ${state.company.supportedCorridors.map(c => `<div class="p-3 rounded-lg bg-slate-50 border font-semibold">🛣️ ${esc(c)}</div>`).join('')}
+                </div>
+                <button onclick="APP.setPubPage('QUOTE')" class="px-5 py-2.5 rounded-xl bg-blue-700 text-white font-black text-xs cursor-pointer">Request Route Quote →</button>
+              </div>
+            </div>
           `;
         }
+      }
 
-        const basisTxt = st.billableBasis === 'LOADED' ? `${t.lMt} MT Loaded` : `${t.uMt} MT Unloaded`;
-        document.getElementById('s-basis').textContent = basisTxt;
-        document.getElementById('s-freight').textContent = this.fmtINR(t.fr);
-        document.getElementById('s-hsdcash').textContent = '− ' + this.fmtINR(t.hsdCash);
-        document.getElementById('s-plant').textContent = '− ' + this.fmtINR(t.plantRec);
-        document.getElementById('s-se-lbl').textContent = `4. Custom (${st.seLabel}):`;
-        document.getElementById('s-se-val').textContent = (t.seSigned < 0 ? '− ' : '+ ') + this.fmtINR(Math.abs(t.seSigned));
-        document.getElementById('s-net').textContent = this.fmtINR(st.simulateMismatch ? t.net + 1775 : t.net);
+      // Render ERP Sidebar
+      function renderErpSidebar() {
+        const isHi = state.lang === 'hi';
+        const hasFb = Boolean(state.firebaseConfigRaw);
+        document.getElementById('erp-role-picker').value = state.role;
+        document.getElementById('erp-role-desc').textContent = ROLE_DESCRIPTIONS[state.role] || '';
+        document.getElementById('bar-role-tag').textContent = state.role;
+        document.getElementById('sidebar-db-mode').textContent = hasFb ? 'Mode: Firebase Configured ✓' : 'Mode: Local Demo Repo';
 
-        document.getElementById('formula-box').innerHTML = `
-          <div>• <strong>Row Freight:</strong> (${st.billableBasis} kg ÷ 1,000) × Rate/MT = <strong>${basisTxt} = ${this.fmtINR(t.fr)}</strong></div>
-          <div>• <strong>Net Payable:</strong> ${this.fmtINR(t.fr)} − En-Route (${this.fmtINR(t.hsdCash)}) − Plant (${this.fmtINR(t.plantRec)}) − ${st.seLabel} (${this.fmtINR(t.se)}) = <strong>${this.fmtINR(t.net)}</strong></div>
+        const q = (document.getElementById('erp-mod-search')?.value || '').toLowerCase().trim();
+        const permitted = ERP_MODULES.filter(m => m.roles.includes(state.role));
+
+        if (!permitted.some(m => m.id === state.erpModule)) {
+          state.erpModule = permitted[0].id;
+        }
+
+        const filtered = permitted.filter(m =>
+          m.en.toLowerCase().includes(q) || m.hi.toLowerCase().includes(q) || String(m.num).includes(q)
+        );
+
+        document.getElementById('erp-nav-items').innerHTML = filtered.map(m => {
+          const active = state.erpModule === m.id;
+          return `
+            <button type="button" onclick="APP.openErpModule('${m.id}')" class="text-left px-3 py-2 rounded-lg text-xs font-extrabold whitespace-nowrap transition cursor-pointer ${active ? 'bg-amber-400 text-slate-950 shadow' : 'text-slate-300 hover:bg-slate-900'}">
+              ${m.num}. ${esc(isHi ? m.hi : m.en)}
+            </button>
+          `;
+        }).join('');
+
+        const curMod = ERP_MODULES.find(m => m.id === state.erpModule);
+        document.getElementById('bar-mod-title').textContent = curMod ? `${curMod.num}. ${isHi ? curMod.hi : curMod.en}` : 'BOC Smart ERP';
+      }
+
+      // Render Module 6 (Freight Statement)
+      function renderFreightModule() {
+        const canView = ['ADMIN', 'ACCOUNTS', 'CUSTOMER_A', 'CUSTOMER_B'].includes(state.role);
+        const canEdit = ['ADMIN', 'ACCOUNTS'].includes(state.role) && !state.stmtConfig.isLocked;
+        const isStaff = ['ADMIN', 'ACCOUNTS'].includes(state.role);
+
+        const rbacBox = document.getElementById('freight-rbac-block');
+        const wb = document.getElementById('freight-workbench');
+
+        if (!canView) {
+          rbacBox.classList.remove('hidden');
+          rbacBox.innerHTML = `🔒 <strong>ACCESS DENIED (${state.role}):</strong> Role "${state.role}" cannot view or alter commercial freight rates or financial settlement statements.`;
+          wb.classList.add('hidden');
+          return;
+        }
+
+        const vRows = getPermittedRows();
+        if (vRows.length === 0) {
+          rbacBox.classList.remove('hidden');
+          rbacBox.innerHTML = `🔒 <strong>MULTI-TENANT ISOLATION VERIFIED (${state.role}):</strong> Logged in as Customer B. You have 0 assigned statements and are strictly blocked from reading Customer A's statements!`;
+          wb.classList.add('hidden');
+          return;
+        }
+
+        rbacBox.classList.add('hidden');
+        wb.classList.remove('hidden');
+
+        document.getElementById('stmt-admin-controls').style.display = isStaff ? 'grid' : 'none';
+        document.getElementById('btn-add-stmt-row').style.display = canEdit ? 'inline-block' : 'none';
+        document.getElementById('btn-lock-stmt').style.display = state.role === 'ADMIN' ? 'inline-block' : 'none';
+
+        const pill = document.getElementById('stmt-lock-pill');
+        const lockBtn = document.getElementById('btn-lock-stmt');
+        if (state.stmtConfig.isLocked) {
+          pill.className = 'px-2.5 py-1 rounded text-xs font-black bg-amber-200 text-slate-950 border border-amber-500';
+          pill.textContent = `🔒 APPROVED & LOCKED (v${state.stmtConfig.version})`;
+          lockBtn.textContent = `🔓 Spawn Revised Version (v${(Number(state.stmtConfig.version) + 0.1).toFixed(1)})`;
+        } else {
+          pill.className = 'px-2.5 py-1 rounded text-xs font-black bg-emerald-100 text-emerald-950 border border-emerald-400';
+          pill.textContent = `🔓 DRAFT EDITABLE (v${state.stmtConfig.version})`;
+          lockBtn.textContent = `🔒 Approve & Lock Statement`;
+        }
+
+        document.getElementById('inp-basis').value = state.stmtConfig.billableBasis;
+        document.getElementById('inp-route-title').value = state.stmtConfig.routeTitle;
+        document.getElementById('inp-sl-label').value = state.stmtConfig.slLabel;
+        document.getElementById('inp-hide-sl').checked = Boolean(state.stmtConfig.hideSl);
+        document.getElementById('inp-se-label').value = state.stmtConfig.seLabel;
+        document.getElementById('inp-se-rule').value = state.stmtConfig.seRule;
+
+        document.getElementById('sheet-from-name').textContent = state.company.name;
+        document.getElementById('sheet-from-addr').textContent = state.company.address;
+        document.getElementById('sheet-from-phones').textContent = `Mob: ${state.company.phones} | Email: ${state.company.email}`;
+        document.getElementById('sheet-from-gst').textContent = `GSTIN: ${state.company.gstin}`;
+        document.getElementById('sheet-route-title').textContent = state.stmtConfig.routeTitle;
+        document.getElementById('sheet-ver-badge').textContent = `v${state.stmtConfig.version} (${state.stmtConfig.isLocked ? 'Approved Locked' : 'Draft'})`;
+
+        const dis = canEdit ? '' : 'disabled';
+        const hideSlClass = state.stmtConfig.hideSl ? 'hidden' : '';
+        document.querySelectorAll('.col-sl-cell').forEach(el => {
+          if (state.stmtConfig.hideSl) el.classList.add('hidden');
+          else el.classList.remove('hidden');
+        });
+
+        const tbody = document.getElementById('stmt-rows-body');
+        tbody.innerHTML = vRows.map((r, idx) => {
+          const lMt = (r.loadedKg / 1000).toFixed(3);
+          const uMt = (r.unloadedKg / 1000).toFixed(3);
+          const bMt = calcBillableMt(r);
+          const fr = (bMt * r.ratePerMt).toFixed(2);
+
+          return `
+            <tr data-rid="${r.id}" class="border-b border-slate-300 hover:bg-slate-50">
+              <td class="p-1.5 border border-slate-300 text-center font-bold">${idx + 1}</td>
+              <td class="p-1.5 border border-slate-300"><input ${dis} type="text" value="${esc(r.date)}" oninput="APP.onStmtInput(${r.id}, 'date', this.value)" class="stmt-cell-input w-20 text-left" /></td>
+              <td class="p-1.5 border border-slate-300"><input ${dis} type="text" value="${esc(r.vehicleNo)}" oninput="APP.onStmtInput(${r.id}, 'vehicleNo', this.value)" class="stmt-cell-input w-28 text-left mono" /></td>
+              <td class="p-1.5 border border-slate-300 text-right">
+                <input ${dis} type="number" step="10" value="${r.loadedKg}" oninput="APP.onStmtInput(${r.id}, 'loadedKg', this.value)" class="stmt-cell-input w-20 text-right" />
+                <div class="text-[10px] font-bold text-blue-700 js-lmt">= ${lMt} MT</div>
+              </td>
+              <td class="p-1.5 border border-slate-300 text-right">
+                <input ${dis} type="number" step="10" value="${r.unloadedKg}" oninput="APP.onStmtInput(${r.id}, 'unloadedKg', this.value)" class="stmt-cell-input w-20 text-right" />
+                <div class="text-[10px] text-slate-600 js-umt">= ${uMt} MT</div>
+              </td>
+              <td class="p-1.5 border border-slate-300 text-right"><input ${dis} type="number" step="50" value="${r.ratePerMt}" oninput="APP.onStmtInput(${r.id}, 'ratePerMt', this.value)" class="stmt-cell-input w-16 text-right" /></td>
+              <td class="p-1.5 border border-slate-300 text-center bg-amber-50/60 ${hideSlClass}"><input ${dis} type="text" value="${esc(r.slCustom)}" oninput="APP.onStmtInput(${r.id}, 'slCustom', this.value)" class="stmt-cell-input w-16 text-center js-sl" /></td>
+              <td class="p-1.5 border border-slate-300 text-right bg-amber-50/60"><input ${dis} type="number" step="100" value="${r.seAmt}" oninput="APP.onStmtInput(${r.id}, 'seAmt', this.value)" class="stmt-cell-input w-18 text-right" /></td>
+              <td class="p-1.5 border border-slate-300 text-right"><input ${dis} type="number" value="${r.hsdQty}" oninput="APP.onStmtInput(${r.id}, 'hsdQty', this.value)" class="stmt-cell-input w-14 text-right" /></td>
+              <td class="p-1.5 border border-slate-300 text-right"><input ${dis} type="number" step="100" value="${r.hsdAmt}" oninput="APP.onStmtInput(${r.id}, 'hsdAmt', this.value)" class="stmt-cell-input w-20 text-right" /></td>
+              <td class="p-1.5 border border-slate-300 text-right"><input ${dis} type="number" step="500" value="${r.cash}" oninput="APP.onStmtInput(${r.id}, 'cash', this.value)" class="stmt-cell-input w-18 text-right" /></td>
+              <td class="p-1.5 border border-slate-300 text-right"><input ${dis} type="number" value="${r.plantHsdQty}" oninput="APP.onStmtInput(${r.id}, 'plantHsdQty', this.value)" class="stmt-cell-input w-14 text-right" /></td>
+              <td class="p-1.5 border border-slate-300 text-right"><input ${dis} type="number" step="100" value="${r.plantHsdAmt}" oninput="APP.onStmtInput(${r.id}, 'plantHsdAmt', this.value)" class="stmt-cell-input w-20 text-right" /></td>
+              <td class="p-1.5 border border-slate-300 text-right"><input ${dis} type="number" step="500" value="${r.plantCash}" oninput="APP.onStmtInput(${r.id}, 'plantCash', this.value)" class="stmt-cell-input w-18 text-right" /></td>
+              <td class="p-1.5 border border-slate-300"><input ${dis} type="text" value="${esc(r.site)}" oninput="APP.onStmtInput(${r.id}, 'site', this.value)" class="stmt-cell-input w-32 text-left font-sans" /></td>
+              <td class="p-1.5 border border-slate-300 text-right font-black bg-blue-50/80 text-blue-950 js-fr">${fmtINR(fr)}</td>
+              <td class="p-1.5 border border-slate-300 text-center no-print">
+                ${canEdit && vRows.length > 1 ? `<button type="button" onclick="APP.removeStmtRow(${r.id})" class="text-red-600 hover:text-red-800 font-black px-1 cursor-pointer">✕</button>` : '—'}
+              </td>
+            </tr>
+          `;
+        }).join('');
+
+        updateStmtSummaryInPlace();
+      }
+
+      function updateStmtSummaryInPlace() {
+        const vRows = getPermittedRows();
+        const t = computeStatementSummary(vRows);
+        const hideSlClass = state.stmtConfig.hideSl ? 'hidden' : '';
+
+        document.getElementById('th-sl-lbl').textContent = '7. ' + state.stmtConfig.slLabel;
+        document.getElementById('th-se-lbl').textContent = '8. ' + state.stmtConfig.seLabel;
+        document.getElementById('th-se-sub').textContent = state.stmtConfig.seRule === 'DEDUCT' ? 'Deduct (−)' : state.stmtConfig.seRule === 'ADD' ? 'Add (+)' : 'Info Only';
+        document.getElementById('th-fr-rule').textContent = state.stmtConfig.billableBasis + ' MT×Rate';
+
+        document.getElementById('stmt-rows-foot').innerHTML = `
+          <tr>
+            <td colspan="3" class="p-2 border border-slate-400">TOTAL (${vRows.length} DEMO TRIPS)</td>
+            <td class="p-2 border border-slate-400 text-right">${t.totLoadedKg.toLocaleString('en-IN')} kg<br><span class="text-[10px] text-blue-800">${t.totLoadedMt} MT</span></td>
+            <td class="p-2 border border-slate-400 text-right">${t.totUnloadedKg.toLocaleString('en-IN')} kg<br><span class="text-[10px]">${t.totUnloadedMt} MT</span></td>
+            <td class="p-2 border border-slate-400 text-right">—</td>
+            <td class="p-2 border border-slate-400 text-center ${hideSlClass}">${Math.max(0, t.totLoadedKg - t.totUnloadedKg)} kg</td>
+            <td class="p-2 border border-slate-400 text-right">${fmtINR(t.totSeAmt)}</td>
+            <td class="p-2 border border-slate-400 text-right">${t.totHsdQty} L</td>
+            <td class="p-2 border border-slate-400 text-right">${fmtINR(t.totHsdAmt)}</td>
+            <td class="p-2 border border-slate-400 text-right">${fmtINR(t.totCash)}</td>
+            <td class="p-2 border border-slate-400 text-right">${t.totPlantHsdQty} L</td>
+            <td class="p-2 border border-slate-400 text-right">${fmtINR(t.totPlantHsdAmt)}</td>
+            <td class="p-2 border border-slate-400 text-right">${fmtINR(t.totPlantCash)}</td>
+            <td class="p-2 border border-slate-400 font-sans">All Sites</td>
+            <td class="p-2 border border-slate-400 text-right text-blue-950 bg-blue-100">${fmtINR(t.totFreight)}</td>
+            <td class="p-2 border border-slate-400 no-print"></td>
+          </tr>
         `;
 
-        const card = document.getElementById('sum-card');
-        const pill = document.getElementById('recon-pill');
-        const mBox = document.getElementById('mismatch-box');
-        if (st.simulateMismatch) {
-          card.className = 'lg:col-span-5 p-4 rounded-lg border-2 border-red-600 bg-red-50 text-xs space-y-2 mono';
+        const seSym = state.stmtConfig.seRule === 'DEDUCT' ? '−' : state.stmtConfig.seRule === 'ADD' ? '+' : '(Ignored)';
+        document.getElementById('sheet-formula-explain').innerHTML = `
+          • <strong>Billable Tonnage Basis:</strong> ${esc(state.stmtConfig.billableBasis)} (${t.totBillableMt} MT across ${vRows.length} trips) → <strong>Gross Freight = ${fmtINR(t.totFreight)}</strong><br>
+          • <strong>Settlement Equation:</strong> ${fmtINR(t.totFreight)} − En-Route HSD/Cash (${fmtINR(t.enrouteRec)}) − Plant HSD/Cash (${fmtINR(t.plantRec)}) ${seSym} ${esc(state.stmtConfig.seLabel)} (${fmtINR(t.totSeAmt)}) = <strong>${fmtINR(t.netPayable)}</strong>
+        `;
+
+        document.getElementById('sum-billable-mt').textContent = `${t.totBillableMt} MT`;
+        document.getElementById('sum-val-freight').textContent = fmtINR(t.totFreight);
+        document.getElementById('sum-val-enroute').textContent = '− ' + fmtINR(t.enrouteRec);
+        document.getElementById('sum-val-plant').textContent = '− ' + fmtINR(t.plantRec);
+        document.getElementById('sum-lbl-se').textContent = `4. Custom Adjustment (${state.stmtConfig.seLabel}):`;
+        document.getElementById('sum-val-se').textContent = (t.seSigned < 0 ? '− ' : '+ ') + fmtINR(Math.abs(t.seSigned));
+
+        const shownNet = state.stmtConfig.simulateMismatch ? t.netPayable + 1775 : t.netPayable;
+        document.getElementById('sum-val-net').textContent = fmtINR(shownNet);
+
+        const card = document.getElementById('sheet-summary-card');
+        const pill = document.getElementById('sheet-recon-pill');
+        const misAlert = document.getElementById('sheet-mismatch-alert');
+
+        if (state.stmtConfig.simulateMismatch) {
+          card.className = 'lg:col-span-5 p-4 rounded-lg border-2 border-red-600 bg-red-50 text-xs space-y-1.5 mono';
           pill.className = 'px-2 py-0.5 rounded bg-red-700 text-white text-[10px]';
           pill.textContent = 'MISMATCH BLOCKED ✕';
-          mBox.classList.remove('hidden');
+          misAlert.classList.remove('hidden');
+          document.getElementById('mis-true-sum').textContent = fmtINR(t.netPayable);
+          document.getElementById('mis-override-sum').textContent = fmtINR(shownNet);
         } else {
-          card.className = 'lg:col-span-5 p-4 rounded-lg border-2 border-emerald-600 bg-emerald-50/60 text-xs space-y-2 mono';
+          card.className = 'lg:col-span-5 p-4 rounded-lg border-2 border-emerald-600 bg-emerald-50/70 text-xs space-y-1.5 mono';
           pill.className = 'px-2 py-0.5 rounded bg-emerald-700 text-white text-[10px]';
           pill.textContent = 'RECONCILED ✓';
-          mBox.classList.add('hidden');
+          misAlert.classList.add('hidden');
         }
-      },
-
-      updateConfig() {
-        const st = this.state.stmt;
-        st.billableBasis = document.getElementById('cfg-basis').value;
-        st.routeTitle = document.getElementById('cfg-title').value;
-        st.slLabel = document.getElementById('cfg-sl').value || 'S/L';
-        st.seLabel = document.getElementById('cfg-se').value || 'S/E Amt (₹)';
-        st.seRule = document.getElementById('cfg-serule').value;
-        this.save();
-        this.renderFreight();
-      },
-
-      addRow() {
-        if (this.state.stmt.isLocked) return alert('Statement is locked! Create a revised version first.');
-        const rows = this.state.stmt.rows;
-        const sno = rows.length + 1;
-        rows.push({
-          sno, date: '17/10/2026', vehicleNo: 'UP85-DEMO-103', customerId: 'CUST-DEMO-A',
-          loadedKg: 23500, unloadedKg: 23480, ratePerMt: 4500, seAmt: 0, hsdQty: 115, hsdAmt: 10350, cash: 5000,
-          plantHsdQty: 0, plantHsdAmt: 0, plantCash: 2000, site: 'Gairsain Project Site (DEMO)', status: 'Dispatched', podLink: ''
-        });
-        this.log(`Added Trip Row #${sno} (UP85-DEMO-103)`);
-        this.renderAll();
-      },
-
-      toggleLock() {
-        const st = this.state.stmt;
-        if (!st.isLocked) {
-          if (st.simulateMismatch) return alert('Resolve red reconciliation mismatch before locking!');
-          st.isLocked = true;
-          this.log(`Approved & Locked Statement v${st.version}`);
-        } else {
-          st.version = (Number(st.version) + 1).toFixed(1);
-          st.isLocked = false;
-          this.log(`Created Revised Statement v${st.version}`);
-        }
-        this.renderFreight();
-      },
-
-      toggleMismatch() {
-        this.state.stmt.simulateMismatch = !this.state.stmt.simulateMismatch;
-        this.save();
-        this.updateStmtSummaryOnly();
-      },
-
-      resolveMismatch() {
-        const r = document.getElementById('override-inp').value.trim();
-        if (!r) return alert('Mandatory Admin override reason required!');
-        this.state.stmt.simulateMismatch = false;
-        this.log(`Overrode reconciliation mismatch with reason: "${r}"`);
-        this.updateStmtSummaryOnly();
-        this.renderSettings();
-      },
-
-      exportCsv() {
-        const rows = this.visibleRows();
-        const st = this.state.stmt;
-        const lines = [['S.No','Date','Vehicle','Loaded_kg','Loaded_MT','Unloaded_kg','Unloaded_MT','Rate_MT',st.slLabel,st.seLabel,'HSD_Qty','HSD_Amt','Cash','Plant_HSD_Qty','Plant_HSD_Amt','Plant_Cash','Site','Freight_INR'].join(',')];
-        rows.forEach(r => {
-          const lMt = (r.loadedKg/1000).toFixed(3), uMt = (r.unloadedKg/1000).toFixed(3);
-          const bMt = st.billableBasis === 'LOADED' ? Number(lMt) : Number(uMt);
-          const fr = (bMt * r.ratePerMt).toFixed(2);
-          lines.push([r.sno, r.date, r.vehicleNo, r.loadedKg, lMt, r.unloadedKg, uMt, r.ratePerMt, `${Math.max(0,r.loadedKg-r.unloadedKg)} kg`, r.seAmt, r.hsdQty, r.hsdAmt, r.cash, r.plantHsdQty, r.plantHsdAmt, r.plantCash, `"${r.site}"`, fr].join(','));
-        });
-        const a = document.createElement('a');
-        a.href = URL.createObjectURL(new Blob([lines.join('\n')], { type: 'text/csv' }));
-        a.download = `BOC_Freight_Statement_v${st.version}.csv`;
-        a.click();
-      },
-
-      submitQuote(e) {
-        e.preventDefault();
-        const comp = document.getElementById('q-comp').value.trim();
-        const phone = document.getElementById('q-phone').value.trim();
-        const prod = document.getElementById('q-prod').value;
-        const qty = document.getElementById('q-qty').value;
-        const orig = document.getElementById('q-orig').value.trim();
-        const dest = document.getElementById('q-dest').value.trim();
-        const id = `LEAD-${101 + this.state.leads.length}`;
-        this.state.leads.unshift({ id, company: `${comp} [DEMO]`, phone, product: prod, qty: `${qty} MT`, origin: orig, dest, stage: 'New' });
-        this.log(`Quote received from ${comp} (${qty} MT to ${dest})`);
-        document.getElementById('quote-form').reset();
-        document.getElementById('q-orig').value = 'Mathura Refinery';
-        document.getElementById('quote-ok-msg').textContent = `✅ Quote Inquiry ${id} saved to ERP Leads Inbox!`;
-        document.getElementById('quote-ok-box').classList.remove('hidden');
-        this.renderLeads();
-      },
-
-      savePodLink(sno, url) {
-        const r = this.state.stmt.rows.find(x => x.sno === sno);
-        if (r) {
-          r.podLink = url.trim();
-          r.status = r.podLink ? 'POD Received' : r.status;
-          this.log(`Attached Restricted Drive POD link for Trip #${sno}`);
-          this.renderTrips();
-        }
-      },
-
-      updateTripStatus(sno, st) {
-        const r = this.state.stmt.rows.find(x => x.sno === sno);
-        if (r) { r.status = st; this.log(`Trip #${sno} status -> ${st} [MANUAL]`); this.renderTrips(); this.renderDashboard(); }
-      },
-
-      addDoc() {
-        const id = `DOC-${this.state.docs.length + 1}`;
-        this.state.docs.unshift({ id, vehicleNo: 'UP85-DEMO-103', type: 'Tanker Calibration Cert', docNo: `CAL-${id}`, expiry: '29/10/2026', days: 11, verified: 'UNVERIFIED' });
-        this.log(`Added Vehicle Document ${id} (UNVERIFIED)`);
-        this.renderDocs();
-        this.renderDashboard();
-      },
-
-      addWorkOrder() {
-        const id = `WO-DEMO-${this.state.workOrders.length + 1}`;
-        this.state.workOrders.unshift({ id, vehicleNo: 'UP85-DEMO-102', issue: 'Bitumen Burner Coil & Valve Replacement', cost: 19500, createdBy: this.state.role, status: 'Awaiting MD Approval', evidence: 'Restricted Drive Link: Before Photo + Estimate' });
-        this.log(`Logged high-value Work Order ${id} (₹19,500)`);
-        this.renderMaintenance();
-      },
-
-      approveWO(id) {
-        const w = this.state.workOrders.find(x => x.id === id);
-        if (!w) return;
-        if (w.cost >= 15000 && w.createdBy === this.state.role && this.state.role !== 'ADMIN') {
-          return alert('SEGREGATION OF DUTIES (SoD) BLOCK: Creator cannot self-approve a repair above ₹15,000! Switch to Owner/Admin (MD).');
-        }
-        w.status = 'Approved & Closed';
-        this.log(`Approved Work Order ${id} (₹${w.cost.toLocaleString('en-IN')})`);
-        this.renderMaintenance();
-      },
-
-      askAssistant(q) {
-        const t = this.calcSummary();
-        const box = document.getElementById('ai-box');
-        if (q === 'OVERDUE') box.innerHTML = `[Role: ${this.state.role}] Statement BOC/DEMO/26-27/014 Net Payable: <strong>${this.fmtINR(t.net)}</strong> across ${t.count} trips.`;
-        if (q === 'DOCS') box.innerHTML = `[Compliance Check] 2 vehicles have documents expiring within 15 days (UP85-DEMO-102 PUC Expired; UP85-DEMO-101 Insurance 4d left).`;
-        if (q === 'MARGIN') box.innerHTML = `[Settlement Math] Total Loaded: ${t.lMt} MT | Gross Freight: ${this.fmtINR(t.fr)} | Recoveries: ${this.fmtINR(t.hsdCash + t.plantRec)} | Net Payable: <strong>${this.fmtINR(t.net)}</strong>.`;
-      },
-
-      saveSettings() {
-        const c = this.state.company;
-        c.name = document.getElementById('set-name').value;
-        c.address = document.getElementById('set-addr').value;
-        c.phones = document.getElementById('set-ph').value;
-        c.gstin = document.getElementById('set-gst').value;
-        c.enableSupply = document.getElementById('set-supply').checked;
-        this.save();
-        this.renderPublic();
-      },
-
-      saveFirebaseConfig() {
-        const raw = document.getElementById('fb-config-input').value.trim();
-        if (!raw) return alert('Paste your Firebase config JSON first.');
-        try {
-          const parsed = JSON.parse(raw);
-          if (!parsed.projectId) return alert('Config must include "projectId".');
-          this.state.firebaseConfigRaw = raw;
-          this.log(`Connected Firebase Project ID: ${parsed.projectId} (Phase 2 Adapter Ready)`);
-          this.renderAll();
-          alert(`Firebase Project "${parsed.projectId}" saved! Phase 2 Cloud Adapter is now configured.`);
-        } catch (e) {
-          alert('Invalid JSON format. Please copy exact JSON object {"apiKey":"...","projectId":"..."}.');
-        }
-      },
-
-      downloadBackup() {
-        const a = document.createElement('a');
-        a.href = URL.createObjectURL(new Blob([JSON.stringify(this.state, null, 2)], { type: 'application/json' }));
-        a.download = 'BOC_Smart_ERP_Master_Backup.json';
-        a.click();
-      },
-
-      renderPublic() {
-        const c = this.state.company;
-        const hi = this.state.lang === 'hi';
-        document.getElementById('pub-comp-title').textContent = c.name;
-        document.getElementById('box-name').textContent = c.name;
-        document.getElementById('box-addr').textContent = c.address;
-        document.getElementById('box-phones').textContent = c.phones;
-        document.getElementById('box-email').textContent = c.email;
-        document.getElementById('hero-h1').textContent = hi
-          ? 'मथुरा रिफाइनरी से प्रोजेक्ट साइट तक विश्वसनीय बिटुमेन और बल्क-लिक्विड ट्रांसपोर्टेशन'
-          : 'Reliable Refinery-to-Site Bitumen & Bulk-Liquid Transportation';
-
-        document.querySelectorAll('.pub-sec').forEach(el => el.classList.add('hidden'));
-        const active = document.getElementById(`pub-${this.state.pubPage}`);
-        if (active) active.classList.remove('hidden');
-
-        document.querySelectorAll('.pub-tab').forEach(b => {
-          const p = b.getAttribute('data-p');
-          b.className = p === this.state.pubPage
-            ? 'pub-tab px-3 py-1.5 rounded-lg text-xs font-black whitespace-nowrap bg-amber-400 text-slate-950 shadow'
-            : 'pub-tab px-3 py-1.5 rounded-lg text-xs font-bold whitespace-nowrap text-slate-300 hover:bg-slate-800';
-        });
-
-        const sup = document.getElementById('pub-supply-card');
-        if (sup) {
-          sup.innerHTML = c.enableSupply
-            ? `<span class="px-2 py-0.5 rounded bg-emerald-700 text-white text-xs font-black">ENABLED BY ADMIN</span><h3 class="text-lg font-black">Bitumen Supply & Trading Active</h3><p class="text-xs text-slate-700">Supply + Delivered rate quotes are currently enabled subject to price validity.</p>`
-            : `<span class="px-2 py-0.5 rounded bg-slate-900 text-amber-300 text-xs font-black">SWITCHED OFF</span><h3 class="text-lg font-black">Bitumen Supply / Trading (Currently Disabled)</h3><p class="text-xs text-slate-700">Switched off until product stock & price validity are confirmed by BOC Admin in ERP Settings.</p>`;
-        }
-      },
-
-      renderSidebar() {
-        const r = this.state.role;
-        const hi = this.state.lang === 'hi';
-        document.getElementById('role-sel').value = r;
-        document.getElementById('role-desc').textContent = ROLE_HINTS[r] || '';
-        const mods = MODULES.filter(m => m.roles.includes(r));
-        document.getElementById('erp-nav').innerHTML = mods.map(m => `
-          <button type="button" onclick="BOC.openErp('${m.id}')" class="text-left px-3 py-2.5 rounded-lg text-xs font-extrabold whitespace-nowrap flex items-center gap-2 cursor-pointer ${m.id === this.state.mod ? 'bg-amber-400 text-slate-950 shadow' : 'text-slate-300 hover:bg-slate-900'}">
-            <span>${m.icon}</span><span>${hi ? m.hi : m.en}</span>
-          </button>
-        `).join('');
-      },
-
-      renderDashboard() {
-        const t = this.calcSummary();
-        const canMoney = ['ADMIN', 'ACCOUNTS', 'CUSTOMER_A'].includes(this.state.role);
-        document.getElementById('dash-kpis').innerHTML = `
-          <div class="bg-white p-4 rounded-xl border-l-4 border-blue-700 shadow-sm"><div class="text-[11px] font-black uppercase text-slate-500">Permitted Trips</div><div class="text-2xl font-black mt-1 mono">${t.count} Trips</div><div class="text-xs text-slate-600 mt-1 mono">${t.lKg.toLocaleString('en-IN')} kg (${t.lMt} MT)</div></div>
-          <div class="bg-white p-4 rounded-xl border-l-4 border-emerald-600 shadow-sm"><div class="text-[11px] font-black uppercase text-slate-500">Net Payable</div><div class="text-2xl font-black mt-1 mono">${canMoney ? this.fmtINR(t.net) : '🔒 Restricted'}</div><div class="text-xs text-slate-600 mt-1">Version v${this.state.stmt.version}</div></div>
-          <div class="bg-white p-4 rounded-xl border-l-4 border-red-600 shadow-sm"><div class="text-[11px] font-black uppercase text-slate-500">Doc Alerts</div><div class="text-2xl font-black text-red-700 mt-1 mono">${this.state.docs.filter(d => d.days <= 15).length} Urgent</div><div class="text-xs text-slate-600 mt-1">30/15/7-Day Control</div></div>
-          <div class="bg-white p-4 rounded-xl border-l-4 border-amber-500 shadow-sm"><div class="text-[11px] font-black uppercase text-slate-500">Open Leads</div><div class="text-2xl font-black mt-1 mono">${this.state.leads.length} Leads</div><div class="text-xs text-slate-600 mt-1">Public Quote Funnel</div></div>
-        `;
-        document.getElementById('dash-docs').innerHTML = this.state.docs.map(d => `
-          <div class="p-2 rounded border flex justify-between items-center ${d.days < 0 ? 'bg-red-100 border-red-400 text-red-950' : 'bg-amber-50 border-amber-300 text-amber-950'}">
-            <span><strong>${d.vehicleNo}</strong> • ${d.type} [${d.verified}]</span>
-            <span class="mono font-black">${d.days < 0 ? 'EXPIRED' : d.days + 'd left'}</span>
-          </div>
-        `).join('');
-      },
-
-      renderFreight() {
-        const st = this.state.stmt;
-        const c = this.state.company;
-        const r = this.state.role;
-        const denied = document.getElementById('freight-denied');
-        const wrap = document.getElementById('freight-wrap');
-
-        if (r === 'DRIVER' || r === 'MAINTENANCE') {
-          denied.classList.remove('hidden');
-          denied.innerHTML = `🔒 <strong>ACCESS DENIED (${r}):</strong> Drivers and Maintenance staff cannot view commercial freight rates or statements.`;
-          wrap.classList.add('hidden');
-          return;
-        }
-        const rows = this.visibleRows();
-        if (rows.length === 0) {
-          denied.classList.remove('hidden');
-          denied.innerHTML = `🔒 <strong>TENANT ISOLATION VERIFIED (${r}):</strong> Customer B has 0 statements and cannot read Customer A's billing!`;
-          wrap.classList.add('hidden');
-          return;
-        }
-        denied.classList.add('hidden');
-        wrap.classList.remove('hidden');
-
-        document.getElementById('cfg-basis').value = st.billableBasis;
-        document.getElementById('cfg-title').value = st.routeTitle;
-        document.getElementById('cfg-sl').value = st.slLabel;
-        document.getElementById('cfg-se').value = st.seLabel;
-        document.getElementById('cfg-serule').value = st.seRule;
-
-        document.getElementById('p-from-name').textContent = c.name;
-        document.getElementById('p-from-addr').textContent = c.address;
-        document.getElementById('p-from-ph').textContent = `Ph: ${c.phones} • ${c.email}`;
-        document.getElementById('p-from-gst').textContent = `GSTIN: ${c.gstin}`;
-        document.getElementById('p-route').textContent = st.routeTitle;
-        document.getElementById('p-ver').textContent = `DEMO DATA • v${st.version} (${st.isLocked ? 'LOCKED' : 'DRAFT'})`;
-        document.getElementById('th-sl').textContent = st.slLabel;
-        document.getElementById('th-se').textContent = st.seLabel;
-
-        const pill = document.getElementById('lock-pill');
-        const lBtn = document.getElementById('btn-lock-stmt');
-        if (st.isLocked) {
-          pill.className = 'px-2 py-0.5 rounded text-[10px] font-black uppercase bg-emerald-700 text-white';
-          pill.textContent = `LOCKED v${st.version}`;
-          lBtn.textContent = `🔓 Revise (v${(Number(st.version)+1).toFixed(1)})`;
-        } else {
-          pill.className = 'px-2 py-0.5 rounded text-[10px] font-black uppercase bg-amber-300 text-slate-950';
-          pill.textContent = `DRAFT v${st.version}`;
-          lBtn.textContent = '🔒 Approve & Lock';
-        }
-
-        const canEdit = this.canEditStmt();
-        const dis = canEdit ? '' : 'disabled';
-        document.getElementById('stmt-controls').style.display = (r === 'ADMIN' || r === 'ACCOUNTS') ? 'grid' : 'none';
-        document.getElementById('btn-add-row').style.display = canEdit ? 'inline-block' : 'none';
-        document.getElementById('btn-lock-stmt').style.display = r === 'ADMIN' ? 'inline-block' : 'none';
-
-        document.getElementById('stmt-tbody').innerHTML = rows.map(x => {
-          const lMt = (x.loadedKg/1000).toFixed(3), uMt = (x.unloadedKg/1000).toFixed(3);
-          const bMt = st.billableBasis === 'LOADED' ? Number(lMt) : Number(uMt);
-          const fr = Number((bMt * x.ratePerMt).toFixed(2));
-          return `
-            <tr class="border-b border-slate-300 hover:bg-slate-50">
-              <td class="p-1.5 border border-slate-300 text-center font-bold">${x.sno}</td>
-              <td class="p-1.5 border border-slate-300">${x.date}</td>
-              <td class="p-1.5 border border-slate-300 font-bold">${x.vehicleNo}</td>
-              <td class="p-1.5 border border-slate-300 text-right"><input type="number" value="${x.loadedKg}" ${dis} oninput="BOC.onCellEdit(${x.sno},'loadedKg',this.value)" class="cell-inp" /><div id="lmt-${x.sno}" class="text-[10px] font-bold text-blue-700">= ${lMt} MT</div></td>
-              <td class="p-1.5 border border-slate-300 text-right"><input type="number" value="${x.unloadedKg}" ${dis} oninput="BOC.onCellEdit(${x.sno},'unloadedKg',this.value)" class="cell-inp" /><div id="umt-${x.sno}" class="text-[10px] text-slate-600">= ${uMt} MT</div></td>
-              <td class="p-1.5 border border-slate-300 text-right"><input type="number" value="${x.ratePerMt}" ${dis} oninput="BOC.onCellEdit(${x.sno},'ratePerMt',this.value)" class="cell-inp" /></td>
-              <td id="sl-${x.sno}" class="p-1.5 border border-slate-300 text-center bg-amber-50/60 font-bold">${Math.max(0, x.loadedKg - x.unloadedKg)} kg</td>
-              <td class="p-1.5 border border-slate-300 text-right bg-amber-50/60"><input type="number" value="${x.seAmt}" ${dis} oninput="BOC.onCellEdit(${x.sno},'seAmt',this.value)" class="cell-inp" /></td>
-              <td class="p-1.5 border border-slate-300 text-right"><input type="number" value="${x.hsdQty}" ${dis} oninput="BOC.onCellEdit(${x.sno},'hsdQty',this.value)" class="cell-inp" /></td>
-              <td class="p-1.5 border border-slate-300 text-right"><input type="number" value="${x.hsdAmt}" ${dis} oninput="BOC.onCellEdit(${x.sno},'hsdAmt',this.value)" class="cell-inp" /></td>
-              <td class="p-1.5 border border-slate-300 text-right"><input type="number" value="${x.cash}" ${dis} oninput="BOC.onCellEdit(${x.sno},'cash',this.value)" class="cell-inp" /></td>
-              <td class="p-1.5 border border-slate-300 text-right"><input type="number" value="${x.plantHsdQty}" ${dis} oninput="BOC.onCellEdit(${x.sno},'plantHsdQty',this.value)" class="cell-inp" /></td>
-              <td class="p-1.5 border border-slate-300 text-right"><input type="number" value="${x.plantHsdAmt}" ${dis} oninput="BOC.onCellEdit(${x.sno},'plantHsdAmt',this.value)" class="cell-inp" /></td>
-              <td class="p-1.5 border border-slate-300 text-right"><input type="number" value="${x.plantCash}" ${dis} oninput="BOC.onCellEdit(${x.sno},'plantCash',this.value)" class="cell-inp" /></td>
-              <td class="p-1.5 border border-slate-300 font-sans text-xs">${x.site}</td>
-              <td id="fr-${x.sno}" class="p-1.5 border border-slate-300 text-right font-black bg-blue-50/80 text-blue-950">${this.fmtINR(fr)}</td>
-            </tr>
-          `;
-        }).join('');
-        this.updateStmtSummaryOnly();
-      },
-
-      renderTrips() {
-        const rows = this.visibleRows();
-        document.getElementById('trips-grid').innerHTML = rows.map(r => `
-          <div class="p-4 rounded-xl border-2 border-slate-200 bg-slate-50 space-y-2.5 text-xs">
-            <div class="flex justify-between items-center">
-              <span class="mono font-black bg-slate-950 text-amber-400 px-2.5 py-1 rounded">Trip #${r.sno} • ${r.vehicleNo}</span>
-              <span class="px-2 py-0.5 rounded-full bg-blue-100 text-blue-900 font-black">${r.status}</span>
-            </div>
-            <div><strong>Route:</strong> Mathura Refinery → ${r.site}</div>
-            <div class="mono"><strong>Loaded:</strong> ${r.loadedKg.toLocaleString('en-IN')} kg (${(r.loadedKg/1000).toFixed(3)} MT)</div>
-            <div>
-              <label class="font-bold block text-[11px] text-slate-600 mb-1">Update Milestone [MANUAL]:</label>
-              <select onchange="BOC.updateTripStatus(${r.sno}, this.value)" class="w-full p-1.5 rounded border border-slate-300 bg-white font-bold">
-                ${TRIP_STATUSES.map(s => `<option value="${s}" ${s === r.status ? 'selected' : ''}>${s}</option>`).join('')}
-              </select>
-            </div>
-            <div>
-              <label class="font-bold block text-[11px] text-slate-600 mb-1">Restricted Google Drive POD Link (Zero-Billing Adapter):</label>
-              <input type="url" value="${r.podLink || ''}" placeholder="Paste private Drive link..." onchange="BOC.savePodLink(${r.sno}, this.value)" class="w-full p-1.5 rounded border border-slate-300 bg-white text-[11px]" />
-            </div>
-            <div class="p-2 rounded bg-amber-100 border border-amber-300 text-[11px] font-bold text-amber-950">📡 GPS: GPS NOT CONNECTED (Manual Mode)</div>
-          </div>
-        `).join('') || `<div class="p-4 rounded bg-amber-50 border border-amber-300 font-bold text-xs">0 trips assigned to ${this.state.role}.</div>`;
-      },
-
-      renderLeads() {
-        const stages = ['New', 'Contacted', 'Details Awaited', 'Quotation Sent', 'Negotiation', 'Won', 'Lost'];
-        document.getElementById('leads-list').innerHTML = this.state.leads.map(l => `
-          <div class="p-4 rounded-xl border border-slate-300 bg-slate-50 flex flex-wrap justify-between items-center gap-2 text-xs">
-            <div>
-              <div class="font-black text-sm">${l.id} • ${l.company} (📞 ${l.phone})</div>
-              <div class="text-slate-600">${l.product} (${l.qty}) | ${l.origin} → ${l.dest}</div>
-            </div>
-            <select onchange="this.value" class="p-1.5 rounded border border-slate-400 bg-white font-black text-blue-900">
-              ${stages.map(s => `<option value="${s}" ${s === l.stage ? 'selected' : ''}>${s}</option>`).join('')}
-            </select>
-          </div>
-        `).join('');
-      },
-
-      renderAccounts() {
-        const t = this.calcSummary();
-        const isCust = this.state.role.startsWith('CUSTOMER');
-        document.getElementById('accounts-box').innerHTML = `
-          <div class="p-4 rounded-xl border border-slate-300 bg-slate-50 space-y-1.5">
-            <div class="font-black text-sm text-blue-900">Customer Commercial Ledger (Shared)</div>
-            <div>Gross Freight: <strong>${this.fmtINR(t.fr)}</strong></div>
-            <div>Less HSD & Cash Recoveries: <strong>− ${this.fmtINR(t.hsdCash + t.plantRec)}</strong></div>
-            <div>Net Balance Payable: <strong class="text-emerald-800">${this.fmtINR(t.net)}</strong></div>
-          </div>
-          <div class="p-4 rounded-xl border border-slate-300 ${isCust ? 'bg-red-50 border-red-300' : 'bg-slate-50'} space-y-1.5">
-            <div class="font-black text-sm">Internal BOC Cost & Margin View</div>
-            ${isCust ? `<div class="font-bold text-red-900">🔒 HIDDEN FROM CUSTOMER: Internal BOC margins, workshop spend & driver bhatta are strictly isolated.</div>` : `<div>Internal Maintenance Spend: <strong>₹24,600.00</strong></div><div>CA-Configurable GST / HSN / RCM fields ready for Tax Invoice.</div>`}
-          </div>
-        `;
-      },
-
-      renderDocs() {
-        document.getElementById('docs-grid').innerHTML = this.state.docs.map(d => {
-          const cls = d.days < 0 ? 'bg-red-700 text-white border-red-950' : d.days <= 7 ? 'bg-red-50 border-red-500 text-red-950' : d.days <= 15 ? 'bg-orange-50 border-orange-500 text-orange-950' : 'bg-amber-50 border-amber-500 text-amber-950';
-          return `
-            <div class="p-4 rounded-xl border-2 ${cls} flex justify-between items-center text-xs">
-              <div>
-                <div class="mono font-black text-sm">${d.vehicleNo} — ${d.type}</div>
-                <div>No: ${d.docNo} • Expiry: ${d.expiry} • Status: <strong>[${d.verified}]</strong></div>
-              </div>
-              <div class="mono font-black text-sm">${d.days < 0 ? 'EXPIRED' : d.days + 'd left'}</div>
-            </div>
-          `;
-        }).join('');
-      },
-
-      renderMaintenance() {
-        document.getElementById('maint-grid').innerHTML = this.state.workOrders.map(w => `
-          <div class="p-4 rounded-xl border-2 ${w.status === 'Approved & Closed' ? 'border-emerald-500 bg-emerald-50/40' : 'border-amber-400 bg-amber-50/50'} space-y-2">
-            <div class="flex justify-between font-black text-sm"><span>${w.id} • ${w.vehicleNo}</span><span>${w.status}</span></div>
-            <div><strong>Fault:</strong> ${w.issue}</div>
-            <div class="mono"><strong>Cost:</strong> ${this.fmtINR(w.cost)}</div>
-            <div><strong>Evidence:</strong> ${w.evidence}</div>
-            <div class="flex justify-between items-center pt-2 border-t border-slate-300">
-              <span>Entered By: <strong>${w.createdBy}</strong></span>
-              ${w.status !== 'Approved & Closed' ? `<button type="button" onclick="BOC.approveWO('${w.id}')" class="px-3 py-1 rounded bg-slate-900 text-white font-black cursor-pointer">Approve (SoD Check)</button>` : ''}
-            </div>
-          </div>
-        `).join('');
-      },
-
-      renderSettings() {
-        const c = this.state.company;
-        document.getElementById('set-name').value = c.name;
-        document.getElementById('set-addr').value = c.address;
-        document.getElementById('set-ph').value = c.phones;
-        document.getElementById('set-gst').value = c.gstin;
-        document.getElementById('set-supply').checked = c.enableSupply;
-        document.getElementById('fb-config-input').value = this.state.firebaseConfigRaw || '';
-
-        const hasFb = Boolean(this.state.firebaseConfigRaw);
-        document.getElementById('fb-status-pill').textContent = hasFb ? 'FIREBASE CONFIGURED ✓' : 'DEMO ADAPTER';
-        document.getElementById('sidebar-db-mode').textContent = hasFb ? 'Mode: Firebase Ready' : 'Mode: Local Demo Repo';
-        document.getElementById('audit-box').innerHTML = this.state.audit.map(a => `<div>• ${a}</div>`).join('');
-      },
-
-      renderAll() {
-        const hi = this.state.lang === 'hi';
-        document.getElementById('btn-lang').textContent = hi ? '🇬🇧 English' : '🇮🇳 हिन्दी (Hindi)';
-        document.getElementById('btn-exp').textContent = this.state.exp === 'PUBLIC'
-          ? (hi ? '🔐 प्राइवेट ERP खोलें' : '🔐 Open Private ERP & Portal')
-          : (hi ? '🌐 पब्लिक वेबसाइट देखें' : '🌐 View Public Sales Website');
-
-        document.getElementById('view-public').classList.toggle('hidden', this.state.exp !== 'PUBLIC');
-        document.getElementById('view-erp').classList.toggle('hidden', this.state.exp !== 'ERP');
-
-        this.renderPublic();
-        this.renderSidebar();
-
-        document.querySelectorAll('.erp-sec').forEach(s => s.classList.add('hidden'));
-        const active = document.getElementById(`mod-${this.state.mod}`);
-        if (active) active.classList.remove('hidden');
-
-        this.renderDashboard();
-        this.renderFreight();
-        this.renderTrips();
-        this.renderLeads();
-        this.renderAccounts();
-        this.renderDocs();
-        this.renderMaintenance();
-        this.renderSettings();
       }
-    };
 
-    window.addEventListener('DOMContentLoaded', () => BOC.init());
+      // Render Other 16 ERP Modules
+      function renderDynamicErpModule() {
+        const mod = state.erpModule;
+        const freightSec = document.getElementById('mod-FREIGHT');
+        const dynContainer = document.getElementById('erp-dynamic-module');
+
+        if (mod === 'FREIGHT') {
+          freightSec.classList.remove('hidden');
+          dynContainer.classList.add('hidden');
+          renderFreightModule();
+          return;
+        }
+
+        freightSec.classList.add('hidden');
+        dynContainer.classList.remove('hidden');
+
+        const vRows = getPermittedRows();
+        const t = computeStatementSummary(vRows);
+        const canSeeFinance = ['ADMIN', 'ACCOUNTS', 'CUSTOMER_A'].includes(state.role);
+
+        if (mod === 'DASHBOARD') {
+          dynContainer.innerHTML = `
+            <div class="space-y-6">
+              <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div class="bg-white p-4 rounded-xl border-l-4 border-blue-700 shadow-sm"><div class="text-[11px] font-black uppercase text-slate-500">Permitted Trips (${state.role})</div><div class="text-2xl font-black mt-1">${vRows.length} Active Trips</div><div class="text-xs text-slate-600 mt-0.5">Loaded Tonnage: ${t.totLoadedMt} MT</div></div>
+                <div class="bg-white p-4 rounded-xl border-l-4 border-emerald-600 shadow-sm"><div class="text-[11px] font-black uppercase text-slate-500">Net Settlement Balance</div><div class="text-2xl font-black mt-1 mono">${canSeeFinance && vRows.length ? fmtINR(t.netPayable) : 'Restricted'}</div><div class="text-xs text-slate-600 mt-0.5">Gross Freight: ${canSeeFinance && vRows.length ? fmtINR(t.totFreight) : 'Hidden'}</div></div>
+                <div class="bg-white p-4 rounded-xl border-l-4 border-red-600 shadow-sm"><div class="text-[11px] font-black uppercase text-slate-500">Compliance Expiry Alerts</div><div class="text-2xl font-black text-red-700 mt-1">${state.docs.filter(d => d.days <= 15).length} Urgent Alerts</div><div class="text-xs text-slate-600 mt-0.5">1 Expired PUC • 1 Insurance (4d)</div></div>
+                <div class="bg-white p-4 rounded-xl border-l-4 border-amber-500 shadow-sm"><div class="text-[11px] font-black uppercase text-slate-500">Open Quote Inquiries</div><div class="text-2xl font-black mt-1">${state.leads.length} Leads</div><div class="text-xs text-slate-600 mt-0.5">Synced from Public Quote Form</div></div>
+              </div>
+            </div>
+          `;
+        } else if (mod === 'TRIPS') {
+          dynContainer.innerHTML = `
+            <div class="bg-white p-5 rounded-xl border border-slate-300 space-y-4 text-xs">
+              <div class="flex flex-wrap justify-between items-center gap-2 border-b pb-3">
+                <div>
+                  <h2 class="text-lg font-black">Module 5: 13-Stage Trip &amp; Dispatch + Restricted Drive POD Link</h2>
+                  <p class="text-slate-600">Zero-Billing Evidence Adapter: Attach private Google Drive links for POD &amp; weighbridge slips.</p>
+                </div>
+                ${!state.role.startsWith('CUSTOMER') && state.role !== 'DRIVER' ? `<button onclick="APP.addStmtRow(); APP.openErpModule('TRIPS');" class="px-4 py-2 rounded-lg bg-emerald-600 text-white font-black cursor-pointer">+ Dispatch New Trip</button>` : ''}
+              </div>
+              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                ${vRows.map(r => `
+                  <div class="p-4 rounded-xl border-2 border-slate-300 bg-slate-50 space-y-2.5">
+                    <div class="flex justify-between items-center">
+                      <span class="px-2.5 py-1 rounded bg-slate-950 text-amber-400 font-black mono text-sm">${esc(r.vehicleNo)}</span>
+                      <select onchange="APP.setTripStatus(${r.id}, this.value)" class="p-1.5 rounded border border-slate-400 bg-white font-black text-blue-900">
+                        ${TRIP_STATUSES.map(st => `<option value="${st}" ${r.status === st ? 'selected' : ''}>${st}</option>`).join('')}
+                      </select>
+                    </div>
+                    <div><strong>Route:</strong> Mathura Refinery → ${esc(r.site)} (${esc(r.date)})</div>
+                    <div class="mono">Loaded: <strong>${r.loadedKg.toLocaleString('en-IN')} kg (${(r.loadedKg/1000).toFixed(3)} MT)</strong></div>
+                    <div>
+                      <label class="font-bold block text-[11px] mb-1">Restricted Google Drive POD Link (Zero-Billing):</label>
+                      <input type="url" value="${esc(r.podLink || '')}" placeholder="Paste private Drive link..." onchange="APP.setTripPodLink(${r.id}, this.value)" class="w-full p-1.5 rounded border bg-white text-[11px]" />
+                    </div>
+                    <div class="p-2 rounded bg-amber-100 border border-amber-300 font-bold text-amber-950 text-[11px]">📡 Telemetry: GPS NOT CONNECTED (Manual Mode)</div>
+                  </div>
+                `).join('') || `<div class="p-4 font-bold text-amber-900">0 trips assigned to ${state.role}.</div>`}
+              </div>
+            </div>
+          `;
+        } else if (mod === 'USERS') {
+          dynContainer.innerHTML = `
+            <div class="bg-white p-5 rounded-xl border border-slate-300 space-y-5 text-xs">
+              <h2 class="text-lg font-black">Module 16: Company Profile &amp; Phase 2 Live Firebase Spark Connector</h2>
+              <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div class="space-y-3 bg-slate-50 p-4 rounded-xl border">
+                  <div class="font-black text-sm">1. Editable BOC Business Settings</div>
+                  <div><label class="font-bold block mb-1">Business Name:</label><input id="cfg-comp-name" type="text" value="${esc(state.company.name)}" oninput="APP.saveAdminSettings()" class="w-full p-2 rounded border bg-white font-semibold" /></div>
+                  <div><label class="font-bold block mb-1">Address:</label><input id="cfg-comp-addr" type="text" value="${esc(state.company.address)}" oninput="APP.saveAdminSettings()" class="w-full p-2 rounded border bg-white font-semibold" /></div>
+                  <div><label class="font-bold block mb-1">Phones / WhatsApp:</label><input id="cfg-comp-phones" type="text" value="${esc(state.company.phones)}" oninput="APP.saveAdminSettings()" class="w-full p-2 rounded border bg-white font-semibold" /></div>
+                  <div><label class="font-bold block mb-1">Verified GSTIN:</label><input id="cfg-comp-gst" type="text" value="${esc(state.company.gstin)}" oninput="APP.saveAdminSettings()" class="w-full p-2 rounded border bg-white font-semibold" /></div>
+                  <div class="p-3 rounded bg-amber-100 border border-amber-400 flex justify-between items-center">
+                    <span class="font-black">Enable Public "Bitumen Supply / Trading" Page</span>
+                    <input id="cfg-comp-supply" type="checkbox" ${state.company.enableBitumenSupply ? 'checked' : ''} onchange="APP.saveAdminSettings()" class="w-5 h-5 accent-blue-700 cursor-pointer" />
+                  </div>
+                </div>
+
+                <div class="space-y-3 bg-blue-50/60 p-4 rounded-xl border-2 border-blue-700">
+                  <div class="flex justify-between items-center">
+                    <div class="font-black text-sm text-blue-950">🔥 2. Phase 2: Live Firebase Spark Connector (₹0 Free Tier)</div>
+                    <span class="px-2 py-0.5 rounded bg-amber-300 text-slate-950 font-black text-[10px]">${state.firebaseConfigRaw ? 'FIREBASE CONFIGURED ✓' : 'DEMO ADAPTER'}</span>
+                  </div>
+                  <p class="text-slate-700 leading-relaxed">Paste your Firebase Web App Config JSON below to connect Live Cloud Firestore &amp; Authentication on the no-cost Spark Plan:</p>
+                  <textarea id="fb-json-box" rows="4" placeholder='{"apiKey": "...", "authDomain": "...", "projectId": "boc-smart-erp"}' class="w-full p-2 rounded border border-slate-300 bg-white mono text-[11px]">${esc(state.firebaseConfigRaw || '')}</textarea>
+                  <div class="flex flex-wrap gap-2">
+                    <button type="button" onclick="APP.saveFirebaseConfig()" class="px-4 py-2 rounded-lg bg-blue-700 text-white font-black cursor-pointer">🔗 Save &amp; Activate Firebase Config</button>
+                    <button type="button" onclick="APP.downloadBackupJSON()" class="px-3.5 py-2 rounded-lg bg-slate-900 text-white font-black cursor-pointer">💾 Download JSON Backup</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          `;
+        } else if (mod === 'MAINTENANCE') {
+          dynContainer.innerHTML = `
+            <div class="bg-white p-5 rounded-xl border border-slate-300 space-y-4 text-xs">
+              <div class="flex flex-wrap justify-between items-center gap-2 border-b pb-3">
+                <div>
+                  <h2 class="text-lg font-black">Module 12: Maintenance, Parts &amp; Evidence (SoD Enforced)</h2>
+                  <p class="text-slate-600">Repairs above ₹15,000 cannot be approved by the same person who entered them.</p>
+                </div>
+                <button onclick="APP.addDemoWorkOrder()" class="px-3.5 py-2 rounded-lg bg-amber-400 text-slate-950 font-black cursor-pointer">+ Log Repair (₹19,500)</button>
+              </div>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                ${state.workOrders.map(w => {
+                  const canApprove = state.role === 'ADMIN' && w.status !== 'Approved & Closed';
+                  const sodBlocked = state.role === 'MAINTENANCE' && w.totalAmt > 15000 && w.status !== 'Approved & Closed';
+                  return `
+                    <div class="p-4 rounded-xl border-2 ${w.status === 'Approved & Closed' ? 'border-slate-300 bg-slate-50' : 'border-amber-400 bg-amber-50/40'} space-y-2">
+                      <div class="flex justify-between font-black text-sm"><span class="mono">${esc(w.id)} •${esc(w.vehicleNo)}</span><span class="px-2 py-0.5 rounded bg-amber-200">${esc(w.status)}</span></div>
+                      <div><strong>Fault:</strong> ${esc(w.fault)} (Odo:${esc(w.odo)})</div>
+                      <div class="mono font-bold">Total: ${fmtINR(w.totalAmt)}</div>
+                      <div class="text-[11px] text-slate-700"><strong>Evidence:</strong> ${esc(w.evidence)}</div>${canApprove ? `<button onclick="APP.approveWO('${w.id}')" class="px-3.5 py-1.5 rounded bg-emerald-700 text-white font-black cursor-pointer">✓ Approve Repair (MD)</button>` : ''}
+                      ${sodBlocked ? `<div class="p-2 rounded bg-red-100 text-red-900 font-bold text-[11px]">🔒 SoD Block: Creator (${w.enteredBy}) cannot self-approve &gt; ₹15,000. Switch to Owner/Admin (MD).</div>` : ''}
+                    </div>
+                  `;
+                }).join('')}
+              </div>
+            </div>
+          `;
+        } else if (mod === 'DOCS') {
+          dynContainer.innerHTML = `
+            <div class="bg-white p-5 rounded-xl border border-slate-300 space-y-4 text-xs">
+              <div class="flex justify-between items-center border-b pb-3">
+                <h2 class="text-lg font-black">Module 13: Vehicle Document Expiry &amp; Verification (30/15/7 Days)</h2>
+                <button onclick="APP.addDemoDoc()" class="px-3.5 py-2 rounded-lg bg-slate-900 text-white font-black cursor-pointer">+ Add Document</button>
+              </div>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                ${state.docs.map(d => {
+                  const cls = d.days < 0 ? 'bg-red-700 text-white border-red-900' : d.days <= 7 ? 'bg-red-50 border-red-500 text-red-950' : d.days <= 15 ? 'bg-orange-50 border-orange-500 text-orange-950' : 'bg-amber-50 border-amber-500 text-amber-950';
+                  return `
+                    <div class="p-4 rounded-xl border-2 ${cls} flex justify-between items-center">
+                      <div>
+                        <div class="font-black text-sm mono">${esc(d.vehicleNo)} —${esc(d.type)}</div>
+                        <div>No: ${esc(d.docNo)} • Expiry: ${esc(d.expiry)} • [${esc(d.status)}]</div>
+                      </div>
+                      <div class="font-black text-sm">${d.days < 0 ? 'EXPIRED' : d.days + 'd left'}</div>
+                    </div>
+                  `;
+                }).join('')}
+              </div>
+            </div>
+          `;
+        } else if (mod === 'LEADS') {
+          dynContainer.innerHTML = `
+            <div class="bg-white p-5 rounded-xl border border-slate-300 space-y-4 text-xs">
+              <h2 class="text-lg font-black">Module 2: Public Website Quote Leads Pipeline (DEMO)</h2>
+              <div class="space-y-3">
+                ${state.leads.map(l => `
+                  <div class="p-4 rounded-xl border bg-slate-50 flex flex-wrap justify-between items-center gap-2">
+                    <div>
+                      <div class="font-black text-sm">${esc(l.company)} • 📞 ${esc(l.phone)}</div>
+                      <div>${esc(l.product)} (${esc(l.qty)}) | ${esc(l.origin)} →${esc(l.dest)}</div>
+                    </div>
+                    <select onchange="APP.setLeadStage('${l.id}', this.value)" class="p-1.5 rounded border bg-white font-black text-blue-900">
+                      ${LEAD_STAGES.map(s => `<option value="${s}" ${l.stage === s ? 'selected' : ''}>${s}</option>`).join('')}
+                    </select>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          `;
+        } else {
+          const curMod = ERP_MODULES.find(m => m.id === mod);
+          dynContainer.innerHTML = `
+            <div class="bg-white p-5 rounded-xl border border-slate-300 space-y-4 text-xs">
+              <div class="flex flex-wrap justify-between items-center gap-2 border-b pb-3">
+                <h2 class="text-lg font-black">Module ${curMod ? curMod.num : ''}: ${esc(curMod ? curMod.en : mod)}</h2>
+                <button onclick="APP.downloadBackupJSON()" class="px-3.5 py-1.5 rounded bg-slate-900 text-amber-400 font-black cursor-pointer">💾 Export JSON Backup</button>
+              </div>
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mono">
+                <div class="p-4 rounded-xl bg-slate-50 border"><div class="font-sans font-bold text-slate-500">Gross Freight (${t.totBillableMt} MT)</div><div class="text-xl font-black mt-1">${fmtINR(t.totFreight)}</div></div>
+                <div class="p-4 rounded-xl bg-slate-50 border"><div class="font-sans font-bold text-slate-500">Total HSD &amp; Cash Recoveries</div><div class="text-xl font-black text-red-700 mt-1">− ${fmtINR(t.enrouteRec + t.plantRec + t.totSeAmt)}</div></div>
+                <div class="p-4 rounded-xl bg-blue-50 border-2 border-blue-600"><div class="font-sans font-bold text-blue-900">Net Settlement Payable</div><div class="text-xl font-black text-blue-950 mt-1">${fmtINR(t.netPayable)}</div></div>
+              </div>
+              <div class="p-4 rounded-xl bg-slate-950 text-emerald-300 mono text-[11px] max-h-48 overflow-y-auto space-y-1">
+                ${state.auditLogs.map(l => `<div>• ${esc(l)}</div>`).join('')}
+              </div>
+            </div>
+          `;
+        }
+      }
+
+      function renderAll() {
+        const isHi = state.lang === 'hi';
+        document.getElementById('btn-lang-toggle').textContent = isHi ? '🇬🇧 English' : '🇮🇳 हिन्दी (Hindi)';
+        document.getElementById('top-demo-banner').textContent = isHi
+          ? 'डेमो मोड सक्रिय — सभी DEMO रिकॉर्ड स्पष्ट रूप से चिह्नित हैं। आपके बदलाव ब्राउज़र में स्वतः सेव होते हैं।'
+          : 'DEMO MODE ACTIVE — Synthetic records are marked [DEMO]. Edits auto-save in your browser.';
+
+        const pubShell = document.getElementById('public-shell');
+        const erpShell = document.getElementById('erp-shell');
+        const switchBtn = document.getElementById('btn-shell-toggle');
+
+        if (state.shell === 'PUBLIC') {
+          pubShell.classList.remove('hidden');
+          erpShell.classList.add('hidden');
+          switchBtn.textContent = isHi ? '🔐 प्राइवेट ERP खोलें (17 मॉड्यूल्स)' : '🔐 Open Private ERP (17 Modules)';
+          renderPublicSite();
+        } else {
+          pubShell.classList.add('hidden');
+          erpShell.classList.remove('hidden');
+          switchBtn.textContent = isHi ? '🌐 पब्लिक वेबसाइट देखें (12 पेजेस)' : '🌐 View Public Website (12 Pages)';
+          renderErpSidebar();
+          renderDynamicErpModule();
+        }
+      }
+
+      return {
+        init() { renderAll(); },
+        toggleLang() { state.lang = state.lang === 'en' ? 'hi' : 'en'; saveState(); renderAll(); },
+        switchShell() { state.shell = state.shell === 'PUBLIC' ? 'ERP' : 'PUBLIC'; saveState(); renderAll(); window.scrollTo({ top: 0, behavior: 'smooth' }); },
+        openShell(targetShell, targetMod) { state.shell = targetShell; if (targetMod) state.erpModule = targetMod; saveState(); renderAll(); window.scrollTo({ top: 0, behavior: 'smooth' }); },
+        setPubPage(pageId) { state.pubPage = pageId; saveState(); renderPublicSite(); window.scrollTo({ top: 0, behavior: 'smooth' }); },
+        loginAsRole(roleId) { state.role = roleId; state.shell = 'ERP'; state.erpModule = roleId === 'DRIVER' ? 'TRIPS' : 'FREIGHT'; addAudit(`Logged in as ${roleId}`); renderAll(); window.scrollTo({ top: 0, behavior: 'smooth' }); },
+        changeRole(roleId) { state.role = roleId; addAudit(`Switched role to ${roleId}`); renderAll(); },
+        openErpModule(modId) { state.erpModule = modId; saveState(); renderErpSidebar(); renderDynamicErpModule(); window.scrollTo({ top: 0, behavior: 'smooth' }); },
+        renderErpSidebar,
+        submitPublicQuote(e) {
+          e.preventDefault();
+          const comp = document.getElementById('q-comp').value.trim();
+          const phone = document.getElementById('q-phone').value.trim();
+          const prod = document.getElementById('q-prod').value;
+          const qty = document.getElementById('q-qty').value;
+          const orig = document.getElementById('q-orig').value.trim();
+          const dest = document.getElementById('q-dest').value.trim();
+          state.leads.unshift({ id: 'LEAD-DEMO-' + (state.leads.length + 1), company: comp + ' [DEMO]', phone, product: prod, qty: qty + ' MT', origin: orig, dest, stage: 'New', date: '18/10/2026' });
+          addAudit(`Captured quote lead from ${comp} (${qty} MT to ${dest})`);
+          const banner = document.getElementById('quote-confirm-banner');
+          document.getElementById('quote-confirm-text').textContent = `✅ DEMO QUOTE SAVED: ${comp} (${qty} MT to ${dest}) added to ERP Leads Inbox!`;
+          banner.classList.remove('hidden');
+        },
+        onStmtInput(rowId, field, rawVal) {
+          if (state.stmtConfig.isLocked) return;
+          const row = state.rows.find(r => r.id === rowId);
+          if (!row) return;
+          const isText = ['date', 'vehicleNo', 'slCustom', 'site'].includes(field);
+          row[field] = isText ? rawVal : Math.max(0, Number(rawVal) || 0);
+          if (field === 'loadedKg' || field === 'unloadedKg') {
+            row.slCustom = `${Math.max(0, (Number(row.loadedKg) || 0) - (Number(row.unloadedKg) || 0))} kg`;
+          }
+          saveState();
+          const tr = document.querySelector(`tr[data-rid="${rowId}"]`);
+          if (tr) {
+            const lMt = (row.loadedKg / 1000).toFixed(3);
+            const uMt = (row.unloadedKg / 1000).toFixed(3);
+            const bMt = calcBillableMt(row);
+            const fr = (bMt * row.ratePerMt).toFixed(2);
+            const lEl = tr.querySelector('.js-lmt');
+            const uEl = tr.querySelector('.js-umt');
+            const slEl = tr.querySelector('.js-sl');
+            const frEl = tr.querySelector('.js-fr');
+            if (lEl) lEl.textContent = `= ${lMt} MT`;
+            if (uEl) uEl.textContent = `= ${uMt} MT`;
+            if (slEl && (field === 'loadedKg' || field === 'unloadedKg')) slEl.value = row.slCustom;
+            if (frEl) frEl.textContent = fmtINR(fr);
+          }
+          updateStmtSummaryInPlace();
+        },
+        addStmtRow() {
+          if (state.stmtConfig.isLocked) return alert('Statement is locked! Click "Spawn Revised Version" first.');
+          state.rows.push({
+            id: Date.now(), sno: state.rows.length + 1, date: '16/10/2026', vehicleNo: 'UP85-DEMO-10' + (state.rows.length + 1),
+            driverName: 'Mahesh Singh (DEMO)', customerId: 'CUST-DEMO-A', loadedKg: 23500, unloadedKg: 23480, ratePerMt: 4500,
+            slCustom: '20 kg', seAmt: 0, hsdQty: 115, hsdAmt: 10350, cash: 5000, plantHsdQty: 0, plantHsdAmt: 0, plantCash: 0,
+            site: 'Gairsain Project Site (DEMO)', status: 'Loaded', podLink: '', internalCost: 73500
+          });
+          addAudit(`Added trip row #${state.rows.length}`);
+          renderDynamicErpModule();
+        },
+        removeStmtRow(rowId) {
+          if (state.stmtConfig.isLocked) return;
+          state.rows = state.rows.filter(r => r.id !== rowId);
+          addAudit(`Deleted draft row ${rowId}`);
+          renderFreightModule();
+        },
+        syncStmtConfig() {
+          state.stmtConfig.billableBasis = document.getElementById('inp-basis').value;
+          state.stmtConfig.routeTitle = document.getElementById('inp-route-title').value;
+          state.stmtConfig.slLabel = document.getElementById('inp-sl-label').value || 'S/L';
+          state.stmtConfig.hideSl = document.getElementById('inp-hide-sl').checked;
+          state.stmtConfig.seLabel = document.getElementById('inp-se-label').value || 'S/E Amt (₹)';
+          state.stmtConfig.seRule = document.getElementById('inp-se-rule').value;
+          saveState();
+          renderFreightModule();
+        },
+        toggleStmtLock() {
+          if (!state.stmtConfig.isLocked) {
+            state.stmtConfig.isLocked = true;
+            addAudit(`Approved & locked Statement v${state.stmtConfig.version}`);
+          } else {
+            state.stmtConfig.version = (Number(state.stmtConfig.version) + 0.1).toFixed(1);
+            state.stmtConfig.isLocked = false;
+            addAudit(`Created revised Statement v${state.stmtConfig.version}`);
+          }
+          renderFreightModule();
+        },
+        toggleMismatchSim() { state.stmtConfig.simulateMismatch = !state.stmtConfig.simulateMismatch; saveState(); updateStmtSummaryInPlace(); },
+        resolveMismatchWithReason() {
+          const r = document.getElementById('inp-mismatch-reason').value.trim();
+          if (!r) return alert('Mandatory Admin override reason required!');
+          state.stmtConfig.simulateMismatch = false;
+          addAudit(`Overrode discrepancy with reason: "${r}"`);
+          updateStmtSummaryInPlace();
+        },
+        setTripStatus(rowId, st) {
+          const r = state.rows.find(x => x.id === rowId);
+          if (r) { r.status = st; addAudit(`Trip ${r.vehicleNo} status -> ${st} [MANUAL]`); renderDynamicErpModule(); }
+        },
+        setTripPodLink(rowId, url) {
+          const r = state.rows.find(x => x.id === rowId);
+          if (r) { r.podLink = url.trim(); r.status = r.podLink ? 'POD Received' : r.status; addAudit(`Attached Restricted Drive POD link for ${r.vehicleNo}`); renderDynamicErpModule(); }
+        },
+        setLeadStage(id, st) {
+          const l = state.leads.find(x => x.id === id);
+          if (l) { l.stage = st; addAudit(`Lead ${l.company} -> ${st}`); renderDynamicErpModule(); }
+        },
+        addDemoDoc() {
+          state.docs.unshift({ id: 'DOC-' + (state.docs.length + 1), vehicleNo: 'UP85-DEMO-101', type: 'Calibration Cert', docNo: 'CAL-DEMO-801', expiry: '03/11/2026', days: 16, status: 'UNVERIFIED' });
+          addAudit('Added Calibration Certificate [UNVERIFIED]');
+          renderDynamicErpModule();
+        },
+        addDemoWorkOrder() {
+          const id = 'WO-DEMO-' + (101 + state.workOrders.length);
+          state.workOrders.unshift({ id, vehicleNo: 'UP85-DEMO-102', fault: 'Burner Coil & Valve Overhaul', odo: '1,14,200 km', partsAmt: 15500, labourAmt: 4000, totalAmt: 19500, enteredBy: state.role, status: 'Awaiting MD Approval', evidence: 'Restricted Drive Link: Before Photo + Bill #912' });
+          addAudit(`Logged Work Order ${id} (₹19,500)`);
+          renderDynamicErpModule();
+        },
+        approveWO(id) {
+          const w = state.workOrders.find(x => x.id === id);
+          if (w) { w.status = 'Approved & Closed'; addAudit(`MD Approved Work Order ${id}`); renderDynamicErpModule(); }
+        },
+        saveAdminSettings() {
+          state.company.name = document.getElementById('cfg-comp-name').value;
+          state.company.address = document.getElementById('cfg-comp-addr').value;
+          state.company.phones = document.getElementById('cfg-comp-phones').value;
+          state.company.gstin = document.getElementById('cfg-comp-gst').value;
+          state.company.enableBitumenSupply = document.getElementById('cfg-comp-supply').checked;
+          addAudit('Updated Company Settings');
+        },
+        saveFirebaseConfig() {
+          const raw = document.getElementById('fb-json-box').value.trim();
+          if (!raw) return alert('Paste your Firebase config JSON first.');
+          try {
+            const parsed = JSON.parse(raw);
+            if (!parsed.projectId) return alert('Config must include "projectId".');
+            state.firebaseConfigRaw = raw;
+            addAudit(`Connected Firebase Project ID: ${parsed.projectId}`);
+            renderAll();
+            alert(`Firebase Project "${parsed.projectId}" saved and activated!`);
+          } catch (e) {
+            alert('Invalid JSON format. Copy the exact {"apiKey":"...","projectId":"..."} block.');
+          }
+        },
+        exportStmtCSV() {
+          const vRows = getPermittedRows();
+          const cols = ['S.No','Date','Vehicle No','Loaded (kg)','Loaded (MT)','Unloaded (kg)','Unloaded (MT)','Rate/MT',state.stmtConfig.slLabel,state.stmtConfig.seLabel,'HSD Qty','HSD Amt','Cash','Plant HSD Qty','Plant HSD Amt','Plant Cash','Unloading Site','Freight (INR)'];
+          const lines = [cols.join(',')];
+          vRows.forEach((r, idx) => {
+            const lMt = (r.loadedKg / 1000).toFixed(3);
+            const uMt = (r.unloadedKg / 1000).toFixed(3);
+            const bMt = calcBillableMt(r);
+            const fr = (bMt * r.ratePerMt).toFixed(2);
+            lines.push([idx + 1, `"${r.date}"`, `"${r.vehicleNo}"`, r.loadedKg, lMt, r.unloadedKg, uMt, r.ratePerMt, `"${r.slCustom}"`, r.seAmt, r.hsdQty, r.hsdAmt, r.cash, r.plantHsdQty, r.plantHsdAmt, r.plantCash, `"${r.site}"`, fr].join(','));
+          });
+          const a = document.createElement('a');
+          a.href = URL.createObjectURL(new Blob([lines.join('\n')], { type: 'text/csv;charset=utf-8;' }));
+          a.download = `BOC_Freight_Statement_v${state.stmtConfig.version}.csv`;
+          a.click();
+        },
+        downloadBackupJSON() {
+          const a = document.createElement('a');
+          a.href = URL.createObjectURL(new Blob([JSON.stringify(state, null, 2)], { type: 'application/json' }));
+          a.download = `BOC_Smart_ERP_Backup_${new Date().toISOString().slice(0,10)}.json`;
+          a.click();
+        },
+        resetAllDemoData() {
+          localStorage.removeItem(STORAGE_KEY);
+          state = JSON.parse(JSON.stringify(DEFAULT_STATE));
+          state.shell = 'ERP';
+          renderAll();
+        }
+      };
+    })();
+
+    window.addEventListener('DOMContentLoaded', () => APP.init());
   </script>
 </body>
 </html>
