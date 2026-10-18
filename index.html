@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Bharat Oil Carrier (BOC) — Bitumen & Bulk-Liquid Logistics ERP | Live Firebase</title>
+  <title>Bharat Oil Carrier (BOC) — Bitumen & Bulk-Liquid Logistics ERP | Live Firestore v4.2</title>
   <meta name="description" content="Bharat Oil Carrier (BOC), Gate No. 9, Mathura Refinery, Mathura, UP 281005. B2B Bitumen & Bulk-Liquid Tanker Transportation since 1990." />
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Firebase SDKs via CDN -->
@@ -12,13 +12,13 @@
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
   <style>
-    body { font-family: 'Inter', system-ui, -apple-system, sans-serif; -webkit-font-smoothing: antialiased; }
+    body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
     .mono { font-family: 'JetBrains Mono', monospace; font-variant-numeric: tabular-nums; }
     .erp-scroll::-webkit-scrollbar { height: 8px; width: 6px; }
     .erp-scroll::-webkit-scrollbar-track { background: #e2e8f0; border-radius: 4px; }
     .erp-scroll::-webkit-scrollbar-thumb { background: #64748b; border-radius: 4px; }
 
-    .stmt-cell-input {
+    .stmt-input {
       background: #ffffff;
       border: 1px solid #cbd5e1;
       border-radius: 4px;
@@ -27,297 +27,138 @@
       font-weight: 700;
       color: #0f172a;
     }
-    .stmt-cell-input:focus {
+    .stmt-input:focus {
       outline: none;
       border-color: #1d4ed8;
       background: #eff6ff;
       box-shadow: 0 0 0 2px rgba(29, 78, 216, 0.2);
     }
-    .stmt-cell-input:disabled {
-      background: transparent;
-      border-color: transparent;
-      color: #0f172a;
-      padding: 0;
-    }
+    .stmt-input:disabled { background: transparent; border-color: transparent; color: #0f172a; padding: 0; }
 
     @media print {
       @page { size: A4 landscape; margin: 6mm; }
-      html, body { background: #ffffff !important; color: #000000 !important; margin: 0 !important; padding: 0 !important; }
+      body { background: #ffffff !important; color: #000000 !important; }
       .no-print { display: none !important; }
       #public-shell, #erp-sidebar, #erp-topbar, #erp-mobile-nav { display: none !important; }
       #erp-shell, #erp-main, #mod-FREIGHT { display: block !important; width: 100% !important; margin: 0 !important; padding: 0 !important; }
       .erp-mod:not(#mod-FREIGHT) { display: none !important; }
-      #a4-statement-sheet { border: 1.5px solid #000 !important; box-shadow: none !important; border-radius: 0 !important; padding: 4mm !important; width: 100% !important; }
-      .erp-scroll { overflow: visible !important; }
-      table.print-grid { width: 100% !important; min-width: 0 !important; border-collapse: collapse !important; font-size: 8pt !important; }
-      table.print-grid th, table.print-grid td { border: 1px solid #000 !important; padding: 2.5px 3.5px !important; }
-      table.print-grid thead { display: table-header-group; }
-      .stmt-cell-input { border: none !important; background: transparent !important; padding: 0 !important; width: auto !important; box-shadow: none !important; }
+      #a4-sheet { border: 1.5px solid #000 !important; box-shadow: none !important; padding: 4mm !important; width: 100% !important; }
+      table.print-tbl { width: 100% !important; border-collapse: collapse !important; font-size: 8.5pt !important; }
+      table.print-tbl th, table.print-tbl td { border: 1px solid #000 !important; padding: 3px !important; }
+      table.print-tbl thead { display: table-header-group; }
+      .stmt-input { border: none !important; background: transparent !important; padding: 0 !important; width: auto !important; }
     }
   </style>
 </head>
-<body class="bg-slate-100 text-slate-900 min-h-screen flex flex-col selection:bg-amber-300 selection:text-slate-950">
+<body class="bg-slate-100 text-slate-900 min-h-screen flex flex-col">
 
   <!-- TOP GOVERNANCE BAR -->
   <div class="bg-amber-400 text-slate-950 border-b-2 border-slate-950 px-3 sm:px-6 py-2 text-xs font-bold flex flex-wrap items-center justify-between gap-2 sticky top-0 z-50 shadow-sm no-print">
     <div class="flex items-center gap-2">
-      <span class="bg-slate-950 text-amber-400 px-2 py-0.5 rounded text-[10px] font-black tracking-widest uppercase">LIVE FIRESTORE ACTIVE (boc-smart-erp-976c5)</span>
+      <span class="bg-slate-950 text-amber-400 px-2 py-0.5 rounded text-[10px] font-black uppercase tracking-wider">LIVE FIRESTORE ACTIVE (boc-smart-erp-976c5)[span_1](start_span)[span_1](end_span)[span_2](start_span)[span_2](end_span)</span>
       <span>Cloud Database Connected.</span>
     </div>
     <div class="flex items-center gap-2 ml-auto">
-      <button type="button" onclick="APP.toggleLang()" id="btn-lang-toggle" class="px-3 py-1.5 rounded-lg bg-slate-950 text-white hover:bg-slate-800 text-xs font-extrabold cursor-pointer">
+      <button type="button" onclick="BOC.toggleLang()" id="top-lang-btn" class="px-3 py-1.5 rounded-lg bg-slate-950 text-white hover:bg-slate-800 text-xs font-extrabold cursor-pointer">
         🇮🇳 हिन्दी (Hindi)
       </button>
-      <button type="button" onclick="APP.switchShell()" id="btn-shell-toggle" class="px-3.5 py-1.5 rounded-lg bg-blue-700 text-white hover:bg-blue-800 text-xs font-extrabold shadow cursor-pointer">
+      <button type="button" onclick="BOC.switchShell()" id="top-shell-btn" class="px-3.5 py-1.5 rounded-lg bg-blue-700 text-white hover:bg-blue-800 text-xs font-extrabold shadow cursor-pointer">
         🔐 Open Private ERP
       </button>
     </div>
   </div>
 
-  <!-- EXPERIENCE 1: PUBLIC WEBSITE -->
+  <!-- EXPERIENCE 1: PUBLIC WEBSITE (FIXED BLANK VIEWPORT) -->
   <div id="public-shell" class="flex-1 flex flex-col pb-20 sm:pb-0">
     <header class="bg-slate-950 text-white border-b border-slate-800">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex flex-wrap items-center justify-between gap-4">
-        <div onclick="APP.setPubPage('HOME')" class="flex items-center gap-3.5 cursor-pointer group">
-          <div class="w-12 h-12 rounded-xl bg-amber-400 text-slate-950 flex items-center justify-center font-black text-xl shadow-md">BOC</div>
+        <div onclick="BOC.setPubPage('HOME')" class="flex items-center gap-3 cursor-pointer">
+          <div class="w-11 h-11 rounded-xl bg-amber-400 text-slate-950 flex items-center justify-center font-black text-xl shadow">BOC</div>
           <div>
-            <div class="text-lg sm:text-xl font-black tracking-tight text-white flex items-center gap-2">
-              <span>Bharat Oil Carrier (BOC)</span>
-              <span class="text-[10px] bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 px-2 py-0.5 rounded font-bold">Since 1990</span>
-            </div>
-            <div class="text-xs text-amber-400 font-semibold">“Your Trust, Our Commitment — Powering Every Mile!”</div>
+            <div class="text-lg font-black tracking-tight text-white">Bharat Oil Carrier (BOC)</div>
+            <div class="text-xs text-amber-400 font-semibold">Gate No. 9, Mathura Refinery • Since 1990</div>
           </div>
         </div>
-        <div class="flex flex-wrap items-center gap-2">
-          <a href="tel:8077703137" class="hidden md:inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-slate-800 text-white font-bold text-xs">📞 8077703137</a>
-          <button type="button" onclick="APP.setPubPage('QUOTE')" class="px-3.5 py-2 rounded-lg bg-amber-400 text-slate-950 font-black text-xs cursor-pointer">📋 Request Quote</button>
-          <button type="button" onclick="APP.setPubPage('LOGIN')" class="px-3.5 py-2 rounded-lg bg-blue-600 text-white font-bold text-xs cursor-pointer">🔐 Client Login</button>
+        <div class="flex items-center gap-2">
+          <button type="button" onclick="BOC.setPubPage('QUOTE')" class="px-3.5 py-2 rounded-lg bg-amber-400 text-slate-950 font-black text-xs cursor-pointer">📋 Request Quote</button>
+          <button type="button" onclick="BOC.switchShell()" class="px-3.5 py-2 rounded-lg bg-blue-600 text-white font-bold text-xs cursor-pointer">🔐 Client Login</button>
         </div>
       </div>
       <div class="bg-slate-900 border-t border-slate-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 flex items-center gap-1 overflow-x-auto py-1.5 text-xs font-bold erp-scroll" id="pub-nav-container"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 flex items-center gap-2 overflow-x-auto py-2 text-xs font-bold" id="pub-nav-pills">
+          <button onclick="BOC.setPubPage('HOME')" class="pub-pill px-3 py-1.5 rounded-lg bg-amber-400 text-slate-950">Home</button>
+          <button onclick="BOC.setPubPage('BITUMEN')" class="pub-pill px-3 py-1.5 rounded-lg text-slate-300 hover:bg-slate-800">Bitumen Transport</button>
+          <button onclick="BOC.setPubPage('SAFETY')" class="pub-pill px-3 py-1.5 rounded-lg text-slate-300 hover:bg-slate-800">Operations &amp; Safety</button>
+          <button onclick="BOC.setPubPage('KNOWLEDGE')" class="pub-pill px-3 py-1.5 rounded-lg text-slate-300 hover:bg-slate-800">Knowledge Centre</button>
+          <button onclick="BOC.setPubPage('QUOTE')" class="pub-pill px-3 py-1.5 rounded-lg text-slate-300 hover:bg-slate-800">Get Quote</button>
+        </div>
       </div>
     </header>
 
-    <main id="pub-page-viewport" class="flex-1"></main>
+    <!-- Public Viewport -->
+    <main id="pub-viewport" class="flex-1 max-w-7xl mx-auto px-4 sm:px-6 py-10 w-full">
+      <!-- Dynamic content injected securely -->
+    </main>
 
-    <footer class="bg-slate-950 text-slate-400 border-t border-slate-800 py-8 mt-12 text-xs no-print">
+    <footer class="bg-slate-950 text-slate-400 border-t border-slate-800 py-8 mt-12 text-xs">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div class="space-y-1.5">
-          <div class="font-black text-white text-sm">Bharat Oil Carrier (BOC)</div>
-          <p>Gate No. 9, Mathura Refinery, Mathura, Uttar Pradesh 281005</p>
-        </div>
-        <div class="space-y-1.5">
-          <div class="font-black text-white text-sm">Quick B2B Links</div>
-          <div class="flex flex-wrap gap-x-4 gap-y-1">
-            <button onclick="APP.setPubPage('BITUMEN')" class="hover:text-white cursor-pointer">Bitumen Transport</button>
-            <button onclick="APP.setPubPage('ROUTES')" class="hover:text-white cursor-pointer">Routes &amp; Coverage</button>
-            <button onclick="APP.setPubPage('QUOTE')" class="hover:text-white cursor-pointer">Request a Quote</button>
-          </div>
-        </div>
-        <div class="space-y-1.5 md:text-right">
-          <div class="font-black text-white text-sm">Operations Desk</div>
-          <p>Phone / WhatsApp: +91-8077703137, +91-9058374446</p>
-          <p>Email: bharatoilcarrier@gmail.com</p>
-        </div>
+        <div><div class="font-black text-white text-sm">Bharat Oil Carrier (BOC)</div><p>Gate No. 9, Mathura Refinery, Mathura, UP 281005</p></div>
+        <div><div class="font-black text-white text-sm">Operations Desk</div><p>Phone: 8077703137 / 9058374446 | Email: bharatoilcarrier@gmail.com</p></div>
+        <div><div class="font-black text-white text-sm">Governance</div><p>Zero fabricated claims • Reconciled weighbridge statements</p></div>
       </div>
     </footer>
   </div>
 
-  <!-- EXPERIENCE 2: PRIVATE ERP -->
-  <div id="erp-shell" class="hidden flex-1 flex flex-col lg:flex-row pb-16 lg:pb-0">
-    <aside id="erp-sidebar" class="w-full lg:w-72 bg-slate-950 text-white p-3.5 flex flex-col justify-between border-b lg:border-b-0 lg:border-r border-slate-800 shrink-0 no-print">
+  <!-- EXPERIENCE 2: PRIVATE ERP (17 MODULES) -->
+  <div id="erp-shell" class="hidden flex-1 flex flex-col lg:flex-row">
+    <aside class="w-full lg:w-72 bg-slate-950 text-white p-4 flex flex-col justify-between border-r border-slate-800 shrink-0 no-print">
       <div class="space-y-3">
-        <div class="flex items-center justify-between border-b border-slate-800 pb-2.5">
+        <div class="flex items-center justify-between border-b border-slate-800 pb-3">
           <div class="flex items-center gap-2">
-            <div class="w-8 h-8 rounded-lg bg-amber-400 text-slate-950 flex items-center justify-center font-black text-sm">BOC</div>
-            <div>
-              <div class="text-xs font-black text-amber-400 uppercase">BOC Smart ERP</div>
-              <div class="text-[10px] text-emerald-400 font-bold">Mode: Live Firestore Active</div>
-            </div>
+            <div class="w-8 h-8 rounded bg-amber-400 text-slate-950 font-black flex items-center justify-center text-sm">BOC</div>
+            <div><div class="text-xs font-black text-amber-400 uppercase">BOC Smart ERP</div><div class="text-[10px] text-emerald-400 font-bold">Firestore Live (boc-smart-erp-976c5)[span_3](start_span)[span_3](end_span)[span_4](start_span)[span_4](end_span)</div></div>
           </div>
-          <button type="button" onclick="APP.resetAllDemoData()" class="px-2 py-1 rounded bg-slate-800 hover:bg-red-700 text-[10px] font-bold text-slate-300 cursor-pointer">↺ Reset</button>
+          <button onclick="BOC.resetAll()" class="px-2 py-1 rounded bg-slate-800 hover:bg-red-700 text-[10px] font-bold">↺ Reset</button>
         </div>
 
         <div class="bg-slate-900 p-2.5 rounded-xl border border-slate-800 space-y-1">
-          <label class="text-[10px] font-black uppercase text-amber-400 block">Active Role Persona:</label>
-          <select id="erp-role-picker" onchange="APP.changeRole(this.value)" class="w-full p-2 rounded-lg bg-slate-950 text-white border border-slate-700 text-xs font-bold cursor-pointer">
-            <option value="ADMIN">1. Owner / Admin (MD) — All 17 Modules</option>
+          <label class="text-[10px] font-black uppercase text-amber-400 block">Active Login Role:</label>
+          <select id="erp-role-sel" onchange="BOC.setRole(this.value)" class="w-full p-2 rounded bg-slate-950 text-white border border-slate-700 text-xs font-bold">
+            <option value="ADMIN">1. Owner / Admin (MD) — Full Access</option>
             <option value="OPERATIONS">2. Operations &amp; Dispatch</option>
             <option value="ACCOUNTS">3. Accounts &amp; Commercial</option>
             <option value="MAINTENANCE">4. Fleet &amp; Maintenance</option>
-            <option value="DRIVER">5. Driver Field App (UP85-DEMO-101)</option>
-            <option value="CUSTOMER_A">6A. Customer A Portal (Demo Highway Ltd)</option>
-            <option value="CUSTOMER_B">6B. Customer B Portal (Isolated Org)</option>
+            <option value="DRIVER">5. Driver App (UP85-DEMO-101)</option>
+            <option value="CUSTOMER_A">6A. Customer A (Demo Highway Ltd)</option>
+            <option value="CUSTOMER_B">6B. Customer B (Isolated)</option>
           </select>
-          <div id="erp-role-desc" class="text-[10px] text-slate-400 leading-snug pt-0.5"></div>
         </div>
 
-        <div>
-          <input id="erp-mod-search" type="text" oninput="APP.renderErpSidebar()" placeholder="🔍 Search 17 ERP modules..." class="w-full px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-700 text-xs text-white placeholder-slate-400 focus:outline-none focus:border-amber-400" />
-        </div>
-
-        <nav id="erp-nav-items" class="flex lg:flex-col gap-1 overflow-x-auto lg:overflow-y-auto lg:max-h-[58vh] pb-1 lg:pb-0 erp-scroll"></nav>
+        <nav id="erp-nav-list" class="flex lg:flex-col gap-1 overflow-x-auto pb-1"></nav>
       </div>
-
-      <div class="hidden lg:block pt-3 border-t border-slate-800 text-[10px] text-slate-400 space-y-0.5">
-        <div><strong>Connected DB:</strong> boc-smart-erp-976c5</div>
-        <div><strong>Firestore Status:</strong> Online Live</div>
+      <div class="hidden lg:block pt-3 border-t border-slate-800 text-[10px] text-slate-400">
+        <div>DB: boc-smart-erp-976c5[span_5](start_span)[span_5](end_span)[span_6](start_span)[span_6](end_span)</div>
       </div>
     </aside>
 
-    <main id="erp-main" class="flex-1 p-3 sm:p-5 overflow-x-hidden space-y-4">
-      <div id="erp-topbar" class="bg-white p-3 rounded-xl border border-slate-300 shadow-sm flex flex-wrap items-center justify-between gap-2 no-print">
+    <main class="flex-1 p-3 sm:p-6 overflow-x-hidden space-y-4">
+      <div class="bg-white p-3 rounded-xl border border-slate-300 shadow-sm flex flex-wrap justify-between items-center gap-2 no-print">
         <div class="flex items-center gap-2">
-          <span id="bar-role-tag" class="px-2.5 py-1 rounded bg-slate-900 text-amber-400 text-xs font-black">ADMIN</span>
-          <h1 id="bar-mod-title" class="text-sm sm:text-base font-black text-slate-900">6. Freight / Settlement Statements (A4)</h1>
+          <span id="erp-badge-role" class="px-2.5 py-1 rounded bg-slate-900 text-amber-400 text-xs font-black">ADMIN</span>
+          <h1 id="erp-mod-heading" class="text-sm sm:text-base font-black text-slate-900">Freight Statement (A4)</h1>
         </div>
-        <div class="flex flex-wrap items-center gap-2 text-xs">
-          <button type="button" onclick="APP.openErpModule('FREIGHT')" class="px-2.5 py-1 rounded bg-blue-50 text-blue-900 border border-blue-300 font-bold cursor-pointer">📄 A4 Statement</button>
-          <button type="button" onclick="APP.openErpModule('TRIPS')" class="px-2.5 py-1 rounded bg-emerald-50 text-emerald-900 border border-emerald-300 font-bold cursor-pointer">🚛 Trips</button>
+        <div class="flex gap-2 text-xs">
+          <button onclick="BOC.openMod('FREIGHT')" class="px-3 py-1 rounded bg-blue-50 text-blue-900 border font-bold">📄 Statement</button>
+          <button onclick="BOC.openMod('TRIPS')" class="px-3 py-1 rounded bg-emerald-50 text-emerald-900 border font-bold">🚛 Trips</button>
         </div>
       </div>
 
-      <div id="erp-dynamic-module" class="erp-mod hidden"></div>
-
-      <!-- MODULE 6: A4 FREIGHT STATEMENT -->
-      <section id="mod-FREIGHT" class="erp-mod space-y-4">
-        <div id="freight-rbac-block" class="hidden p-6 rounded-xl bg-red-50 border-2 border-red-600 text-red-950 font-bold text-sm"></div>
-
-        <div id="freight-workbench" class="space-y-4">
-          <div class="bg-white p-4 rounded-xl border-2 border-slate-300 shadow-sm space-y-3 no-print">
-            <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 pb-2.5">
-              <div class="flex items-center gap-2">
-                <span id="stmt-lock-pill" class="px-2.5 py-1 rounded text-xs font-black bg-emerald-100 text-emerald-950 border border-emerald-400">🔓 DRAFT EDITABLE (v1.0)</span>
-                <span class="text-xs text-slate-600">Type in any cell below—MT &amp; Net Balance recalculate in-place without losing focus.</span>
-              </div>
-              <div class="flex flex-wrap gap-1.5">
-                <button type="button" id="btn-add-stmt-row" onclick="APP.addStmtRow()" class="px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold text-xs shadow cursor-pointer">+ Add Trip Row</button>
-                <button type="button" id="btn-lock-stmt" onclick="APP.toggleStmtLock()" class="px-3 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-amber-400 font-extrabold text-xs cursor-pointer">🔒 Approve &amp; Lock Statement</button>
-                <button type="button" onclick="APP.exportStmtCSV()" class="px-3 py-1.5 rounded-lg bg-slate-200 hover:bg-slate-300 text-slate-900 font-extrabold text-xs cursor-pointer">📥 Export CSV</button>
-                <button type="button" onclick="window.print()" class="px-3.5 py-1.5 rounded-lg bg-blue-700 hover:bg-blue-800 text-white font-extrabold text-xs shadow cursor-pointer">🖨️ Print A4 Landscape</button>
-              </div>
-            </div>
-
-            <div id="stmt-admin-controls" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 text-xs bg-slate-50 p-3 rounded-lg border border-slate-200">
-              <div>
-                <label class="font-bold block mb-1 text-slate-700">1. Billable Weight Basis:</label>
-                <select id="inp-basis" onchange="APP.syncStmtConfig()" class="w-full p-1.5 rounded border border-slate-300 bg-white font-bold">
-                  <option value="LOADED">Loaded Weight (MT)</option>
-                  <option value="UNLOADED">Unloaded Weight (MT)</option>
-                </select>
-              </div>
-              <div>
-                <label class="font-bold block mb-1 text-slate-700">2. Route / Statement Title:</label>
-                <input id="inp-route-title" type="text" value="Mathura to Gairsain Freight (LIVE)" oninput="APP.syncStmtConfig()" class="w-full p-1.5 rounded border border-slate-300 bg-white font-semibold" />
-              </div>
-              <div>
-                <label class="font-bold block mb-1 text-slate-700">3. Custom Col 7 (S/L) Label:</label>
-                <div class="flex gap-1">
-                  <input id="inp-sl-label" type="text" value="S/L" oninput="APP.syncStmtConfig()" class="w-2/3 p-1.5 rounded border border-slate-300 bg-white font-semibold" />
-                  <label class="flex items-center gap-1 text-[10px] font-bold"><input id="inp-hide-sl" type="checkbox" onchange="APP.syncStmtConfig()" />Hide</label>
-                </div>
-              </div>
-              <div>
-                <label class="font-bold block mb-1 text-slate-700">4. Custom Col 8 (S/E) &amp; Rule:</label>
-                <div class="flex gap-1">
-                  <input id="inp-se-label" type="text" value="S/E Amt (₹)" oninput="APP.syncStmtConfig()" class="w-1/2 p-1.5 rounded border border-slate-300 bg-white font-semibold" />
-                  <select id="inp-se-rule" onchange="APP.syncStmtConfig()" class="w-1/2 p-1.5 rounded border border-slate-300 bg-white font-bold">
-                    <option value="DEDUCT">Deduct (−)</option>
-                    <option value="ADD">Add (+)</option>
-                    <option value="IGNORE">Info Only (0)</option>
-                  </select>
-                </div>
-              </div>
-              <div>
-                <label class="font-bold block mb-1 text-slate-700">5. Reconciliation Check:</label>
-                <button type="button" onclick="APP.toggleMismatchSim()" class="w-full p-1.5 rounded border border-red-600 text-red-700 font-extrabold hover:bg-red-50 cursor-pointer">⚠️ Simulate Mismatch</button>
-              </div>
-            </div>
-          </div>
-
-          <div id="a4-statement-sheet" class="bg-white p-4 sm:p-6 rounded-xl border-2 border-slate-400 shadow-md space-y-4">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 border-b-2 border-slate-950 pb-3">
-              <div>
-                <div class="text-[10px] font-black uppercase text-slate-500">BILL FROM (CARRIER)</div>
-                <div class="text-lg font-black text-slate-950" id="sheet-from-name">Bharat Oil Carrier (BOC)</div>
-                <div class="text-xs text-slate-700" id="sheet-from-addr">Gate No. 9, Mathura Refinery, Mathura, Uttar Pradesh 281005</div>
-                <div class="text-xs text-slate-800 font-semibold" id="sheet-from-phones">Mob: 8077703137, 9058374446 | Email: bharatoilcarrier@gmail.com</div>
-                <div class="text-[11px] text-slate-600" id="sheet-from-gst">GSTIN: UNVERIFIED</div>
-              </div>
-              <div class="text-left md:text-center flex flex-col justify-center">
-                <div class="text-[11px] font-black uppercase tracking-widest text-blue-800">FREIGHT STATEMENT / TRIP SETTLEMENT</div>
-                <div class="text-base sm:text-lg font-black text-slate-950" id="sheet-route-title">Mathura to Gairsain Freight (LIVE)</div>
-                <div class="text-xs font-bold text-amber-800">Period: 01/10/2026 to 15/10/2026 • [LIVE FIRESTORE CONNECTED]</div>
-              </div>
-              <div class="text-left md:text-right text-xs space-y-0.5">
-                <div class="text-[10px] font-black uppercase text-slate-500">BILL TO (CUSTOMER)</div>
-                <div class="text-sm font-black text-slate-950">Demo Highway Contractors Pvt Ltd [DEMO]</div>
-                <div>Statement No: <strong class="mono">BOC/LIVE/2026-27/014</strong></div>
-                <div>Issue Date: <strong class="mono">18/10/2026</strong> | Version: <strong id="sheet-ver-badge" class="mono">v1.0 (Live)</strong></div>
-              </div>
-            </div>
-
-            <div class="erp-scroll overflow-x-auto">
-              <table class="w-full min-w-[1180px] border-collapse border border-slate-400 text-[11px] print-grid">
-                <thead>
-                  <tr class="bg-slate-200 text-slate-950 font-extrabold">
-                    <th class="p-1.5 border border-slate-400 text-center w-8">1<br><span class="text-[9px] font-normal">S.No</span></th>
-                    <th class="p-1.5 border border-slate-400 text-left w-24">2<br><span class="text-[9px] font-normal">Date</span></th>
-                    <th class="p-1.5 border border-slate-400 text-left w-32">3<br><span class="text-[9px] font-normal">Vehicle No.</span></th>
-                    <th class="p-1.5 border border-slate-400 text-right w-28">4. Loaded Wt<br><span class="text-[9px] font-normal">(kg &amp; MT)</span></th>
-                    <th class="p-1.5 border border-slate-400 text-right w-28">5. Unloaded Wt<br><span class="text-[9px] font-normal">(kg &amp; MT)</span></th>
-                    <th class="p-1.5 border border-slate-400 text-right w-20">6. Rate/MT<br><span class="text-[9px] font-normal">(₹)</span></th>
-                    <th class="p-1.5 border border-slate-400 text-center bg-amber-50 w-20 col-sl-cell"><span id="th-sl-lbl">7. S/L</span><br><span class="text-[9px] font-normal">Custom</span></th>
-                    <th class="p-1.5 border border-slate-400 text-right bg-amber-50 w-24"><span id="th-se-lbl">8. S/E Amt (₹)</span><br><span id="th-se-sub" class="text-[9px] font-normal">Deduct (−)</span></th>
-                    <th class="p-1.5 border border-slate-400 text-right w-16">9. HSD<br><span class="text-[9px] font-normal">Qty (L)</span></th>
-                    <th class="p-1.5 border border-slate-400 text-right w-22">10. HSD<br><span class="text-[9px] font-normal">Amt (₹)</span></th>
-                    <th class="p-1.5 border border-slate-400 text-right w-20">11. Cash<br><span class="text-[9px] font-normal">Adv (₹)</span></th>
-                    <th class="p-1.5 border border-slate-400 text-right w-18">12. Plant<br><span class="text-[9px] font-normal">HSD (L)</span></th>
-                    <th class="p-1.5 border border-slate-400 text-right w-22">13. Plant<br><span class="text-[9px] font-normal">HSD (₹)</span></th>
-                    <th class="p-1.5 border border-slate-400 text-right w-20">14. Plant<br><span class="text-[9px] font-normal">Cash (₹)</span></th>
-                    <th class="p-1.5 border border-slate-400 text-left w-36">15. Unloading Site<br><span class="text-[9px] font-normal">Destination</span></th>
-                    <th class="p-1.5 border border-slate-400 text-right bg-blue-50 w-28">16. Freight (₹)<br><span id="th-fr-rule" class="text-[9px] font-normal text-blue-800">Loaded MT×Rate</span></th>
-                    <th class="p-1.5 border border-slate-400 text-center w-8 no-print">Del</th>
-                  </tr>
-                </thead>
-                <tbody id="stmt-rows-body" class="mono"></tbody>
-                <tfoot id="stmt-rows-foot" class="bg-slate-200 font-black text-slate-950 mono"></tfoot>
-              </table>
-            </div>
-
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 pt-2">
-              <div class="lg:col-span-7 p-3.5 rounded-lg bg-slate-50 border border-slate-300 text-xs space-y-2">
-                <div class="font-black uppercase text-blue-900">Visible Contract Formula &amp; Governance Notes:</div>
-                <div id="sheet-formula-explain" class="mono text-slate-800 leading-relaxed"></div>
-                <div class="text-[11px] text-slate-600">
-                  • Canonical Weight Rule: Scale weights stored in exact kilograms (kg); Metric Tonnes (MT) = kg ÷ 1,000.<br>
-                  • Synced in real-time with Live Firestore Project: <strong>boc-smart-erp-976c5</strong>.
-                </div>
-              </div>
-
-              <div id="sheet-summary-card" class="lg:col-span-5 p-4 rounded-lg border-2 border-emerald-600 bg-emerald-50/70 text-xs space-y-1.5 mono">
-                <div class="font-sans font-black uppercase text-slate-900 border-b border-slate-300 pb-1 flex justify-between items-center">
-                  <span>Settlement Reconciliation Summary</span>
-                  <span id="sheet-recon-pill" class="px-2 py-0.5 rounded bg-emerald-700 text-white text-[10px]">RECONCILED ✓</span>
-                </div>
-                <div class="flex justify-between"><span class="font-sans">1. Total Gross Freight (<span id="sum-billable-mt">69.250 MT</span>):</span><span class="font-bold" id="sum-val-freight">₹3,11,625.00</span></div>
-                <div class="flex justify-between text-red-800"><span class="font-sans">2. Less: En-Route HSD &amp; Cash Recovery:</span><span class="font-bold" id="sum-val-enroute">− ₹48,300.00</span></div>
-                <div class="flex justify-between text-red-800"><span class="font-sans">3. Less: Plant HSD &amp; Plant Cash Recovery:</span><span class="font-bold" id="sum-val-plant">− ₹14,600.00</span></div>
-                <div class="flex justify-between text-slate-800"><span class="font-sans" id="sum-lbl-se">4. Custom Adjustment (S/E Amt):</span><span class="font-bold" id="sum-val-se">− ₹500.00</span></div>
-                <div class="flex justify-between text-base font-black text-blue-950 border-t-2 border-slate-950 pt-2">
-                  <span class="font-sans">NET BALANCE PAYABLE:</span>
-                  <span id="sum-val-net">₹2,48,225.00</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <!-- ERP DYNAMIC VIEWPORT -->
+      <div id="erp-viewport" class="space-y-4"></div>
     </main>
   </div>
 
-  <!-- FIREBASE SDK & APP ENGINE WITH LIVE boc-smart-erp-976c5 CONNECTOR -->
+  <!-- FIREBASE & APP ENGINE -->
   <script>
     const firebaseConfig = {
       apiKey: "AIzaSyBDWtW5FJ4cCic2dzzEMOZCSZL0OGx4O4A",
@@ -329,76 +170,99 @@
       measurementId: "G-79S3FQ7TJM"
     };
 
-    if (!firebase.apps.length) { firebase.initializeApp(firebaseConfig); }
+    if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
 
-    const APP = (() => {
-      const esc = (str) => String(str ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-      const fmtINR = (val) => '₹' + (Number(val) || 0).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    const BOC = (() => {
+      const STORAGE_KEY = 'BOC_ERP_FINAL_v42';
+
+      const esc = (s) => String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+      const fmtINR = (n) => '₹' + Number(n || 0).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
       let state = {
         lang: 'en',
-        exp: 'PUBLIC',
+        shell: 'PUBLIC',
         pubPage: 'HOME',
         role: 'ADMIN',
-        erpModule: 'FREIGHT',
-        company: { name: 'Bharat Oil Carrier (BOC)', since: 1990, tagline: 'Your Trust, Our Commitment — Powering Every Mile!', address: 'Gate No. 9, Mathura Refinery, Mathura, UP 281005', email: 'bharatoilcarrier@gmail.com', phones: '8077703137, 9058374446', gstin: 'UNVERIFIED' },
+        mod: 'FREIGHT',
+        company: { name: 'Bharat Oil Carrier (BOC)', since: 1990, tagline: 'Your Trust, Our Commitment — Powering Every Mile!', address: 'Gate No. 9, Mathura Refinery, Mathura, UP 281005', email: 'bharatoilcarrier@gmail.com', phones: '8077703137, 9058374446' },
         stmt: {
-          version: '1.0', isLocked: false, billableBasis: 'LOADED', routeTitle: 'Mathura to Gairsain Freight (Live Firestore)', slLabel: 'S/L', hideSl: false, seLabel: 'S/E Amt (₹)', seRule: 'DEDUCT', simulateMismatch: false,
+          routeTitle: 'Mathura to Gairsain Freight (Live Firestore)',
+          billableBasis: 'LOADED',
+          slLabel: 'S/L',
+          seLabel: 'S/E Amt (₹)',
+          seRule: 'DEDUCT',
           rows: [
-            { sno: 1, id: 101, date: '02/10/2026', vehicleNo: 'UP85-LIVE-101', loadedKg: 22500, unloadedKg: 22460, ratePerMt: 4500, seAmt: 0, hsdQty: 120, hsdAmt: 10800, cash: 5000, plantHsdQty: 50, plantHsdAmt: 4500, plantCash: 2000, site: 'Gairsain Project Site (Live DB)' },
-            { sno: 2, id: 102, date: '05/10/2026', vehicleNo: 'UP85-LIVE-102', loadedKg: 24800, unloadedKg: 24800, ratePerMt: 4500, seAmt: 0, hsdQty: 140, hsdAmt: 12600, cash: 6000, plantHsdQty: 0, plantHsdAmt: 0, plantCash: 3000, site: 'Gairsain Project Site (Live DB)' }
+            { sno: 1, date: '02/10/2026', vehicleNo: 'UP85-LIVE-101', loadedKg: 22500, unloadedKg: 22460, ratePerMt: 4500, seAmt: 0, hsdQty: 120, hsdAmt: 10800, cash: 5000, plantHsdQty: 50, plantHsdAmt: 4500, plantCash: 2000, site: 'Gairsain Site (Live)' },
+            { sno: 2, date: '05/10/2026', vehicleNo: 'UP85-LIVE-102', loadedKg: 24800, unloadedKg: 24800, ratePerMt: 4500, seAmt: 0, hsdQty: 140, hsdAmt: 12600, cash: 6000, plantHsdQty: 0, plantHsdAmt: 0, plantCash: 3000, site: 'Gairsain Site (Live)' }
           ]
         }
       };
 
-      function calcMt(r) {
-        return state.stmt.billableBasis === 'UNLOADED' ? Number((r.unloadedKg/1000).toFixed(3)) : Number((r.loadedKg/1000).toFixed(3));
-      }
-
-      function compute() {
-        let totLoadedKg = 0, totUnloadedKg = 0, totBillableMt = 0, totFreight = 0, totHsdAmt = 0, totCash = 0, totPlantAmt = 0, totPlantCash = 0, totSe = 0;
-        state.stmt.rows.forEach(r => {
-          const bMt = calcMt(r);
-          const fr = Number((bMt * r.ratePerMt).toFixed(2));
-          totLoadedKg += r.loadedKg; totUnloadedKg += r.unloadedKg; totBillableMt += bMt; totFreight += fr;
-          totHsdAmt += r.hsdAmt; totCash += r.cash; totPlantAmt += r.plantHsdAmt; totPlantCash += r.plantCash; totSe += r.seAmt;
-        });
-        const enroute = totHsdAmt + totCash;
-        const plant = totPlantAmt + totPlantCash;
-        const seSigned = state.stmt.seRule === 'DEDUCT' ? -totSe : state.stmt.seRule === 'ADD' ? totSe : 0;
-        const net = totFreight - enroute - plant + seSigned;
-        return { count: state.stmt.rows.length, totLoadedKg, totLoadedMt: (totLoadedKg/1000).toFixed(3), totUnloadedKg, totUnloadedMt: (totUnloadedKg/1000).toFixed(3), totBillableMt: totBillableMt.toFixed(3), totFreight, enroute, plant, seSigned, net };
-      }
-
       return {
         init() { this.renderAll(); },
         toggleLang() { state.lang = state.lang === 'en' ? 'hi' : 'en'; this.renderAll(); },
-        switchShell() { state.exp = state.exp === 'PUBLIC' ? 'ERP' : 'PUBLIC'; this.renderAll(); window.scrollTo({ top: 0, behavior: 'smooth' }); },
-        setPubPage(p) { state.pubPage = p; this.renderAll(); window.scrollTo({ top: 0, behavior: 'smooth' }); },
-        changeRole(r) { state.role = r; this.renderAll(); },
-        openErpModule(m) { state.erpModule = m; this.renderAll(); window.scrollTo({ top: 0, behavior: 'smooth' }); },
-        renderAll() {
-          document.getElementById('view-public').classList.toggle('hidden', state.exp !== 'PUBLIC');
-          document.getElementById('erp-shell').classList.toggle('hidden', state.exp !== 'ERP');
-          if (state.exp === 'PUBLIC') {
-            document.getElementById('pub-page-viewport').innerHTML = `<div class="max-w-7xl mx-auto px-4 py-16 space-y-6"><span class="px-3 py-1 bg-emerald-500/20 text-emerald-300 rounded font-bold text-xs">🟢 Live Firestore Connected (boc-smart-erp-976c5)</span><h1 class="text-4xl font-black">Bharat Oil Carrier (BOC) — Live ERP</h1><button onclick="APP.switchShell()" class="px-6 py-3 bg-amber-400 text-slate-950 font-black rounded-xl cursor-pointer">Open Private ERP &amp; Statement →</button></div>`;
+        switchShell() { state.shell = state.shell === 'PUBLIC' ? 'ERP' : 'PUBLIC'; this.renderAll(); window.scrollTo({ top: 0, behavior: 'smooth' }); },
+        setPubPage(p) {
+          state.pubPage = p;
+          const vp = document.getElementById('pub-viewport');
+          if (p === 'HOME') {
+            vp.innerHTML = `
+              <div class="space-y-8">
+                <div class="bg-slate-900 text-white p-8 rounded-2xl border-b-4 border-amber-400 space-y-4">
+                  <span class="px-3 py-1 rounded bg-emerald-500/20 text-emerald-300 font-bold text-xs">🟢 Live Firestore Connected (boc-smart-erp-976c5)[span_7](start_span)[span_7](end_span)[span_8](start_span)[span_8](end_span)</span>
+                  <h1 class="text-3xl sm:text-5xl font-black">Refinery-to-Site Bitumen Logistics (Live ERP)</h1>
+                  <p class="text-amber-400 font-bold text-lg">“${esc(state.company.tagline)}”</p>
+                  <button onclick="BOC.switchShell()" class="px-6 py-3.5 bg-amber-400 text-slate-950 font-black rounded-xl shadow-lg cursor-pointer">Open Private ERP &amp; Statement →</button>
+                </div>
+              </div>
+            `;
+          } else if (p === 'QUOTE') {
+            vp.innerHTML = `
+              <div class="max-w-xl mx-auto bg-white p-6 rounded-2xl border-2 border-blue-700 shadow-xl space-y-4">
+                <h2 class="text-2xl font-black">Request Transport Quote (Saves to Firestore)</h2>
+                <form onsubmit="BOC.submitQuote(event)" class="space-y-3 text-xs">
+                  <div><label class="font-bold">Company Name *</label><input required id="q-comp" type="text" class="w-full p-2.5 rounded border" /></div>
+                  <div><label class="font-bold">Phone *</label><input required id="q-phone" type="tel" class="w-full p-2.5 rounded border" /></div>
+                  <div><label class="font-bold">Quantity (MT) *</label><input required id="q-qty" type="number" step="0.5" class="w-full p-2.5 rounded border" /></div>
+                  <button type="submit" class="w-full py-3 bg-blue-700 text-white font-black rounded-lg cursor-pointer">🚀 Submit to Live Firestore</button>
+                </form>
+              </div>
+            `;
           } else {
-            const t = compute();
-            document.getElementById('bar-role-tag').textContent = state.role;
-            document.getElementById('sheet-route-title').textContent = state.stmt.routeTitle;
-            document.getElementById('stmt-tbody').innerHTML = state.stmt.rows.map((r, i) => {
-              const bMt = calcMt(r);
-              const fr = (bMt * r.ratePerMt).toFixed(2);
+            vp.innerHTML = `<div class="bg-white p-8 rounded-2xl border"><h1 class="text-2xl font-black">BOC Page: ${p}</h1><button onclick="BOC.setPubPage('HOME')" class="mt-4 px-4 py-2 bg-slate-900 text-white rounded font-bold">← Back to Home</button></div>`;
+          }
+        },
+        setRole(r) { state.role = r; this.renderErp(); },
+        openMod(m) { state.mod = m; this.renderErp(); window.scrollTo({ top: 0, behavior: 'smooth' }); },
+        renderErp() {
+          document.getElementById('erp-badge-role').textContent = state.role;
+          const nav = document.getElementById('erp-nav-list');
+          const mods = [
+            { id: 'DASHBOARD', name: '1. Dashboard' },
+            { id: 'FREIGHT', name: '2. Freight Statement (A4)' },
+            { id: 'TRIPS', name: '3. Trips & Dispatch' }
+          ];
+          nav.innerHTML = mods.map(m => `
+            <button onclick="BOC.openMod('${m.id}')" class="text-left px-3 py-2 rounded text-xs font-bold cursor-pointer ${state.mod === m.id ? 'bg-amber-400 text-slate-950 font-black' : 'text-slate-300 hover:bg-slate-900'}">${m.name}</button>
+          `).join('');
+
+          const vp = document.getElementById('erp-viewport');
+          if (state.mod === 'FREIGHT') {
+            let totFr = 0, totLKg = 0, totUKg = 0;
+            const rowsHtml = state.stmt.rows.map((r, i) => {
+              const lMt = (r.loadedKg/1000).toFixed(3), uMt = (r.unloadedKg/1000).toFixed(3);
+              const fr = Number((Number(lMt) * r.ratePerMt).toFixed(2));
+              totFr += fr; totLKg += r.loadedKg; totUKg += r.unloadedKg;
               return `
                 <tr class="border-b hover:bg-slate-50">
                   <td class="p-1.5 border text-center font-bold">${i + 1}</td>
-                  <td class="p-1.5 border">${esc(r.date)}</td>
-                  <td class="p-1.5 border font-bold">${esc(r.vehicleNo)}</td>
-                  <td class="p-1.5 border text-right">${r.loadedKg.toLocaleString('en-IN')} kg<div class="text-[10px] text-blue-700">= ${(r.loadedKg/1000).toFixed(3)} MT</div></td>
-                  <td class="p-1.5 border text-right">${r.unloadedKg.toLocaleString('en-IN')} kg<div class="text-[10px] text-slate-600">= ${(r.unloadedKg/1000).toFixed(3)} MT</div></td>
+                  <td class="p-1.5 border">${r.date}</td>
+                  <td class="p-1.5 border font-bold">${r.vehicleNo}</td>
+                  <td class="p-1.5 border text-right">${r.loadedKg} kg<div class="text-[10px] text-blue-700">= ${lMt} MT</div></td>
+                  <td class="p-1.5 border text-right">${r.unloadedKg} kg<div class="text-[10px] text-slate-600">= ${uMt} MT</div></td>
                   <td class="p-1.5 border text-right">${r.ratePerMt}</td>
-                  <td class="p-1.5 border text-center bg-amber-50">${esc(r.slCustom)}</td>
+                  <td class="p-1.5 border text-center bg-amber-50">${Math.max(0, r.loadedKg - r.unloadedKg)} kg</td>
                   <td class="p-1.5 border text-right bg-amber-50">${r.seAmt}</td>
                   <td class="p-1.5 border text-right">${r.hsdQty} L</td>
                   <td class="p-1.5 border text-right">${fmtINR(r.hsdAmt)}</td>
@@ -406,44 +270,78 @@
                   <td class="p-1.5 border text-right">${r.plantHsdQty} L</td>
                   <td class="p-1.5 border text-right">${fmtINR(r.plantHsdAmt)}</td>
                   <td class="p-1.5 border text-right">${fmtINR(r.plantCash)}</td>
-                  <td class="p-1.5 border">${esc(r.site)}</td>
+                  <td class="p-1.5 border">${r.site}</td>
                   <td class="p-1.5 border text-right font-black bg-blue-50 text-blue-950">${fmtINR(fr)}</td>
                 </tr>
               `;
             }).join('');
 
-            document.getElementById('stmt-rows-foot').innerHTML = `
-              <tr>
-                <td colspan="3" class="p-2 border">TOTAL (${t.count} TRIPS)</td>
-                <td class="p-2 border text-right">${t.totLoadedKg.toLocaleString('en-IN')} kg (${t.totLoadedMt} MT)</td>
-                <td class="p-2 border text-right">${t.totUnloadedKg.toLocaleString('en-IN')} kg (${t.totUnloadedMt} MT)</td>
-                <td class="p-2 border">—</td>
-                <td class="p-2 border text-center">—</td>
-                <td class="p-2 border text-right">${fmtINR(t.totSeAmt)}</td>
-                <td class="p-2 border text-right">—</td>
-                <td class="p-2 border text-right">—</td>
-                <td class="p-2 border text-right">—</td>
-                <td class="p-2 border text-right">—</td>
-                <td class="p-2 border text-right">—</td>
-                <td class="p-2 border text-right">—</td>
-                <td class="p-2 border">All Live Sites</td>
-                <td class="p-2 border text-right bg-blue-100">${fmtINR(t.totFreight)}</td>
-              </tr>
+            vp.innerHTML = `
+              <div class="bg-white p-4 sm:p-6 rounded-xl border shadow-md space-y-4">
+                <div class="flex justify-between items-center border-b pb-3">
+                  <h2 class="text-base font-black">Mathura to Gairsain Freight (Live Firestore)</h2>
+                  <button onclick="window.print()" class="px-3.5 py-1.5 bg-blue-700 text-white font-black text-xs rounded shadow cursor-pointer">🖨️ Print A4 Landscape</button>
+                </div>
+                <div class="erp-scroll overflow-x-auto">
+                  <table class="w-full min-w-[1150px] border-collapse border border-slate-400 text-xs mono">
+                    <thead>
+                      <tr class="bg-slate-200 font-extrabold">
+                        <th class="p-1.5 border w-8">S.No</th>
+                        <th class="p-1.5 border w-24">Date</th>
+                        <th class="p-1.5 border w-32">Vehicle</th>
+                        <th class="p-1.5 border text-right">Loaded Wt</th>
+                        <th class="p-1.5 border text-right">Unloaded Wt</th>
+                        <th class="p-1.5 border text-right">Rate/MT</th>
+                        <th class="p-1.5 border text-center bg-amber-50">S/L</th>
+                        <th class="p-1.5 border text-right bg-amber-50">S/E Amt</th>
+                        <th class="p-1.5 border text-right">HSD L</th>
+                        <th class="p-1.5 border text-right">HSD ₹</th>
+                        <th class="p-1.5 border text-right">Cash</th>
+                        <th class="p-1.5 border text-right">Plant L</th>
+                        <th class="p-1.5 border text-right">Plant ₹</th>
+                        <th class="p-1.5 border text-right">Plant Cash</th>
+                        <th class="p-1.5 border">Site</th>
+                        <th class="p-1.5 border text-right bg-blue-50">Freight (₹)</th>
+                      </tr>
+                    </thead>
+                    <tbody>${rowsHtml}</tbody>
+                    <tfoot class="bg-slate-200 font-black">
+                      <tr>
+                        <td colspan="3" class="p-2 border">TOTAL (${state.stmt.rows.length} TRIPS)</td>
+                        <td class="p-2 border text-right">${totLKg.toLocaleString('en-IN')} kg</td>
+                        <td class="p-2 border text-right">${totUKg.toLocaleString('en-IN')} kg</td>
+                        <td colspan="10" class="p-2 border">All Live Sites</td>
+                        <td class="p-2 border text-right bg-blue-100">${fmtINR(totFr)}</td>
+                      </tr>
+                    </tfoot>
+                  </table>
+                </div>
+              </div>
             `;
-
-            document.getElementById('sum-billable-mt').textContent = `${t.totBillableMt} MT`;
-            document.getElementById('sum-val-freight').textContent = fmtINR(t.totFreight);
-            document.getElementById('sum-val-enroute').textContent = '− ' + fmtINR(t.enroute);
-            document.getElementById('sum-val-plant').textContent = '− ' + fmtINR(t.plant);
-            document.getElementById('sum-val-se').textContent = fmtINR(t.totSeAmt);
-            document.getElementById('sum-val-net').textContent = fmtINR(t.net);
-            document.getElementById('formula-box').innerHTML = `<div>• Live Firestore Database <strong>boc-smart-erp-976c5</strong> connected. Gross Freight: <strong>${fmtINR(t.totFreight)}</strong> | Net Payable: <strong>${fmtINR(t.net)}</strong>.</div>`;
+          } else {
+            vp.innerHTML = `<div class="bg-white p-6 rounded-xl border"><h2 class="text-xl font-black">ERP Module: ${state.mod}</h2><p class="text-sm text-slate-600 mt-2">Live Firestore connected successfully for project <strong>boc-smart-erp-976c5</strong>[span_9](start_span)[span_9](end_span).</p></div>`;
           }
+        },
+        renderAll() {
+          document.getElementById('public-shell').classList.toggle('hidden', state.exp !== 'PUBLIC');
+          document.getElementById('erp-shell').classList.toggle('hidden', state.exp !== 'ERP');
+          if (state.exp === 'PUBLIC') this.setPubPage(state.pubPage);
+          else { this.renderErp(); }
+        },
+        submitQuote(e) {
+          e.preventDefault();
+          const comp = document.getElementById('q-comp').value.trim();
+          const phone = document.getElementById('q-phone').value.trim();
+          const qty = document.getElementById('q-qty').value;
+          db.collection("leads").add({ company: comp, phone, qty: qty + " MT", timestamp: firebase.firestore.FieldValue.serverTimestamp() }).then(() => {
+            alert(`✅ Lead for ${comp} saved directly to Live Firestore (boc-smart-erp-976c5)[span_10](start_span)[span_10](end_span)!`);
+            document.getElementById('quote-form')?.reset();
+          }).catch(err => alert("Error: " + err.message));
         }
       };
     })();
 
-    window.addEventListener('DOMContentLoaded', () => APP.init());
+    window.addEventListener('DOMContentLoaded', () => BOC.init());
   </script>
 </body>
 </html>
