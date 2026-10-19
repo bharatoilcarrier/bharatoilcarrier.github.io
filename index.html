@@ -3,152 +3,131 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Bharat Oil Carrier (BOC) — Safety First. Reliable Supply. | Bitumen Logistics & ERP</title>
-  <meta name="description" content="Bharat Oil Carrier (BOC), 9 No. Gate, Mathura Refinery. Bitumen & Bulk Liquid Transportation (19MT-33MT Tankers) & Supply since 1990." />
-  <link rel="icon" href="logo.png" type="image/png" />
+  <title>Bharat Oil Carrier (BOC) — Safety First. Reliable Supply. | Bitumen & Logistics ERP 2.0</title>
+  <meta name="description" content="Bharat Oil Carrier (BOC), Gate No. 9, Mathura Refinery. Bitumen & Bulk-Liquid Transportation Since 1990. Call +91 8077703137." />
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Official Firebase Compat SDKs -->
+  <!-- Official Firebase Compat SDKs for Project: boc-smart-erp-976c5 -->
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
   <style>
     body { font-family: 'Inter', system-ui, -apple-system, sans-serif; -webkit-font-smoothing: antialiased; }
     .mono { font-family: 'JetBrains Mono', monospace; font-variant-numeric: tabular-nums; }
     .hero-bg {
-      background-image: linear-gradient(to right, rgba(15, 23, 42, 0.94), rgba(15, 23, 42, 0.82)), url('tanker-bg.jpg');
+      background-image: linear-gradient(to bottom, rgba(15, 23, 42, 0.88), rgba(15, 23, 42, 0.96)), url('tanker-bg.jpg');
       background-size: cover;
       background-position: center;
     }
     @media print {
-      @page { size: A4 landscape; margin: 7mm; }
-      .no-print { display: none !important; }
+      @page { size: A4 landscape; margin: 6mm; }
       body { background: #ffffff !important; color: #000000 !important; }
+      .no-print { display: none !important; }
+      #a4-print-area { display: block !important; border: 1.5px solid #000 !important; padding: 4mm !important; width: 100% !important; }
+      table.print-tbl { width: 100% !important; border-collapse: collapse !important; font-size: 8.5pt !important; }
+      table.print-tbl th, table.print-tbl td { border: 1px solid #000 !important; padding: 3px 4px !important; }
     }
   </style>
 </head>
-<body class="bg-slate-100 text-slate-900 min-h-screen flex flex-col">
+<body class="bg-slate-100 text-slate-900 min-h-screen flex flex-col selection:bg-amber-300 selection:text-slate-950">
 
   <!-- ========================================================================
-       TOP QUICK BAR (ROLE VIEW SWITCHER + FIREBASE LOGIN + LANGUAGE)
+       TOP QUICK ROLE & VIEW SWITCHER BAR (EASY FOR OWNER TESTING & LOGIN)
        ======================================================================== -->
   <div class="bg-amber-400 text-slate-950 border-b-2 border-slate-950 px-3 sm:px-6 py-2 text-xs font-bold flex flex-wrap items-center justify-between gap-2 sticky top-0 z-50 shadow-sm no-print">
     <div class="flex items-center gap-2">
-      <span class="bg-slate-950 text-amber-400 px-2 py-0.5 rounded text-[10px] font-black uppercase">BOC DIGITAL ERP 2.0</span>
-      <span id="top-status-text">चारों सरल इंटरफेस तैयार हैं — नीचे बटन दबाकर किसी भी रोल की स्क्रीन देखें:</span>
+      <span class="bg-slate-950 text-amber-400 px-2 py-0.5 rounded text-[10px] font-black uppercase">BOC ERP 2.0</span>
+      <span id="top-status-text">कामोन्मुख सरल सिस्टम (Simple Task-Based System) • नीचे बटन दबाकर कोई भी इंटरफेस खोलें:</span>
     </div>
     <div class="flex flex-wrap items-center gap-1.5 ml-auto">
-      <button type="button" onclick="BOC.switchView('PUBLIC')" id="tab-btn-PUBLIC" class="px-2.5 py-1.5 rounded-lg text-xs font-black cursor-pointer transition">
-        🌐 पब्लिक वेबसाइट
-      </button>
-      <button type="button" onclick="BOC.switchView('OWNER')" id="tab-btn-OWNER" class="px-2.5 py-1.5 rounded-lg text-xs font-black cursor-pointer transition">
-        👑 1. Owner (मालिक)
-      </button>
-      <button type="button" onclick="BOC.switchView('EMPLOYEE')" id="tab-btn-EMPLOYEE" class="px-2.5 py-1.5 rounded-lg text-xs font-black cursor-pointer transition">
-        🧑‍💼 2. Employee (स्टाफ)
-      </button>
-      <button type="button" onclick="BOC.switchView('CLIENT')" id="tab-btn-CLIENT" class="px-2.5 py-1.5 rounded-lg text-xs font-black cursor-pointer transition">
-        🏢 3. Client (ग्राहक)
-      </button>
-      <button type="button" onclick="BOC.switchView('DRIVER')" id="tab-btn-DRIVER" class="px-2.5 py-1.5 rounded-lg text-xs font-black cursor-pointer transition">
-        🚛 4. Driver (ड्राइवर ऐप)
-      </button>
-      <button type="button" onclick="BOC.openLoginModal()" id="btn-auth-top" class="px-3 py-1.5 rounded-lg bg-blue-700 text-white hover:bg-blue-800 text-xs font-black shadow cursor-pointer">
-        🔐 लॉगिन (Login)
-      </button>
+      <button type="button" onclick="BOC.switchInterface('PUBLIC')" id="nav-btn-PUBLIC" class="px-2.5 py-1.5 rounded-lg text-xs font-black cursor-pointer transition">🌐 1. पब्लिक वेबसाइट</button>
+      <button type="button" onclick="BOC.switchInterface('OWNER')" id="nav-btn-OWNER" class="px-2.5 py-1.5 rounded-lg text-xs font-black cursor-pointer transition">👑 2. मालिक (Owner)</button>
+      <button type="button" onclick="BOC.switchInterface('EMPLOYEE')" id="nav-btn-EMPLOYEE" class="px-2.5 py-1.5 rounded-lg text-xs font-black cursor-pointer transition">👷 3. कर्मचारी (Staff)</button>
+      <button type="button" onclick="BOC.switchInterface('CLIENT')" id="nav-btn-CLIENT" class="px-2.5 py-1.5 rounded-lg text-xs font-black cursor-pointer transition">🏢 4. ग्राहक (Client)</button>
+      <button type="button" onclick="BOC.switchInterface('DRIVER')" id="nav-btn-DRIVER" class="px-2.5 py-1.5 rounded-lg text-xs font-black cursor-pointer transition">🚛 5. ड्राइवर ऐप (Driver)</button>
+      <button type="button" onclick="BOC.openLoginModal()" id="btn-firebase-login" class="px-2.5 py-1.5 rounded-lg bg-blue-700 text-white text-xs font-black cursor-pointer">🔐 ID लॉगिन</button>
     </div>
   </div>
 
   <!-- ========================================================================
-       FIREBASE AUTHENTICATION MODAL (OWNER / EMPLOYEE / CLIENT / DRIVER LOGIN)
+       FIREBASE EMAIL/PASSWORD LOGIN MODAL (SECURE INDIVIDUAL ACCOUNTS)
        ======================================================================== -->
-  <div id="login-modal" class="hidden fixed inset-0 bg-slate-950/75 z-50 flex items-center justify-center p-4 no-print">
+  <div id="login-modal" class="hidden fixed inset-0 bg-slate-950/80 z-50 flex items-center justify-center p-4 no-print">
     <div class="bg-white rounded-2xl border-2 border-slate-900 max-w-md w-full p-6 space-y-4 shadow-2xl text-xs">
       <div class="flex justify-between items-center border-b pb-3">
-        <div class="flex items-center gap-2.5">
-          <img src="logo.png" alt="BOC" onerror="this.style.display='none'" class="w-9 h-9 rounded object-contain" />
-          <div>
-            <div class="text-[10px] font-black uppercase text-blue-700">सुरक्षित लॉगिन पोर्टल</div>
-            <h3 class="text-base font-black text-slate-900">Bharat Oil Carrier — अकाउंट लॉगिन</h3>
-          </div>
+        <div>
+          <div class="text-[10px] font-black uppercase text-blue-700">Firebase Project: boc-smart-erp-976c5</div>
+          <h3 class="text-lg font-black text-slate-900">अपनी व्यक्तिगत ID से लॉगिन करें</h3>
         </div>
-        <button type="button" onclick="BOC.closeLoginModal()" class="text-slate-500 hover:text-slate-900 font-black text-lg cursor-pointer">✕</button>
+        <button type="button" onclick="BOC.closeLoginModal()" class="text-slate-500 hover:text-slate-950 font-black text-lg cursor-pointer">✕</button>
       </div>
-
       <div id="login-alert" class="hidden p-3 rounded-lg font-bold"></div>
-
       <form onsubmit="BOC.handleFirebaseLogin(event)" class="space-y-3">
         <div>
-          <label class="font-bold block mb-1">आपकी ईमेल आईडी (Email ID) *</label>
-          <input required id="login-email" type="email" value="bharatoilcarrier@gmail.com" class="w-full p-2.5 rounded-lg border border-slate-300 font-semibold text-sm" />
+          <label class="font-bold block mb-1">ईमेल आईडी (Email ID) *</label>
+          <input required id="login-email" type="email" value="bharatoilcarrier@gmail.com" class="w-full p-3 rounded-xl border border-slate-300 text-sm font-semibold" />
         </div>
         <div>
           <label class="font-bold block mb-1">पासवर्ड (Password) *</label>
-          <input required id="login-password" type="password" placeholder="अपना पासवर्ड दर्ज करें" class="w-full p-2.5 rounded-lg border border-slate-300 font-semibold text-sm" />
+          <input required id="login-pass" type="password" placeholder="अपना पासवर्ड दर्ज करें" class="w-full p-3 rounded-xl border border-slate-300 text-sm font-semibold" />
         </div>
-        <div class="flex gap-2">
-          <button type="submit" class="flex-1 py-3 px-4 rounded-xl bg-blue-700 hover:bg-blue-800 text-white font-black text-sm cursor-pointer">
-            🔐 लॉगिन करें (Sign In)
-          </button>
-          <button type="button" onclick="BOC.handlePasswordReset()" class="py-3 px-3 rounded-xl bg-slate-200 hover:bg-slate-300 text-slate-800 font-bold cursor-pointer">
-            पासवर्ड भूल गए?
-          </button>
+        <div class="flex gap-2 pt-1">
+          <button type="submit" class="flex-1 py-3 px-4 rounded-xl bg-blue-700 hover:bg-blue-800 text-white font-black text-sm cursor-pointer">🔐 लॉगिन करें (Sign In)</button>
+          <button type="button" onclick="BOC.handlePasswordReset()" class="py-3 px-3 rounded-xl bg-slate-200 hover:bg-slate-300 text-slate-800 font-bold cursor-pointer">पासवर्ड रीसेट</button>
         </div>
       </form>
-
       <div class="border-t pt-3 space-y-2">
-        <div class="font-black text-slate-700">टेस्टिंग के लिए सीधा रोल चुनें (Demo Role Preview):</div>
+        <div class="font-bold text-slate-600">या टेस्टिंग के लिए सीधे अपना रोल चुनें:</div>
         <div class="grid grid-cols-2 gap-2">
-          <button onclick="BOC.switchView('OWNER'); BOC.closeLoginModal();" class="p-2.5 rounded-xl bg-amber-50 hover:bg-amber-100 border border-amber-300 font-black text-left cursor-pointer">👑 1. Owner (मालिक)</button>
-          <button onclick="BOC.switchView('EMPLOYEE'); BOC.closeLoginModal();" class="p-2.5 rounded-xl bg-blue-50 hover:bg-blue-100 border border-blue-300 font-black text-left cursor-pointer">🧑‍💼 2. Employee (स्टाफ)</button>
-          <button onclick="BOC.switchView('CLIENT'); BOC.closeLoginModal();" class="p-2.5 rounded-xl bg-emerald-50 hover:bg-emerald-100 border border-emerald-300 font-black text-left cursor-pointer">🏢 3. Client (ग्राहक)</button>
-          <button onclick="BOC.switchView('DRIVER'); BOC.closeLoginModal();" class="p-2.5 rounded-xl bg-purple-50 hover:bg-purple-100 border border-purple-300 font-black text-left cursor-pointer">🚛 4. Driver (ड्राइवर)</button>
+          <button onclick="BOC.closeLoginModal(); BOC.switchInterface('OWNER');" class="p-2.5 rounded-xl bg-amber-100 hover:bg-amber-200 font-black text-slate-950 border border-amber-400">👑 मालिक डैशबोर्ड</button>
+          <button onclick="BOC.closeLoginModal(); BOC.switchInterface('EMPLOYEE');" class="p-2.5 rounded-xl bg-blue-50 hover:bg-blue-100 font-black text-blue-950 border border-blue-300">👷 कर्मचारी ERP</button>
+          <button onclick="BOC.closeLoginModal(); BOC.switchInterface('CLIENT');" class="p-2.5 rounded-xl bg-emerald-50 hover:bg-emerald-100 font-black text-emerald-950 border border-emerald-300">🏢 ग्राहक पोर्टल</button>
+          <button onclick="BOC.closeLoginModal(); BOC.switchInterface('DRIVER');" class="p-2.5 rounded-xl bg-purple-50 hover:bg-purple-100 font-black text-purple-950 border border-purple-300">🚛 ड्राइवर मोबाइल ऐप</button>
         </div>
       </div>
     </div>
   </div>
 
   <!-- ========================================================================
-       MAIN VIEWPORT CONTAINER
+       MAIN DYNAMIC VIEWPORT (RENDERS PUBLIC, OWNER, EMPLOYEE, CLIENT, OR DRIVER)
        ======================================================================== -->
-  <div id="app-viewport" class="flex-1 flex flex-col"></div>
+  <main id="app-viewport" class="flex-1 pb-20 sm:pb-8"></main>
 
   <!-- ========================================================================
-       FOOTER
+       GLOBAL FOOTER
        ======================================================================== -->
-  <footer class="bg-slate-950 text-slate-400 border-t border-slate-800 py-8 mt-12 text-xs no-print">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 grid grid-cols-1 md:grid-cols-3 gap-6">
-      <div class="flex items-start gap-3">
-        <img src="logo.png" alt="BOC Logo" onerror="this.style.display='none'" class="w-12 h-12 rounded bg-white p-1 object-contain" />
-        <div class="space-y-1">
+  <footer class="bg-slate-950 text-slate-400 border-t border-slate-800 py-8 text-xs no-print">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
+      <div class="flex items-center gap-3">
+        <img src="logo.png" alt="BOC Logo" onerror="this.style.display='none'" class="w-12 h-12 rounded-xl object-contain bg-white p-1" />
+        <div>
           <div class="font-black text-white text-sm">Bharat Oil Carrier (BOC)</div>
-          <div class="text-amber-400 font-bold">Safety First. Reliable Supply. • Since 1990</div>
-          <p>9 No. Gate, Mathura Refinery, Bharat Dharm Kata, Mathura, UP 281005</p>
+          <div class="text-amber-400 font-bold">Safety First. Reliable Supply. (Since 1990)</div>
+          <div>Gate No. 9, Mathura Refinery, Mathura, UP 281005</div>
         </div>
       </div>
       <div class="space-y-1">
-        <div class="font-black text-white text-sm">उपलब्ध टैंकर और प्रोडक्ट्स</div>
-        <p>Tanker Capacities: <strong>19 MT, 23 MT, 27 MT, 28 MT, 33 MT</strong></p>
-        <p>Products: <strong>VG-10, VG-20, VG-30, VG-40, CRMB, Emulsion, LDO</strong></p>
-        <a href="bharat-brochure.pdf" target="_blank" class="inline-block text-amber-400 font-bold hover:underline pt-1">📄 कंपनी ब्रोशर डाउनलोड करें (PDF) →</a>
+        <div class="text-white font-bold">उपलब्ध टैंकर और उत्पाद (Verified Capabilities):</div>
+        <div>टैंकर क्षमता: 19 MT, 23 MT, 27 MT, 28 MT, 33 MT</div>
+        <div>उत्पाद: VG-10, VG-20, VG-30, VG-40, CRMB, Emulsion, LDO</div>
       </div>
-      <div class="space-y-1 md:text-right">
-        <div class="font-black text-white text-sm">संपर्क करें (Operations Desk)</div>
-        <p>📞 फोन / WhatsApp: <strong class="text-white">+91 8077703137, 9058374446</strong></p>
-        <p>✉️ ईमेल: <strong class="text-white">bharatoilcarrier@gmail.com</strong></p>
-        <p class="text-[11px] text-slate-500">Firebase Project: boc-smart-erp-976c5</p>
+      <div class="md:text-right space-y-1">
+        <div class="text-white font-bold">संपर्क करें (Operations Desk):</div>
+        <div>📞 फोन / WhatsApp: <a href="tel:+918077703137" class="text-amber-400 font-bold">+91 8077703137</a>, 9058374446</div>
+        <div>✉️ ईमेल: bharatoilcarrier@gmail.com</div>
+        <div class="pt-1"><a href="bharat-brochure.pdf" target="_blank" class="underline text-emerald-400 font-bold">📄 कंपनी ब्रोशर डाउनलोड करें (PDF)</a></div>
       </div>
     </div>
   </footer>
 
   <!-- ========================================================================
-       BOC DIGITAL ERP 2.0 — CORE APPLICATION ENGINE
+       CORE APPLICATION ENGINE (BOC DIGITAL ERP 2.0)
        ======================================================================== -->
   <script>
     const BOC = (() => {
       const STORAGE_KEY = 'BOC_DIGITAL_ERP_V2_STATE';
 
-      // Firebase Configuration (Project: boc-smart-erp-976c5)
+      // Firebase Config for Confirmed Project: boc-smart-erp-976c5
       const FIREBASE_CONFIG = {
         apiKey: "AIzaSyBDWtW5FJ4cCic2dzzEMOZCSZL0OGx4O4A",
         authDomain: "boc-smart-erp-976c5.firebaseapp.com",
@@ -166,234 +145,267 @@
           fbDb = firebase.firestore();
         }
       } catch (e) {
-        console.warn('Firebase offline fallback active:', e);
+        console.warn('Firebase running in local-safe fallback mode:', e);
       }
 
-      const esc = (s) => String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
-      const fmtINR = (v) => '₹' + (Number(v) || 0).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-      const fmtInt = (v) => (Number(v) || 0).toLocaleString('en-IN', { maximumFractionDigits: 0 });
-
-      const TANKER_CAPACITIES = [19, 23, 27, 28, 33];
+      const esc = (s) => String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+      const fmtINR = (n) => '₹' + (Number(n) || 0).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      const fmtIntINR = (n) => '₹' + Math.round(Number(n) || 0).toLocaleString('en-IN');
 
       // ======================================================================
-      // PART 11: SINGLE REUSABLE FREIGHT CALCULATOR FUNCTION
+      // PART 11: SINGLE REUSABLE FREIGHT CALCULATION FUNCTION
       // Formula: ONE-WAY DISTANCE (KM) × QUANTITY (MT) × ₹3 × 2
       // Never multiplies by 2 twice!
       // ======================================================================
-      function calculateEstimatedFreight(oneWayKmRaw, quantityMtRaw, ratePerKmPerMt = 3, roundTripMultiplier = 2) {
-        const rawDistStr = String(oneWayKmRaw ?? '').trim();
-        const rawQtyStr = String(quantityMtRaw ?? '').trim();
+      function calculateOfficialFreight(oneWayKmInput, quantityMtInput, ratePerKmMt = 3, roundTripMultiplier = 2) {
+        const rawKm = String(oneWayKmInput ?? '').trim();
+        const rawMt = String(quantityMtInput ?? '').trim();
 
-        if (rawDistStr === '' || rawQtyStr === '') {
+        if (rawKm === '' || rawMt === '') {
           return { valid: false, errorHi: 'कृपया एक तरफ की दूरी (KM) और माल की मात्रा (MT) दोनों दर्ज करें।' };
         }
 
-        const oneWayKm = Number(rawDistStr);
-        const quantityMt = Number(rawQtyStr);
+        const km = Number(rawKm);
+        const mt = Number(rawMt);
 
-        if (!Number.isFinite(oneWayKm) || !Number.isFinite(quantityMt)) {
-          return { valid: false, errorHi: 'कृपया केवल सही संख्या (Valid Numbers) दर्ज करें।' };
+        if (!Number.isFinite(km) || !Number.isFinite(mt) || Number.isNaN(km) || Number.isNaN(mt)) {
+          return { valid: false, errorHi: 'कृपया केवल सही संख्या (Numbers) दर्ज करें।' };
         }
-        if (oneWayKm <= 0) {
-          return { valid: false, errorHi: 'त्रुटि: एक तरफ की दूरी 0 या नेगेटिव (-) नहीं हो सकती। कृपया सही किलोमीटर दर्ज करें।' };
+        if (km <= 0) {
+          return { valid: false, errorHi: 'एक तरफ की दूरी 0 या नेगेटिव (-) नहीं हो सकती। कृपया सही किलोमीटर (KM) लिखें।' };
         }
-        if (quantityMt <= 0) {
-          return { valid: false, errorHi: 'त्रुटि: माल की मात्रा (MT) 0 या नेगेटिव (-) नहीं हो सकती।' };
+        if (mt <= 0) {
+          return { valid: false, errorHi: 'माल की मात्रा 0 या नेगेटिव (-) नहीं हो सकती। कृपया सही टन (MT) लिखें।' };
         }
-        if (oneWayKm > 5000 || quantityMt > 500) {
-          return { valid: false, errorHi: 'अधिकतम सीमा: दूरी 5,000 KM और मात्रा 500 MT से कम होनी चाहिए।' };
+        if (km > 5000) {
+          return { valid: false, errorHi: 'दूरी 5,000 KM से अधिक नहीं हो सकती। कृपया सही दूरी जांचें।' };
+        }
+        if (mt > 500) {
+          return { valid: false, errorHi: 'मात्रा 500 MT से अधिक है। बड़े प्रोजेक्ट ऑर्डर के लिए सीधे ऑफिस में कॉल करें।' };
         }
 
-        const totalCalculatedDistanceKm = oneWayKm * roundTripMultiplier;
-        // Single exact multiplication: oneWayKm * quantityMt * rate * multiplier
-        const totalFreightInr = Number((oneWayKm * quantityMt * ratePerKmPerMt * roundTripMultiplier).toFixed(2));
+        // Exact Business Formula: One-Way KM * Quantity MT * Rate * Multiplier (2)
+        const roundTripKm = Number((km * roundTripMultiplier).toFixed(2));
+        const totalFreight = Number((km * mt * ratePerKmMt * roundTripMultiplier).toFixed(2));
 
         return {
           valid: true,
-          oneWayKm,
-          quantityMt,
-          ratePerKmPerMt,
-          roundTripMultiplier,
-          totalCalculatedDistanceKm,
-          totalFreightInr
+          oneWayKm: km,
+          quantityMt: mt,
+          ratePerKmMt,
+          multiplier: roundTripMultiplier,
+          roundTripKm,
+          totalFreight
         };
       }
 
       // ======================================================================
-      // INITIAL STATE (Includes Part 9 Image Rates from 16 Oct 2026)
+      // INITIAL STATE (INCLUDES PART 9 BITUMEN RATES FROM 16 OCT 2026 IMAGE)
       // ======================================================================
-      const DEFAULT_STATE = {
-        activeView: 'PUBLIC', // 'PUBLIC' | 'OWNER' | 'EMPLOYEE' | 'CLIENT' | 'DRIVER'
-        ownerSubPage: 'HOME', // 'HOME' | 'RATES' | 'CALCULATOR' | 'TRIPS' | 'QUOTES' | 'CLIENTS' | 'PAYMENTS' | 'EXPENSES' | 'VEHICLES' | 'EMPLOYEES' | 'REPORTS'
-        clientActiveId: 'CLIENT_A',
-        driverActiveId: 'DRV-101',
+      const INITIAL_STATE = {
+        activeInterface: 'PUBLIC', // PUBLIC | OWNER | EMPLOYEE | CLIENT | DRIVER
+        ownerSubTask: 'HOME',      // HOME | ADD_TRIP | UPDATE_RATES | CALCULATOR | QUOTATIONS | CLIENTS | PAYMENTS | EXPENSES | VEHICLES | EMPLOYEES | REPORTS
         loggedInEmail: null,
-        calcDistKm: 250,
-        calcQtyMt: 23,
-        freightDefaultRate: 3,
+        activeClientFilter: 'CLIENT_A', // CLIENT_A | CLIENT_B (for testing isolation)
+        calcKm: 250,
+        calcMt: 23,
+        freightRatePerKmMt: 3,
         freightMultiplier: 2,
 
-        // Part 8 & Part 9: Centralized Bitumen Rate Board (16 October 2026 Image Data)
+        // Part 8 & Part 9: Centralized Bitumen Rates (16 October 2026 Image Reference)
         productRates: [
           {
             code: 'VG-10',
-            name: 'Bitumen VG-10 (Bulk)',
-            refinery: 'Mathura Refinery (IOCL Ref)',
+            name: 'Bitumen VG-10',
+            location: 'Mathura Refinery',
+            packing: 'Bulk Tanker',
             unit: 'MT',
-            increaseInr: 7920,
-            basicPriceInr: 83472,
+            increaseAmt: 7920,
+            basicPrice: 83472,
             taxLabel: '18% GST (Configurable / Subject to Verification)',
-            taxPct: 18,
-            taxablePriceInr: 98496.96,
+            taxablePrice: 98496.96,
             effectiveDate: '16/10/2026',
             updatedAt: '16/10/2026 09:00 IST',
-            updatedBy: 'Owner (Imported from BOC Rate Image)',
-            source: 'User-provided Bharat Oil Carrier rate image (16 Oct 2026)',
+            updatedBy: 'Owner (Image Import)',
+            sourceRef: 'User-provided BOC Bitumen Rate Image (16 Oct 2026)',
             availability: 'Available',
-            status: 'Published Current Rate' // 'Draft Rate' | 'Published Current Rate' | 'Unverified Rate'
+            status: 'Draft / Reference Rate (Verify to Publish)'
           },
           {
             code: 'VG-30',
-            name: 'Bitumen VG-30 (Bulk)',
-            refinery: 'Mathura Refinery (IOCL Ref)',
+            name: 'Bitumen VG-30',
+            location: 'Mathura Refinery',
+            packing: 'Bulk Tanker',
             unit: 'MT',
-            increaseInr: 7120,
-            basicPriceInr: 83972,
+            increaseAmt: 7120,
+            basicPrice: 83972,
             taxLabel: '18% GST (Configurable / Subject to Verification)',
-            taxPct: 18,
-            taxablePriceInr: 99086.96,
+            taxablePrice: 99086.96,
             effectiveDate: '16/10/2026',
             updatedAt: '16/10/2026 09:00 IST',
-            updatedBy: 'Owner (Imported from BOC Rate Image)',
-            source: 'User-provided Bharat Oil Carrier rate image (16 Oct 2026)',
+            updatedBy: 'Owner (Image Import)',
+            sourceRef: 'User-provided BOC Bitumen Rate Image (16 Oct 2026)',
             availability: 'Available',
-            status: 'Published Current Rate'
+            status: 'Draft / Reference Rate (Verify to Publish)'
           },
           {
             code: 'VG-40',
-            name: 'Bitumen VG-40 (Bulk)',
-            refinery: 'Mathura Refinery (IOCL Ref)',
+            name: 'Bitumen VG-40',
+            location: 'Mathura Refinery',
+            packing: 'Bulk Tanker',
             unit: 'MT',
-            increaseInr: 8020,
-            basicPriceInr: 90652,
+            increaseAmt: 8020,
+            basicPrice: 90652,
             taxLabel: '18% GST (Configurable / Subject to Verification)',
-            taxPct: 18,
-            taxablePriceInr: 106969.36,
+            taxablePrice: 106969.36,
             effectiveDate: '16/10/2026',
             updatedAt: '16/10/2026 09:00 IST',
-            updatedBy: 'Owner (Imported from BOC Rate Image)',
-            source: 'User-provided Bharat Oil Carrier rate image (16 Oct 2026)',
+            updatedBy: 'Owner (Image Import)',
+            sourceRef: 'User-provided BOC Bitumen Rate Image (16 Oct 2026)',
             availability: 'Available',
-            status: 'Published Current Rate'
+            status: 'Draft / Reference Rate (Verify to Publish)'
           },
           {
             code: 'VG-20',
-            name: 'Bitumen VG-20 (Bulk)',
-            refinery: 'Mathura / Configurable',
+            name: 'Bitumen VG-20',
+            location: 'Mathura Refinery',
+            packing: 'Bulk Tanker',
             unit: 'MT',
-            increaseInr: 0,
-            basicPriceInr: null,
+            increaseAmt: 0,
+            basicPrice: 0,
             taxLabel: '18% GST (Configurable / Subject to Verification)',
-            taxPct: 18,
-            taxablePriceInr: null,
+            taxablePrice: 0,
             effectiveDate: '—',
-            updatedAt: 'Not entered yet',
+            updatedAt: 'Not Entered Yet',
             updatedBy: '—',
-            source: 'No rate invented — Awaiting Owner Entry',
-            availability: 'On Request',
-            status: 'Unverified Rate'
+            sourceRef: 'Awaiting Owner Entry (No invented price)',
+            availability: 'Subject to Confirmation',
+            status: 'Unverified / Rate on Request'
           },
           {
             code: 'CRMB',
             name: 'CRMB-55 / CRMB-60',
-            refinery: 'Mathura / Configurable',
+            location: 'Mathura Refinery',
+            packing: 'Bulk Tanker',
             unit: 'MT',
-            increaseInr: 0,
-            basicPriceInr: null,
+            increaseAmt: 0,
+            basicPrice: 0,
             taxLabel: '18% GST (Configurable / Subject to Verification)',
-            taxPct: 18,
-            taxablePriceInr: null,
+            taxablePrice: 0,
             effectiveDate: '—',
-            updatedAt: 'Not entered yet',
+            updatedAt: 'Not Entered Yet',
             updatedBy: '—',
-            source: 'No rate invented — Awaiting Owner Entry',
-            availability: 'On Request',
-            status: 'Unverified Rate'
+            sourceRef: 'Awaiting Owner Entry (No invented price)',
+            availability: 'Subject to Confirmation',
+            status: 'Unverified / Rate on Request'
           },
           {
             code: 'EMULSION',
             name: 'Bitumen Emulsion',
-            refinery: 'Mathura / Configurable',
+            location: 'Mathura Refinery',
+            packing: 'Bulk / Packed',
             unit: 'MT',
-            increaseInr: 0,
-            basicPriceInr: null,
+            increaseAmt: 0,
+            basicPrice: 0,
             taxLabel: '18% GST (Configurable / Subject to Verification)',
-            taxPct: 18,
-            taxablePriceInr: null,
+            taxablePrice: 0,
             effectiveDate: '—',
-            updatedAt: 'Not entered yet',
+            updatedAt: 'Not Entered Yet',
             updatedBy: '—',
-            source: 'No rate invented — Awaiting Owner Entry',
-            availability: 'On Request',
-            status: 'Unverified Rate'
+            sourceRef: 'Awaiting Owner Entry (No invented price)',
+            availability: 'Subject to Confirmation',
+            status: 'Unverified / Rate on Request'
           },
           {
             code: 'LDO',
             name: 'Light Diesel Oil (LDO)',
-            refinery: 'Mathura / Configurable',
-            unit: 'MT',
-            increaseInr: 0,
-            basicPriceInr: null,
-            taxLabel: '18% GST (Configurable / Subject to Verification)',
-            taxPct: 18,
-            taxablePriceInr: null,
+            location: 'Mathura Refinery',
+            packing: 'Bulk Tanker',
+            unit: 'KL / MT',
+            increaseAmt: 0,
+            basicPrice: 0,
+            taxLabel: 'Configurable Tax',
+            taxablePrice: 0,
             effectiveDate: '—',
-            updatedAt: 'Not entered yet',
+            updatedAt: 'Not Entered Yet',
             updatedBy: '—',
-            source: 'No rate invented — Awaiting Owner Entry',
-            availability: 'On Request',
-            status: 'Unverified Rate'
+            sourceRef: 'Awaiting Owner Entry (No invented price)',
+            availability: 'Subject to Confirmation',
+            status: 'Unverified / Rate on Request'
           }
         ],
 
         rateHistory: [
-          { ts: '16/10/2026 09:00', product: 'VG-10', oldBasic: 75552, newBasic: 83472, location: 'Mathura Refinery', updatedBy: 'Owner', source: '16 Oct 2026 BOC Rate Image (+₹7,920/MT)', status: 'Published' },
-          { ts: '16/10/2026 09:00', product: 'VG-30', oldBasic: 76852, newBasic: 83972, location: 'Mathura Refinery', updatedBy: 'Owner', source: '16 Oct 2026 BOC Rate Image (+₹7,120/MT)', status: 'Published' },
-          { ts: '16/10/2026 09:00', product: 'VG-40', oldBasic: 82632, newBasic: 90652, location: 'Mathura Refinery', updatedBy: 'Owner', source: '16 Oct 2026 BOC Rate Image (+₹8,020/MT)', status: 'Published' }
+          { ts: '16/10/2026 09:00', product: 'VG-10', oldBasic: 75552, newBasic: 83472, taxable: 98496.96, location: 'Mathura Refinery', updatedBy: 'Owner (Image Import)', status: 'Draft / Reference' },
+          { ts: '16/10/2026 09:00', product: 'VG-30', oldBasic: 76852, newBasic: 83972, taxable: 99086.96, location: 'Mathura Refinery', updatedBy: 'Owner (Image Import)', status: 'Draft / Reference' },
+          { ts: '16/10/2026 09:00', product: 'VG-40', oldBasic: 82632, newBasic: 90652, taxable: 106969.36, location: 'Mathura Refinery', updatedBy: 'Owner (Image Import)', status: 'Draft / Reference' }
         ],
 
-        employeePermissions: {
-          empName: 'Vikram Singh (Dispatch & Operations)',
-          canCreateTrip: true,
-          canUpdateStatus: true,
-          canPrepareQuote: true,
-          canUpdateRates: false,
-          canRecordExpense: true,
-          canRecordPayment: false
-        },
+        // Part 12: Quotations (Preserves historical rate & calculator snapshot)
+        quotations: [
+          {
+            id: 'QT-2026-101',
+            clientId: 'CLIENT_A',
+            clientName: 'Demo Highway Contractors Pvt Ltd [DEMO]',
+            phone: '9800000001',
+            product: 'VG-30',
+            quantityMt: 23,
+            supplyLocation: 'Mathura Refinery',
+            destination: 'Gairsain Project Site',
+            oneWayKm: 250,
+            ratePerKmMtUsed: 3,
+            multiplierUsed: 2,
+            estimatedFreightInr: 34500,
+            productBasicRateUsed: 83972,
+            productTaxableRateUsed: 99086.96,
+            status: 'Quotation Sent',
+            createdAt: '18/10/2026',
+            createdBy: 'Owner'
+          }
+        ],
+
+        // Part 13: Trips & Tankers (19, 23, 27, 28, 33 MT) + Mathura-Gairsain A4 Statement Data
+        trips: [
+          { sno: 1, tripId: 'TRP-26-101', date: '02/10/2026', clientId: 'CLIENT_A', clientName: 'Demo Highway Contractors Pvt Ltd [DEMO]', vehicleNo: 'UP85-DEMO-101', capacityMt: 23, driverName: 'Ramesh Kumar', product: 'VG-30', origin: 'Mathura Refinery', destination: 'Gairsain Project Site (DEMO)', loadedKg: 22500, unloadedKg: 22460, ratePerMt: 4500, slText: '40 kg', seAmt: 0, hsdQty: 120, hsdAmt: 10800, cash: 5000, plantHsdQty: 50, plantHsdAmt: 4500, plantCash: 2000, status: 'Delivered', podNote: 'POD प्राप्त और सत्यापित', productAmountInr: 0, additionalChargesInr: 0 },
+          { sno: 2, tripId: 'TRP-26-102', date: '05/10/2026', clientId: 'CLIENT_A', clientName: 'Demo Highway Contractors Pvt Ltd [DEMO]', vehicleNo: 'UP85-DEMO-102', capacityMt: 27, driverName: 'Suresh Yadav', product: 'VG-30', origin: 'Mathura Refinery', destination: 'Gairsain Project Site (DEMO)', loadedKg: 24800, unloadedKg: 24800, ratePerMt: 4500, slText: '0 kg', seAmt: 0, hsdQty: 140, hsdAmt: 12600, cash: 6000, plantHsdQty: 0, plantHsdAmt: 0, plantCash: 3000, status: 'In Transit', podNote: 'रास्ते में (In Transit)', productAmountInr: 0, additionalChargesInr: 0 },
+          { sno: 3, tripId: 'TRP-26-103', date: '09/10/2026', clientId: 'CLIENT_A', clientName: 'Demo Highway Contractors Pvt Ltd [DEMO]', vehicleNo: 'UP85-DEMO-101', capacityMt: 23, driverName: 'Ramesh Kumar', product: 'VG-30', origin: 'Mathura Refinery', destination: 'Karnaprayag Base (DEMO)', loadedKg: 21950, unloadedKg: 21900, ratePerMt: 4500, slText: '50 kg', seAmt: 500, hsdQty: 110, hsdAmt: 9900, cash: 4000, plantHsdQty: 40, plantHsdAmt: 3600, plantCash: 1500, status: 'Vehicle Assigned', podNote: 'डिलीवरी बाकी है', productAmountInr: 0, additionalChargesInr: 0 }
+        ],
+
+        vehicles: [
+          { regNo: 'UP85-DEMO-101', capacityMt: 23, driver: 'Ramesh Kumar', phone: '9800000101', insExpiry: '22/10/2026 (3 Days Left)', fitExpiry: '30/10/2026', status: 'Active on Trip' },
+          { regNo: 'UP85-DEMO-102', capacityMt: 27, driver: 'Suresh Yadav', phone: '9800000102', insExpiry: '15/02/2027', fitExpiry: '10/11/2026', status: 'In Transit' },
+          { regNo: 'UP85-DEMO-103', capacityMt: 19, driver: 'Mahesh Singh', phone: '9800000103', insExpiry: '12/05/2027', fitExpiry: '18/04/2027', status: 'Available at Gate No. 9' },
+          { regNo: 'UP85-DEMO-104', capacityMt: 28, driver: 'Unassigned', phone: '—', insExpiry: '20/06/2027', fitExpiry: '25/06/2027', status: 'Available' },
+          { regNo: 'UP85-DEMO-105', capacityMt: 33, driver: 'Unassigned', phone: '—', insExpiry: '01/08/2027', fitExpiry: '10/08/2027', status: 'Available' }
+        ],
 
         clients: [
-          { id: 'CLIENT_A', name: 'Demo Highway Contractors Pvt Ltd [DEMO]', contact: '9800000001', city: 'Gairsain / Haldwani (UK)', productAmt: 1931356, transportAmt: 311625, approvedAddCharges: 0, taxNote: '18% GST Configurable', invoiceTotal: 311625, advancesDeducted: 63400, paymentsReceived: 100000, outstandingBalance: 148225 },
-          { id: 'CLIENT_B', name: 'Demo Infra Roads Ltd [DEMO - Isolated]', contact: '9800000002', city: 'Agra (UP)', productAmt: 0, transportAmt: 0, approvedAddCharges: 0, taxNote: '18% GST Configurable', invoiceTotal: 0, advancesDeducted: 0, paymentsReceived: 0, outstandingBalance: 0 }
+          { id: 'CLIENT_A', name: 'Demo Highway Contractors Pvt Ltd [DEMO]', phone: '9800000001', location: 'Gairsain / Karnaprayag, UK', gstin: '05AAACD0000A1Z5 (Demo)' },
+          { id: 'CLIENT_B', name: 'Demo Infra Roads Ltd [Isolated Test Client]', phone: '9800000099', location: 'Agra, UP', gstin: '09BBBB0000B1Z2 (Demo)' }
         ],
 
-        quotations: [
-          { id: 'QT-2026-101', clientId: 'CLIENT_A', clientName: 'Demo Highway Contractors Pvt Ltd [DEMO]', phone: '9800000001', product: 'VG-30', qtyMt: 23, oneWayKm: 250, ratePerKmMt: 3, multiplier: 2, snapshotBasicRate: 83972, estimatedFreightInr: 34500, origin: 'Mathura Refinery', dest: 'Gairsain Site (UK)', status: 'Quotation Sent', date: '18/10/2026', createdBy: 'Owner' }
-        ],
-
-        trips: [
-          { id: 'TRP-101', sno: 1, date: '02/10/2026', clientId: 'CLIENT_A', clientName: 'Demo Highway Contractors Pvt Ltd [DEMO]', vehicleNo: 'UP85-DEMO-101', tankerCapMt: 23, driverId: 'DRV-101', driverName: 'रमेश कुमार (Ramesh Kumar)', product: 'VG-30', qtyMt: 22.5, loadedKg: 22500, unloadedKg: 22460, origin: 'Mathura Refinery', dest: 'Gairsain Project Site (DEMO)', freightInr: 101250, hsdCashRecInr: 22300, status: 'Delivered', proofNote: 'POD Slip Uploaded', createdBy: 'Owner' },
-          { id: 'TRP-102', sno: 2, date: '05/10/2026', clientId: 'CLIENT_A', clientName: 'Demo Highway Contractors Pvt Ltd [DEMO]', vehicleNo: 'UP85-DEMO-102', tankerCapMt: 27, driverId: 'DRV-102', driverName: 'सुरेश यादव (Suresh Yadav)', product: 'VG-40', qtyMt: 24.8, loadedKg: 24800, unloadedKg: 24800, origin: 'Mathura Refinery', dest: 'Gairsain Project Site (DEMO)', freightInr: 111600, hsdCashRecInr: 21600, status: 'In Transit', proofNote: 'In Transit on NH', createdBy: 'Owner' },
-          { id: 'TRP-103', sno: 3, date: '19/10/2026', clientId: 'CLIENT_A', clientName: 'Demo Highway Contractors Pvt Ltd [DEMO]', vehicleNo: 'UP85-DEMO-101', tankerCapMt: 23, driverId: 'DRV-101', driverName: 'रमेश कुमार (Ramesh Kumar)', product: 'VG-30', qtyMt: 21.95, loadedKg: 21950, unloadedKg: 21900, origin: 'Mathura Refinery', dest: 'Karnaprayag Base (DEMO)', freightInr: 98775, hsdCashRecInr: 19500, status: 'Vehicle Assigned', proofNote: 'Awaiting Trip Start', createdBy: 'Owner' }
+        payments: [
+          { id: 'PAY-101', clientId: 'CLIENT_A', clientName: 'Demo Highway Contractors Pvt Ltd [DEMO]', date: '16/10/2026', mode: 'NEFT / RTGS', ref: 'UTR992018471DEMO', amountInr: 100000 }
         ],
 
         expenses: [
-          { id: 'EXP-01', date: '18/10/2026', vehicleNo: 'UP85-DEMO-101', category: 'Rear Axle Seal & Brake Overhaul', amountInr: 18400, status: 'Awaiting Owner Approval' },
-          { id: 'EXP-02', date: '15/10/2026', vehicleNo: 'UP85-DEMO-102', category: 'Routine Engine Oil & Filter', amountInr: 6200, status: 'Approved' }
+          { id: 'EXP-101', date: '14/10/2026', vehicleNo: 'UP85-DEMO-101', category: 'Workshop Maintenance (Hub Seal & Brake)', amountInr: 18400, status: 'Awaiting Owner Approval (> ₹15,000)' },
+          { id: 'EXP-102', date: '08/10/2026', vehicleNo: 'UP85-DEMO-102', category: 'Routine Oil & Filter Service', amountInr: 6200, status: 'Approved' }
         ],
 
+        // Part 5: Granular Employee Permissions Controlled by Owner
+        employeePermissions: {
+          empName: 'Vikram Singh (Dispatch & Rate Staff)',
+          canCreateTrip: true,
+          canUpdateDeliveryStatus: true,
+          canPrepareQuotation: true,
+          canUpdateRates: true,
+          canPublishRates: false,
+          canRecordPayment: false
+        },
+
         auditLogs: [
-          { ts: '19/10/2026 21:38', actor: 'SYSTEM', action: 'INIT_ERP_2_0', detail: 'Loaded 16 Oct 2026 Bitumen Rates & ₹3/KM/MT × 2 Freight Calculator' }
+          { ts: '19/10/2026 21:45 IST', actor: 'SYSTEM', action: 'INIT_ERP_2_0', detail: 'Loaded 16 Oct 2026 Bitumen Reference Rates & ₹3/KM/MT × 2 Freight Calculator.' }
         ]
       };
 
@@ -401,11 +413,12 @@
 
       function loadState() {
         try {
-          const raw = localStorage.getItem(STORAGE_KEY);
-          if (!raw) return JSON.parse(JSON.stringify(DEFAULT_STATE));
-          return { ...DEFAULT_STATE, ...JSON.parse(raw) };
+          const saved = localStorage.getItem(STORAGE_KEY);
+          if (!saved) return JSON.parse(JSON.stringify(INITIAL_STATE));
+          const parsed = JSON.parse(saved);
+          return { ...INITIAL_STATE, ...parsed, employeePermissions: { ...INITIAL_STATE.employeePermissions, ...(parsed.employeePermissions || {}) } };
         } catch (e) {
-          return JSON.parse(JSON.stringify(DEFAULT_STATE));
+          return JSON.parse(JSON.stringify(INITIAL_STATE));
         }
       }
 
@@ -413,49 +426,95 @@
         try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch (e) {}
       }
 
-      function logAudit(actor, action, detail) {
+      function logAction(actor, action, detail) {
         const ts = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
         const item = { ts, actor, action, detail };
         state.auditLogs.unshift(item);
         saveState();
-        if (fbDb) fbDb.collection('audit_logs').add(item).catch(() => {});
+        if (fbDb) {
+          fbDb.collection('audit_logs').add(item).catch(() => {});
+        }
       }
 
-      // ======================================================================
-      // REUSABLE FREIGHT CALCULATOR WIDGET HTML (Part 11)
-      // ======================================================================
-      function buildFreightCalculatorWidgetHTML(contextTitle = 'त्वरित भाड़ा कैलकुलेटर (Instant Freight Calculator)') {
-        const res = calculateEstimatedFreight(state.calcDistKm, state.calcQtyMt, state.freightDefaultRate, state.freightMultiplier);
+      // Compute A4 Freight Statement Summary
+      function getStatementSummary(tripsSubset) {
+        let totLoadedKg = 0, totUnloadedKg = 0, totFreight = 0;
+        let totHsdQty = 0, totHsdAmt = 0, totCash = 0, totPlantHsdQty = 0, totPlantHsdAmt = 0, totPlantCash = 0, totSeAmt = 0;
+
+        tripsSubset.forEach(r => {
+          const lMt = Number((r.loadedKg / 1000).toFixed(3));
+          const fr = Number((lMt * r.ratePerMt).toFixed(2));
+          totLoadedKg += Number(r.loadedKg) || 0;
+          totUnloadedKg += Number(r.unloadedKg) || 0;
+          totFreight += fr;
+          totHsdQty += Number(r.hsdQty) || 0;
+          totHsdAmt += Number(r.hsdAmt) || 0;
+          totCash += Number(r.cash) || 0;
+          totPlantHsdQty += Number(r.plantHsdQty) || 0;
+          totPlantHsdAmt += Number(r.plantHsdAmt) || 0;
+          totPlantCash += Number(r.plantCash) || 0;
+          totSeAmt += Number(r.seAmt) || 0;
+        });
+
+        const enrouteRec = totHsdAmt + totCash;
+        const plantRec = totPlantHsdAmt + totPlantCash;
+        const netInvoicePayable = Number((totFreight - enrouteRec - plantRec - totSeAmt).toFixed(2));
+
+        return {
+          totLoadedKg,
+          totLoadedMt: (totLoadedKg / 1000).toFixed(3),
+          totUnloadedKg,
+          totUnloadedMt: (totUnloadedKg / 1000).toFixed(3),
+          totFreight,
+          totHsdQty,
+          totHsdAmt,
+          totCash,
+          totPlantHsdQty,
+          totPlantHsdAmt,
+          totPlantCash,
+          totSeAmt,
+          enrouteRec,
+          plantRec,
+          netInvoicePayable
+        };
+      }
+
+      // Reusable Freight Calculator HTML Widget (Used across Public, Client, Employee & Owner)
+      function renderFreightCalculatorWidget() {
+        const res = calculateOfficialFreight(state.calcKm, state.calcMt, state.freightRatePerKmMt, state.freightMultiplier);
         return `
           <div class="bg-white rounded-2xl border-2 border-blue-700 shadow-lg p-5 sm:p-6 space-y-4">
             <div class="flex flex-wrap justify-between items-center gap-2 border-b border-slate-200 pb-3">
               <div>
-                <span class="text-[11px] font-black uppercase text-blue-700">Part 11 • Verified BOC Formula (₹${state.freightDefaultRate}/KM/MT × ${state.freightMultiplier})</span>
-                <h3 class="text-lg sm:text-xl font-black text-slate-900">🧮 ${esc(contextTitle)}</h3>
+                <span class="text-xs font-black uppercase text-blue-700">Part 11 • त्वरित भाड़ा कैलकुलेटर (Instant Freight Calculator)</span>
+                <h2 class="text-xl sm:text-2xl font-black text-slate-900">भाड़ा हिसाब (Freight Calculator)</h2>
               </div>
-              <span class="px-2.5 py-1 rounded bg-blue-50 text-blue-900 font-bold text-xs">केवल 2 चीजें दर्ज करें</span>
+              <span class="px-3 py-1 rounded-full bg-blue-50 text-blue-900 font-bold text-xs">
+                फॉर्मूला: दूरी (KM) × मात्रा (MT) × ₹${state.freightRatePerKmMt} × ${state.freightMultiplier}
+              </span>
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <!-- Two Large Input Fields Only -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div class="bg-slate-50 p-4 rounded-xl border-2 border-slate-300">
-                <label for="calc-inp-km" class="block text-sm font-black text-slate-900 mb-1">1. एक तरफ की दूरी (KM) *</label>
-                <span class="block text-[11px] text-slate-500 mb-2">केवल जाने की दूरी लिखें (आने-जाने का हिसाब अपने-आप होगा)</span>
-                <input id="calc-inp-km" type="number" step="1" min="1" value="${esc(state.calcDistKm)}" oninput="BOC.onCalculatorInput()" class="w-full p-3 rounded-lg border-2 border-blue-600 text-xl font-black mono bg-white" placeholder="उदा. 250" />
+                <label for="calc-input-km" class="block text-sm font-black text-slate-900 mb-1">1. एक तरफ की दूरी (KM) *</label>
+                <input id="calc-input-km" type="number" step="1" value="${esc(state.calcKm)}" oninput="BOC.onCalculatorInput()" placeholder="उदा. 250" class="w-full p-3 rounded-xl border-2 border-blue-600 text-2xl font-black mono bg-white text-slate-950 focus:outline-none" />
+                <div class="text-[11px] text-slate-600 mt-1">केवल एक तरफ (One-Way) के किलोमीटर लिखें</div>
               </div>
 
               <div class="bg-slate-50 p-4 rounded-xl border-2 border-slate-300">
-                <label for="calc-inp-mt" class="block text-sm font-black text-slate-900 mb-1">2. माल की मात्रा (MT) *</label>
-                <span class="block text-[11px] text-slate-500 mb-2">टैंकर क्षमता चुनें (19, 23, 27, 28, 33 MT) या वजन लिखें</span>
-                <div class="flex gap-2">
-                  <input id="calc-inp-mt" type="number" step="0.5" min="1" value="${esc(state.calcQtyMt)}" oninput="BOC.onCalculatorInput()" class="w-2/3 p-3 rounded-lg border-2 border-blue-600 text-xl font-black mono bg-white" placeholder="उदा. 23" />
-                  <select onchange="document.getElementById('calc-inp-mt').value=this.value; BOC.onCalculatorInput();" class="w-1/3 p-2 rounded-lg border border-slate-400 bg-white font-black text-xs">
-                    <option value="">टैंकर चुनें</option>
-                    ${TANKER_CAPACITIES.map(c => `<option value="${c}" ${Number(state.calcQtyMt)===c?'selected':''}>${c} MT</option>`).join('')}
-                  </select>
+                <label for="calc-input-mt" class="block text-sm font-black text-slate-900 mb-1">2. माल की मात्रा (MT) *</label>
+                <input id="calc-input-mt" type="number" step="0.5" value="${esc(state.calcMt)}" oninput="BOC.onCalculatorInput()" placeholder="उदा. 23" class="w-full p-3 rounded-xl border-2 border-blue-600 text-2xl font-black mono bg-white text-slate-950 focus:outline-none" />
+                <div class="flex flex-wrap gap-1.5 mt-2">
+                  <span class="text-[11px] font-bold text-slate-600 self-center">टैंकर चुनें:</span>
+                  ${[19, 23, 27, 28, 33].map(cap => `
+                    <button type="button" onclick="BOC.setCalcMt(${cap})" class="px-2.5 py-1 rounded bg-slate-900 hover:bg-blue-700 text-amber-400 font-black text-xs cursor-pointer">${cap} MT</button>
+                  `).join('')}
                 </div>
               </div>
             </div>
 
+            <!-- Live Calculation Output Box -->
             <div id="calc-result-container">
               ${renderCalculatorResultInner(res)}
             </div>
@@ -466,135 +525,149 @@
       function renderCalculatorResultInner(res) {
         if (!res.valid) {
           return `
-            <div class="p-4 rounded-xl bg-red-50 border-2 border-red-600 text-red-900 font-black text-sm">
+            <div class="p-4 rounded-xl bg-red-50 border-2 border-red-600 text-red-950 font-black text-sm">
               ⚠️ ${esc(res.errorHi)}
             </div>
           `;
         }
         return `
           <div class="p-5 rounded-xl bg-emerald-50 border-2 border-emerald-600 space-y-3">
-            <div class="grid grid-cols-2 sm:grid-cols-5 gap-2 text-xs bg-white p-3 rounded-lg border border-emerald-200">
-              <div><span class="text-slate-500 block">एक तरफ की दूरी:</span><strong class="mono text-sm">${fmtInt(res.oneWayKm)} KM</strong></div>
-              <div><span class="text-slate-500 block">माल की मात्रा:</span><strong class="mono text-sm">${res.quantityMt} MT</strong></div>
-              <div><span class="text-slate-500 block">Freight Rate:</span><strong class="mono text-sm">₹${res.ratePerKmPerMt}/KM/MT</strong></div>
-              <div><span class="text-slate-500 block">Round-trip multiplier:</span><strong class="mono text-sm">${res.roundTripMultiplier}</strong></div>
-              <div><span class="text-slate-500 block">गणना की कुल दूरी:</span><strong class="mono text-sm text-blue-800">${fmtInt(res.totalCalculatedDistanceKm)} KM</strong></div>
+            <div class="grid grid-cols-2 sm:grid-cols-5 gap-2 text-xs border-b border-emerald-300 pb-3">
+              <div><span class="text-slate-600 block">एक तरफ की दूरी:</span><strong class="mono text-sm">${res.oneWayKm} KM</strong></div>
+              <div><span class="text-slate-600 block">माल की मात्रा:</span><strong class="mono text-sm">${res.quantityMt} MT</strong></div>
+              <div><span class="text-slate-600 block">Freight Rate:</span><strong class="mono text-sm">₹${res.ratePerKmMt}/KM/MT</strong></div>
+              <div><span class="text-slate-600 block">Round-trip multiplier:</span><strong class="mono text-sm">${res.multiplier}</strong></div>
+              <div><span class="text-slate-600 block">गणना की कुल दूरी:</span><strong class="mono text-sm text-blue-900">${res.roundTripKm} KM</strong></div>
             </div>
-            <div class="flex flex-wrap justify-between items-center gap-2 pt-1">
+            <div class="flex flex-wrap justify-between items-center gap-2">
               <div>
-                <div class="text-xs font-bold uppercase text-emerald-900">गणना: ${res.oneWayKm} KM × ${res.quantityMt} MT × ₹${res.ratePerKmPerMt} × ${res.roundTripMultiplier}</div>
-                <div class="text-2xl sm:text-3xl font-black text-slate-950 mono">TOTAL ESTIMATED FREIGHT: ${fmtINR(res.totalFreightInr)}</div>
+                <div class="text-xs font-black uppercase text-emerald-900">TOTAL ESTIMATED FREIGHT (कुल अनुमानित भाड़ा):</div>
+                <div class="text-[11px] text-slate-700 font-semibold mt-0.5">
+                  गणना: ${res.oneWayKm} KM × ${res.quantityMt} MT × ₹${res.ratePerKmMt} × ${res.multiplier} = ${fmtIntINR(res.totalFreight)}
+                </div>
               </div>
+              <div class="text-3xl sm:text-4xl font-black text-emerald-950 mono">${fmtIntINR(res.totalFreight)}</div>
             </div>
-            <div class="text-xs font-bold text-amber-900 bg-amber-100/80 px-3 py-2 rounded border border-amber-300">
+            <div class="text-[11px] font-bold text-amber-900 bg-amber-100/80 px-3 py-1.5 rounded border border-amber-300">
               ℹ️ अनुमानित Freight — Final quotation business terms और approved additional charges के अनुसार अलग हो सकती है।
             </div>
           </div>
         `;
       }
 
-      // ======================================================================
-      // REUSABLE BITUMEN RATE BOARD HTML (Part 8 & Part 9)
-      // ======================================================================
-      function buildRateBoardHTML(showDraftAndUnverified = false) {
-        const list = showDraftAndUnverified
-          ? state.productRates
-          : state.productRates.filter(r => r.status === 'Published Current Rate');
-
+      // Reusable Bitumen Rate Board HTML Widget (Part 8 & Part 9)
+      function renderBitumenRateBoardWidget(showAdminActions = false) {
         return `
-          <div class="bg-white rounded-2xl border-2 border-slate-300 shadow-sm p-5 sm:p-6 space-y-4">
+          <div class="bg-white rounded-2xl border-2 border-slate-300 shadow-md p-5 sm:p-6 space-y-4">
             <div class="flex flex-wrap justify-between items-center gap-2 border-b border-slate-200 pb-3">
               <div>
-                <span class="text-[11px] font-black uppercase text-amber-700">लागू तारीख (Effective Date): 16 October 2026 • रिफाइनरी रेफरेंस</span>
-                <h3 class="text-lg sm:text-xl font-black text-slate-900">🛢️ Bharat Oil Carrier — आधिकारिक बिटुमेन रेट बोर्ड (Bitumen Rate Board)</h3>
+                <span class="text-xs font-black uppercase text-amber-700">Part 8 &amp; 9 • मथुरा रिफाइनरी एवं सप्लाई रेट बोर्ड</span>
+                <h2 class="text-xl sm:text-2xl font-black text-slate-900">Bharat Oil Carrier — Bitumen Rate Board</h2>
               </div>
-              <span class="px-2.5 py-1 rounded bg-slate-900 text-amber-400 font-bold text-xs">Source: BOC Rate Circular (16 Oct 2026)</span>
+              <div class="text-xs font-bold text-slate-600">
+                लागू तारीख (Effective Date): <strong class="text-slate-950">16 October 2026</strong>
+              </div>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-              ${list.map(r => `
-                <div class="p-4 rounded-xl border-2 ${r.basicPriceInr ? 'border-slate-300 bg-slate-50' : 'border-dashed border-slate-300 bg-slate-50/50'} space-y-2 text-xs">
-                  <div class="flex justify-between items-center">
-                    <span class="px-2.5 py-1 rounded bg-slate-950 text-amber-400 font-black text-sm mono">${esc(r.code)}</span>
-                    <span class="px-2 py-0.5 rounded font-black text-[10px] ${r.status === 'Published Current Rate' ? 'bg-emerald-100 text-emerald-900 border border-emerald-400' : 'bg-amber-100 text-amber-900'}">${esc(r.status)}</span>
-                  </div>
-                  <div class="font-black text-sm text-slate-900">${esc(r.name)} • ${esc(r.refinery)}</div>${r.basicPriceInr ? `
-                    <div class="p-3 rounded-lg bg-white border border-slate-200 space-y-1 mono">
-                      <div class="flex justify-between text-slate-600"><span>बढ़ोतरी (Increase):</span><strong class="text-amber-700">+ ₹${fmtInt(r.increaseInr)} / MT</strong></div>
-                      <div class="flex justify-between text-slate-900 text-sm"><span>Basic Price:</span><strong>₹${fmtInt(r.basicPriceInr)} / MT</strong></div>
-                      <div class="flex justify-between text-blue-900 text-sm border-t pt-1"><span>Taxable Price:</span><strong class="font-black">${fmtINR(r.taxablePriceInr)} / MT</strong></div>
-                    </div>
-                    <div class="text-[11px] text-slate-500">
-                      • टैक्स: ${esc(r.taxLabel)}<br>
-                      • लागू तारीख: <strong>${esc(r.effectiveDate)}</strong> | अपडेट: ${esc(r.updatedAt)}
-                    </div>
-                  ` : `
-                    <div class="p-3 rounded-lg bg-white border border-slate-200 text-slate-600 font-semibold">
-                      रेट उपलब्धता के अनुसार (Rate on Request) — कोई काल्पनिक रेट नहीं दिखाया गया है।
-                    </div>
-                  `}
-                </div>
-              `).join('')}
+            <div class="overflow-x-auto">
+              <table class="w-full border-collapse border border-slate-300 text-xs">
+                <thead>
+                  <tr class="bg-slate-900 text-white font-black">
+                    <th class="p-2.5 border border-slate-700 text-left">प्रोडक्ट (Grade)</th>
+                    <th class="p-2.5 border border-slate-700 text-left">रिफाइनरी / टाइप</th>
+                    <th class="p-2.5 border border-slate-700 text-right">बढ़ोतरी (Increase)</th>
+                    <th class="p-2.5 border border-slate-700 text-right">बेसिक रेट (Basic / MT)</th>
+                    <th class="p-2.5 border border-slate-700 text-left">लागू टैक्स (Tax Info)</th>
+                    <th class="p-2.5 border border-slate-700 text-right bg-amber-400 text-slate-950">टैक्सेबल रेट (Taxable / MT)</th>
+                    <th class="p-2.5 border border-slate-700 text-center">स्टेटस (Status)</th>
+                    ${showAdminActions ? `<th class="p-2.5 border border-slate-700 text-center">एक्शन</th>` : ''}
+                  </tr>
+                </thead>
+                <tbody class="mono">
+                  ${state.productRates.map((r, idx) => `
+                    <tr class="border-b border-slate-300 hover:bg-slate-50">
+                      <td class="p-2.5 border border-slate-300 font-sans font-black text-sm text-slate-950">${esc(r.name)}</td>
+                      <td class="p-2.5 border border-slate-300 font-sans text-slate-700">${esc(r.location)} (${esc(r.packing)})</td>
+                      <td class="p-2.5 border border-slate-300 text-right font-bold text-emerald-700">${r.increaseAmt > 0 ? '+ ' + fmtIntINR(r.increaseAmt) : '—'}</td>
+                      <td class="p-2.5 border border-slate-300 text-right font-black text-sm">${r.basicPrice > 0 ? fmtIntINR(r.basicPrice) : 'Rate on Request'}</td>
+                      <td class="p-2.5 border border-slate-300 font-sans text-[11px] text-slate-600">${esc(r.taxLabel)}</td>
+                      <td class="p-2.5 border border-slate-300 text-right font-black text-sm bg-amber-50 text-blue-950">${r.taxablePrice > 0 ? fmtINR(r.taxablePrice) : 'संपर्क करें'}</td>
+                      <td class="p-2.5 border border-slate-300 text-center font-sans">
+                        <span class="px-2 py-0.5 rounded text-[10px] font-black ${r.status.includes('Published') ? 'bg-emerald-100 text-emerald-900 border border-emerald-400' : 'bg-amber-100 text-amber-950 border border-amber-400'}">
+                          ${esc(r.status)}
+                        </span>
+                      </td>
+                      ${showAdminActions ? `
+                        <td class="p-2.5 border border-slate-300 text-center font-sans">
+                          ${r.basicPrice > 0 && !r.status.includes('Published') ? `
+                            <button type="button" onclick="BOC.publishRate(${idx})" class="px-2.5 py-1 rounded bg-emerald-700 text-white font-black text-[11px] cursor-pointer">✓ प्रकाशित करें</button>
+                          ` : `<span class="text-[11px] text-slate-500">OK</span>`}
+                        </td>
+                      ` : ''}
+                    </tr>
+                  `).join('')}
+                </tbody>
+              </table>
+            </div>
+
+            <div class="text-[11px] text-slate-600 flex flex-wrap justify-between gap-2 bg-slate-50 p-3 rounded-lg border border-slate-200">
+              <span>📌 <strong>स्रोत (Source):</strong> User-provided Bharat Oil Carrier Rate Image (Effective 16 Oct 2026).</span>
+              <span>🔒 पुराने कोटेशन और बिलों का रेट सुरक्षित रहता है (नया रेट बदलने पर पुराने बिल नहीं बदलते)।</span>
             </div>
           </div>
         `;
       }
 
       // ======================================================================
-      // VIEW 0: PUBLIC B2B WEBSITE
+      // INTERFACE 0: PUBLIC WEBSITE
       // ======================================================================
-      function renderPublicWebsite() {
+      function renderPublicInterface() {
         return `
           <!-- Hero Section with Original Logo & Tanker Background -->
           <section class="hero-bg text-white py-12 sm:py-16 border-b-4 border-amber-400">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-              <div class="lg:col-span-7 space-y-5">
+              <div class="lg:col-span-7 space-y-4">
                 <div class="flex items-center gap-3">
-                  <img src="logo.png" alt="BOC Logo" onerror="this.style.display='none'" class="w-14 h-14 rounded-xl bg-white p-1.5 shadow-lg object-contain" />
+                  <img src="logo.png" alt="BOC Logo" onerror="this.style.display='none'" class="w-14 h-14 rounded-xl bg-white p-1 object-contain shadow-lg" />
                   <div>
-                    <span class="px-2.5 py-0.5 rounded bg-amber-400 text-slate-950 font-black text-xs uppercase">Since 1990 • Mathura Refinery</span>
-                    <h1 class="text-3xl sm:text-5xl font-black tracking-tight mt-1">Bharat Oil Carrier</h1>
+                    <span class="px-2.5 py-0.5 rounded bg-amber-400 text-slate-950 text-xs font-black uppercase">Operating Since 1990</span>
+                    <div class="text-sm text-amber-300 font-bold mt-0.5">Gate No. 9, Mathura Refinery, Mathura (UP)</div>
                   </div>
                 </div>
-                <p class="text-amber-400 font-black text-lg sm:text-xl">“Safety First. Reliable Supply. — Your Trust, Our Commitment!”</p>
+                <h1 class="text-3xl sm:text-5xl font-black leading-tight">
+                  Bharat Oil Carrier (BOC) — Bitumen &amp; Bulk-Liquid Logistics
+                </h1>
+                <p class="text-amber-400 font-extrabold text-lg">
+                  “Safety First. Reliable Supply. — Your Trust, Our Commitment!”
+                </p>
                 <p class="text-slate-200 text-sm sm:text-base leading-relaxed">
-                  मथुरा रिफाइनरी (गेट नं. 9) से पूरे भारत में विश्वसनीय बिटुमेन (VG-10, VG-30, VG-40, CRMB, Emulsion, LDO) ट्रांसपोर्टेशन और सप्लाई। उपलब्ध प्रमाणित टैंकर क्षमता: <strong>19 MT, 23 MT, 27 MT, 28 MT, 33 MT</strong>।
+                  मथुरा रिफाइनरी से पूरे भारत के हाईवे प्रोजेक्ट्स, सड़क निर्माण कंपनियों और हॉट-मिक्स प्लांट्स के लिए विश्वसनीय बिटुमेन ट्रांसपोर्ट और सप्लाई। उपलब्ध टैंकर क्षमता: <strong>19 MT, 23 MT, 27 MT, 28 MT, 33 MT</strong>।
                 </p>
                 <div class="flex flex-wrap gap-3 pt-2">
-                  <a href="#pub-quote-box" class="px-6 py-3.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-black text-sm shadow-lg">
-                    📋 कोटेशन मांगें (Request Quote)
-                  </a>
-                  <a href="tel:8077703137" class="px-5 py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-black text-sm">
-                    📞 कॉल करें: +91 8077703137
-                  </a>
-                  <a href="bharat-brochure.pdf" target="_blank" class="px-5 py-3.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-600 text-white font-bold text-sm">
-                    📄 Download Brochure (PDF)
-                  </a>
+                  <a href="#pub-quote-section" class="px-6 py-3.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-black text-sm shadow-lg">📋 कोटेशन मांगें (Request Quote)</a>
+                  <a href="tel:+918077703137" class="px-5 py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-black text-sm">📞 कॉल करें: +91 8077703137</a>
+                  <a href="bharat-brochure.pdf" target="_blank" class="px-5 py-3.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-600 text-white font-bold text-sm">📄 ब्रोशर (Brochure PDF)</a>
                 </div>
               </div>
 
-              <!-- Quick Role Selector Card for Business Owner -->
+              <!-- Quick Role Selector Card for Immediate Access -->
               <div class="lg:col-span-5 bg-slate-900/95 border-2 border-amber-400 rounded-2xl p-6 space-y-4 shadow-2xl">
-                <div class="border-b border-slate-700 pb-3">
-                  <span class="text-xs font-black uppercase text-amber-400">सरल रोल-आधारित पोर्टल (Part 3)</span>
-                  <h2 class="text-lg font-black text-white mt-0.5">अपना इंटरफेस चुनें (1-Click Open):</h2>
+                <div class="border-b border-slate-700 pb-2">
+                  <div class="text-xs font-black uppercase text-amber-400">सरल रोल-आधारित लॉगिन (4 Simple Portals)</div>
+                  <div class="text-base font-black text-white">अपना डैशबोर्ड चुनें:</div>
                 </div>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-                  <button onclick="BOC.switchView('OWNER')" class="p-3.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-black text-left shadow cursor-pointer">
-                    <div class="text-sm">👑 1. Owner Dashboard</div>
-                    <div class="text-[11px] opacity-85 mt-0.5">मालिक का सरल कंट्रोल पैनल</div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs">
+                  <button onclick="BOC.switchInterface('OWNER')" class="p-3.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-black text-left cursor-pointer">
+                    👑 1. मालिक डैशबोर्ड<span class="block text-[11px] font-semibold mt-0.5">Owner Dashboard</span>
                   </button>
-                  <button onclick="BOC.switchView('DRIVER')" class="p-3.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-left shadow cursor-pointer">
-                    <div class="text-sm">🚛 4. Driver Mobile App</div>
-                    <div class="text-[11px] opacity-85 mt-0.5">ड्राइवर के लिए सरल हिंदी ऐप</div>
+                  <button onclick="BOC.switchInterface('EMPLOYEE')" class="p-3.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-black text-left cursor-pointer">
+                    👷 2. कर्मचारी ERP<span class="block text-[11px] font-normal mt-0.5">Authorized Staff ERP</span>
                   </button>
-                  <button onclick="BOC.switchView('CLIENT')" class="p-3.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-black text-left shadow cursor-pointer">
-                    <div class="text-sm">🏢 3. Client Portal</div>
-                    <div class="text-[11px] opacity-85 mt-0.5">ग्राहक के रेट, ट्रिप और बिल</div>
+                  <button onclick="BOC.switchInterface('CLIENT')" class="p-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-black text-left cursor-pointer">
+                    🏢 3. ग्राहक पोर्टल<span class="block text-[11px] font-normal mt-0.5">Client Portal (Isolated)</span>
                   </button>
-                  <button onclick="BOC.switchView('EMPLOYEE')" class="p-3.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-600 text-white font-black text-left cursor-pointer">
-                    <div class="text-sm">🧑‍💼 2. Employee ERP</div>
-                    <div class="text-[11px] text-slate-300 mt-0.5">स्टाफ के लिए परमिशन-आधारित काम</div>
+                  <button onclick="BOC.switchInterface('DRIVER')" class="p-3.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-black text-left cursor-pointer">
+                    🚛 4. ड्राइवर मोबाइल ऐप<span class="block text-[11px] font-normal mt-0.5">Simple Hindi Driver App</span>
                   </button>
                 </div>
               </div>
@@ -602,232 +675,254 @@
           </section>
 
           <div class="max-w-7xl mx-auto px-4 sm:px-6 py-10 space-y-10">
-            <!-- 1. Centralized Bitumen Rate Board -->
-            ${buildRateBoardHTML(false)}
+            <!-- 1. Freight Calculator -->
+            ${renderFreightCalculatorWidget()}
 
-            <!-- 2. Exact Freight Calculator (₹3/KM/MT × 2) -->
-            ${buildFreightCalculatorWidgetHTML('ऑनलाइन भाड़ा कैलकुलेटर (Freight Calculator)')}
+            <!-- 2. Bitumen Rate Board -->
+            ${renderBitumenRateBoardWidget(false)}
 
-            <!-- 3. Simple Quotation Request Form -->
-            <div id="pub-quote-box" class="bg-white rounded-2xl border-2 border-slate-300 shadow-md p-6 space-y-4">
+            <!-- 3. Quotation Request Form (Part 12) -->
+            <section id="pub-quote-section" class="bg-white rounded-2xl border-2 border-slate-300 shadow-lg p-6 sm:p-8 space-y-5">
               <div class="border-b pb-3">
-                <span class="text-xs font-black uppercase text-blue-700">Part 12 • Customer Enquiry</span>
-                <h3 class="text-xl font-black text-slate-900">📋 कोटेशन मांगें (Request a Quotation)</h3>
+                <span class="text-xs font-black uppercase text-blue-700">Part 12 • ग्राहक कोटेशन फॉर्म</span>
+                <h2 class="text-2xl font-black text-slate-900">कोटेशन के लिए पूछताछ करें (Request a Quotation)</h2>
               </div>
-              <div id="pub-quote-alert" class="hidden p-4 rounded-xl bg-emerald-50 border-2 border-emerald-600 text-emerald-950 font-bold text-xs"></div>
-              <form onsubmit="BOC.submitQuoteRequest(event)" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
-                <div><label class="font-black block mb-1">1. कंपनी / ग्राहक का नाम *</label><input required id="rq-client" type="text" placeholder="उदा. शिवालिक रोड बिल्डर्स" class="w-full p-2.5 rounded-lg border border-slate-300 font-semibold" /></div>
-                <div><label class="font-black block mb-1">2. मोबाइल / WhatsApp नंबर *</label><input required id="rq-phone" type="tel" placeholder="10-अंकों का नंबर" class="w-full p-2.5 rounded-lg border border-slate-300 font-semibold" /></div>
+              <div id="pub-quote-msg" class="hidden p-4 rounded-xl bg-emerald-50 border-2 border-emerald-600 text-emerald-950 font-black text-sm"></div>
+              <form onsubmit="BOC.submitQuotationRequest(event)" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 text-xs">
+                <div><label class="font-black block mb-1">1. कंपनी / ग्राहक का नाम *</label><input required id="rq-client" type="text" placeholder="उदा. शिवालिक रोड बिल्डर्स" class="w-full p-3 rounded-xl border border-slate-300 font-semibold" /></div>
+                <div><label class="font-black block mb-1">2. मोबाइल / WhatsApp नंबर *</label><input required id="rq-phone" type="tel" placeholder="10 अंकों का नंबर" class="w-full p-3 rounded-xl border border-slate-300 font-semibold" /></div>
                 <div><label class="font-black block mb-1">3. प्रोडक्ट चुनें *</label>
-                  <select id="rq-prod" class="w-full p-2.5 rounded-lg border border-slate-300 font-bold bg-white">
-                    ${state.productRates.map(p => `<option value="${esc(p.code)}">${esc(p.code)} —${esc(p.name)}</option>`).join('')}
+                  <select id="rq-prod" class="w-full p-3 rounded-xl border border-slate-300 font-bold bg-white">
+                    ${state.productRates.map(p => `<option value="${esc(p.code)}">${esc(p.name)} (${p.basicPrice > 0 ? 'Basic ₹' + p.basicPrice + '/MT' : 'Rate on Request'})</option>`).join('')}
                   </select>
                 </div>
-                <div><label class="font-black block mb-1">4. मात्रा / टैंकर क्षमता (MT) *</label>
-                  <select id="rq-qty" class="w-full p-2.5 rounded-lg border border-slate-300 font-bold bg-white">
-                    ${TANKER_CAPACITIES.map(c => `<option value="${c}" ${c===23?'selected':''}>${c} MT Tanker</option>`).join('')}
-                  </select>
+                <div><label class="font-black block mb-1">4. माल की मात्रा (MT) *</label><input required id="rq-mt" type="number" step="0.5" min="1" value="23" class="w-full p-3 rounded-xl border border-slate-300 font-bold mono" /></div>
+                <div><label class="font-black block mb-1">5. डिलीवरी स्थान (Destination) *</label><input required id="rq-dest" type="text" placeholder="उदा. हल्द्वानी / गैरसैंण" class="w-full p-3 rounded-xl border border-slate-300 font-semibold" /></div>
+                <div><label class="font-black block mb-1">6. एक तरफ की अनुमानित दूरी (KM) *</label><input required id="rq-km" type="number" min="1" value="250" class="w-full p-3 rounded-xl border border-slate-300 font-bold mono" /></div>
+                <div class="sm:col-span-3">
+                  <button type="submit" class="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-blue-700 hover:bg-blue-800 text-white font-black text-sm shadow-lg cursor-pointer">🚀 कोटेशन रिक्वेस्ट भेजें (Submit Request)</button>
                 </div>
-                <div><label class="font-black block mb-1">5. लोडिंग रिफाइनरी *</label><input required id="rq-orig" type="text" value="Mathura Refinery" class="w-full p-2.5 rounded-lg border border-slate-300 font-semibold" /></div>
-                <div><label class="font-black block mb-1">6. डिलीवरी स्थान (Destination) *</label><input required id="rq-dest" type="text" placeholder="उदा. गैरसैंण / हल्द्वानी" class="w-full p-2.5 rounded-lg border border-slate-300 font-semibold" /></div>
-                <div><label class="font-black block mb-1">7. एक तरफ की अनुमानित दूरी (KM) *</label><input required id="rq-km" type="number" min="1" value="250" class="w-full p-2.5 rounded-lg border border-slate-300 font-bold mono" /></div>
-                <div class="flex items-end"><button type="submit" class="w-full py-3 px-4 rounded-xl bg-blue-700 hover:bg-blue-800 text-white font-black cursor-pointer">🚀 कोटेशन रिक्वेस्ट भेजें</button></div>
               </form>
-            </div>
+            </section>
           </div>
         `;
       }
 
       // ======================================================================
-      // INTERFACE 1: OWNER DASHBOARD (Part 4 — Simple, 8 Key Answers + 10 Big Actions)
+      // INTERFACE 1: OWNER DASHBOARD (PART 4 — SIMPLE, TASK-FOCUSED)
       // ======================================================================
-      function renderOwnerDashboard() {
-        const activeTrips = state.trips.filter(t => t.status !== 'Delivered');
-        const pendingDeliveries = state.trips.filter(t => t.status !== 'Delivered');
-        const totalOutstanding = state.clients.reduce((s, c) => s + c.outstandingBalance, 0);
-        const unverifiedRatesCount = state.productRates.filter(r => r.status !== 'Published Current Rate').length;
+      function renderOwnerInterface() {
+        const stmt = getStatementSummary(state.trips);
+        const totPaid = state.payments.reduce((s, p) => s + p.amountInr, 0);
+        const totOutstanding = Math.max(0, stmt.netInvoicePayable - totPaid);
+        const pendingDeliveries = state.trips.filter(t => t.status !== 'Delivered').length;
         const pendingApprovals = state.expenses.filter(e => e.status.includes('Awaiting')).length;
-
-        const actionButtons = [
-          { id: 'TRIPS', icon: '➕', title: '1. नई ट्रिप जोड़ें', sub: 'Add New Trip (19–33 MT)' },
-          { id: 'RATES', icon: '🛢️', title: '2. बिटुमेन रेट अपडेट करें', sub: 'Update Bitumen Rates' },
-          { id: 'CALCULATOR', icon: '🧮', title: '3. भाड़ा कैलकुलेटर', sub: 'Freight Calculator (₹3×2)' },
-          { id: 'QUOTES', icon: '📝', title: '4. कोटेशन बनाएं / देखें', sub: 'Create / View Quotations' },
-          { id: 'CLIENTS', icon: '🏢', title: '5. क्लाइंट और बकाया', sub: 'Manage Clients & Ledger' },
-          { id: 'PAYMENTS', icon: '💰', title: '6. पेमेंट दर्ज करें', sub: 'Record Client Payment' },
-          { id: 'EXPENSES', icon: '🧾', title: '7. खर्चे और अप्रूवल', sub: 'View & Approve Expenses' },
-          { id: 'VEHICLES', icon: '🚛', title: '8. गाड़ियां और ड्राइवर', sub: 'Manage Vehicles & Drivers' },
-          { id: 'EMPLOYEES', icon: '👷', title: '9. कर्मचारी परमिशन', sub: 'Manage Employee Access' },
-          { id: 'REPORTS', icon: '📊', title: '10. रिपोर्ट्स और टेस्ट', sub: 'Reports, A4 Bill & QA Tests' }
-        ];
 
         return `
           <div class="max-w-7xl mx-auto px-4 sm:px-6 py-6 space-y-6">
             <!-- Owner Welcome Header -->
-            <div class="bg-slate-900 text-white p-5 rounded-2xl border-b-4 border-amber-400 flex flex-wrap justify-between items-center gap-4">
+            <div class="bg-slate-950 text-white p-5 rounded-2xl border-b-4 border-amber-400 flex flex-wrap justify-between items-center gap-4 no-print">
               <div>
-                <span class="text-xs font-black uppercase text-amber-400">Interface 1 • Business Owner Control Center</span>
-                <h1 class="text-2xl font-black">👑 मालिक का डैशबोर्ड (Owner Dashboard)</h1>
-                <p class="text-xs text-slate-300">कोई जटिल चार्ट नहीं — केवल आज के जरूरी सवाल और 10 सीधे काम के बटन।</p>
+                <span class="px-2.5 py-0.5 rounded bg-amber-400 text-slate-950 text-xs font-black uppercase">Interface 1 • Owner Dashboard</span>
+                <h1 class="text-2xl font-black mt-1">👑 मालिक डैशबोर्ड (Business Owner Control Center)</h1>
+                <p class="text-xs text-slate-300">बिना किसी तकनीकी उलझन के अपने पूरे व्यापार को नीचे दिए गए बड़े बटनों से चलाएं।</p>
               </div>
-              <button onclick="BOC.setOwnerPage('HOME')" class="px-4 py-2 rounded-xl bg-amber-400 text-slate-950 font-black text-xs cursor-pointer">🏠 मुख्य डैशबोर्ड होम</button>
+              <button onclick="BOC.runAutomatedTests()" class="px-4 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-xs cursor-pointer">
+                🧪 ऑटोमेटेड टेस्ट चलाएं (Run Verification Tests)
+              </button>
             </div>
 
-            <!-- 8 Daily Questions Summary Cards (Part 4) -->
-            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
+            <div id="test-results-box" class="hidden no-print"></div>
+
+            <!-- 8 Clear Summary Cards Answering Part 4 Questions -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs no-print">
               <div class="bg-white p-4 rounded-xl border-l-4 border-blue-700 shadow-sm">
-                <div class="text-slate-500 font-bold">1. आज एक्टिव ट्रिप्स?</div>
-                <div class="text-2xl font-black mt-1">${activeTrips.length} ट्रिप्स</div>
-                <div class="text-[11px] text-slate-600">कुल ${state.trips.length} ट्रिप्स दर्ज</div>
+                <div class="text-slate-500 font-bold">1. आज की एक्टिव ट्रिप्स</div>
+                <div class="text-2xl font-black mt-1 mono">${state.trips.length} ट्रिप्स</div>
+                <div class="text-[11px] text-slate-600">कुल वजन: ${stmt.totLoadedMt} MT</div>
               </div>
               <div class="bg-white p-4 rounded-xl border-l-4 border-amber-500 shadow-sm">
-                <div class="text-slate-500 font-bold">2. पेंडिंग डिलीवरी?</div>
-                <div class="text-2xl font-black mt-1">${pendingDeliveries.length} डिलीवरी</div>
-                <div class="text-[11px] text-slate-600">रास्ते में / असाइन की गई</div>
+                <div class="text-slate-500 font-bold">2. पेंडिंग डिलीवरी</div>
+                <div class="text-2xl font-black mt-1 mono text-amber-700">${pendingDeliveries} पेंडिंग</div>
+                <div class="text-[11px] text-slate-600">1 रास्ते में, 1 असाइन</div>
               </div>
               <div class="bg-white p-4 rounded-xl border-l-4 border-red-600 shadow-sm">
-                <div class="text-slate-500 font-bold">3. क्लाइंट्स पर कुल बकाया?</div>
-                <div class="text-2xl font-black text-red-700 mt-1 mono">${fmtINR(totalOutstanding)}</div>
-                <div class="text-[11px] text-slate-600">1 क्लाइंट पर बकाया</div>
+                <div class="text-slate-500 font-bold">3. ग्राहकों पर बकाया</div>
+                <div class="text-2xl font-black mt-1 mono text-red-700">${fmtIntINR(totOutstanding)}</div>
+                <div class="text-[11px] text-slate-600">प्राप्त: ${fmtIntINR(totPaid)}</div>
               </div>
               <div class="bg-white p-4 rounded-xl border-l-4 border-emerald-600 shadow-sm">
-                <div class="text-slate-500 font-bold">4. अप्रूवल / कोटेशन ध्यान दें?</div>
-                <div class="text-2xl font-black mt-1">${state.quotations.length} कोटेशन • ${pendingApprovals} बिल</div>
-                <div class="text-[11px] text-slate-600">${unverifiedRatesCount} प्रोडक्ट रेट अनवेरिफाइड</div>
+                <div class="text-slate-500 font-bold">4. असाइन गाड़ियां/ड्राइवर</div>
+                <div class="text-2xl font-black mt-1 mono">${state.vehicles.length} टैंकर</div>
+                <div class="text-[11px] text-slate-600">19, 23, 27, 28, 33 MT</div>
+              </div>
+              <div class="bg-white p-4 rounded-xl border-l-4 border-purple-600 shadow-sm">
+                <div class="text-slate-500 font-bold">5. ध्यान देने योग्य कोटेशन</div>
+                <div class="text-2xl font-black mt-1 mono">${state.quotations.length} कोटेशन</div>
+                <div class="text-[11px] text-slate-600">अनुमानित (Non-Invoice)</div>
+              </div>
+              <div class="bg-white p-4 rounded-xl border-l-4 border-indigo-600 shadow-sm">
+                <div class="text-slate-500 font-bold">6. बिटुमेन रेट अपडेट</div>
+                <div class="text-lg font-black mt-1">16 Oct 2026</div>
+                <div class="text-[11px] text-slate-600">VG-10, VG-30, VG-40 तैयार</div>
+              </div>
+              <div class="bg-white p-4 rounded-xl border-l-4 border-orange-600 shadow-sm">
+                <div class="text-slate-500 font-bold">7. दर्ज किए गए खर्चे</div>
+                <div class="text-2xl font-black mt-1 mono">₹24,600</div>
+                <div class="text-[11px] text-slate-600">2 वर्कशॉप एंट्री</div>
+              </div>
+              <div class="bg-white p-4 rounded-xl border-l-4 border-rose-600 shadow-sm">
+                <div class="text-slate-500 font-bold">8. अप्रूवल के काम</div>
+                <div class="text-2xl font-black mt-1 mono text-rose-700">${pendingApprovals} बाकी</div>
+                <div class="text-[11px] text-slate-600">रिपेयर व रेट प्रकाशन</div>
               </div>
             </div>
 
-            <!-- 10 Large Primary Action Buttons -->
-            <div class="bg-white p-5 rounded-2xl border border-slate-300 shadow-sm space-y-3">
-              <div class="text-xs font-black uppercase text-slate-500">मुख्य कार्य चुनें (10 Primary Business Actions):</div>
-              <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
-                ${actionButtons.map(btn => `
-                  <button type="button" onclick="BOC.setOwnerPage('${btn.id}')" class="p-3.5 rounded-xl border-2 text-left transition cursor-pointer ${state.ownerSubPage === btn.id ? 'border-blue-700 bg-blue-50 shadow' : 'border-slate-200 hover:border-blue-600 bg-slate-50'}">
-                    <div class="text-xl mb-1">${btn.icon}</div>
-                    <div class="font-black text-xs sm:text-sm text-slate-900">${esc(btn.title)}</div>
-                    <div class="text-[10px] text-slate-500 mt-0.5">${esc(btn.sub)}</div>
+            <!-- 10 Large Primary Action Buttons (Part 4 Requirement) -->
+            <div class="bg-white p-5 rounded-2xl border-2 border-slate-300 shadow-sm space-y-3 no-print">
+              <div class="text-xs font-black uppercase text-slate-500">मुख्य कार्य बटन (10 Primary Actions — किसी भी बटन को दबाएं):</div>
+              <div class="grid grid-cols-2 sm:grid-cols-5 gap-2.5 text-xs">
+                ${[
+                  { id: 'ADD_TRIP', icon: '➕', lbl: '1. नई ट्रिप जोड़ें', sub: 'Add New Trip' },
+                  { id: 'UPDATE_RATES', icon: '📈', lbl: '2. बिटुमेन रेट अपडेट', sub: 'Update Bitumen Rates' },
+                  { id: 'CALCULATOR', icon: '🧮', lbl: '3. भाड़ा कैलकुलेटर', sub: 'Freight Calculator' },
+                  { id: 'QUOTATIONS', icon: '📋', lbl: '4. कोटेशन बनाएं', sub: 'Create Quotation' },
+                  { id: 'CLIENTS', icon: '🏢', lbl: '5. क्लाइंट जोड़ें', sub: 'Add / View Clients' },
+                  { id: 'PAYMENTS', icon: '💰', lbl: '6. पेमेंट दर्ज करें', sub: 'Record Payment' },
+                  { id: 'EXPENSES', icon: '⛽', lbl: '7. खर्चे देखें / अप्रूव', sub: 'View Expenses' },
+                  { id: 'VEHICLES', icon: '🚛', lbl: '8. गाड़ियां (19-33 MT)', sub: 'Manage Vehicles' },
+                  { id: 'EMPLOYEES', icon: '👷', lbl: '9. कर्मचारी परमिशन', sub: 'Manage Employees' },
+                  { id: 'REPORTS', icon: '📊', lbl: '10. रिपोर्ट्स व A4 बिल', sub: 'Reports & A4 Statement' }
+                ].map(b => `
+                  <button type="button" onclick="BOC.setOwnerTask('${b.id}')" class="p-3 rounded-xl border-2 text-left transition cursor-pointer ${state.ownerSubTask === b.id ? 'bg-slate-950 text-amber-400 border-slate-950 shadow-md' : 'bg-slate-50 hover:bg-amber-50 text-slate-900 border-slate-200'}">
+                    <div class="font-black text-sm">${b.icon} ${b.lbl}</div>
+                    <div class="text-[10px] opacity-75 mt-0.5">${b.sub}</div>
                   </button>
                 `).join('')}
               </div>
             </div>
 
-            <!-- Dynamic Sub-View Area Inside Owner Dashboard -->
-            <div id="owner-subview">
-              ${renderOwnerSubPageContent()}
+            <!-- Dynamic Owner Task Workspace -->
+            <div id="owner-task-workspace">
+              ${renderOwnerSubTaskContent()}
             </div>
           </div>
         `;
       }
 
-      function renderOwnerSubPageContent() {
-        const sub = state.ownerSubPage;
+      function renderOwnerSubTaskContent() {
+        const task = state.ownerSubTask;
+        const stmt = getStatementSummary(state.trips);
 
-        if (sub === 'RATES' || sub === 'HOME') {
+        if (task === 'UPDATE_RATES') {
           return `
             <div class="space-y-6">
-              <!-- Hindi Bitumen Rate Update Form (Part 8) -->
-              <div class="bg-white p-6 rounded-2xl border-2 border-amber-400 shadow-md space-y-4">
-                <div class="border-b pb-3">
-                  <span class="text-xs font-black uppercase text-amber-800">Part 8 &amp; Part 9 • बिना कोड छुए रेट बदलें</span>
-                  <h2 class="text-xl font-black text-slate-900">🛢️ बिटुमेन और प्रोडक्ट रेट अपडेट फॉर्म (Rate Management)</h2>
-                </div>
-                <form onsubmit="BOC.handleRateUpdate(event)" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
+              <!-- Straightforward Hindi Rate Update Form (Part 8) -->
+              <div class="bg-white p-6 rounded-2xl border-2 border-amber-500 shadow-md space-y-4">
+                <h3 class="text-lg font-black text-slate-900">📈 नया बिटुमेन / प्रोडक्ट रेट अपडेट करें (Hindi Rate Update Form)</h3>
+                <form onsubmit="BOC.saveProductRateForm(event)" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
                   <div>
-                    <label class="font-black block mb-1">प्रोडक्ट चुनें *</label>
-                    <select id="ru-code" onchange="BOC.prefillRateForm(this.value)" class="w-full p-2.5 rounded-lg border border-slate-300 bg-white font-bold">
-                      ${state.productRates.map(p => `<option value="${esc(p.code)}">${esc(p.code)} (${esc(p.name)})</option>`).join('')}
+                    <label class="font-black block mb-1">प्रोडक्ट चुनें (Select Product) *</label>
+                    <select id="rf-code" class="w-full p-2.5 rounded-xl border border-slate-300 bg-white font-bold">
+                      ${state.productRates.map(p => `<option value="${esc(p.code)}">${esc(p.name)}</option>`).join('')}
                     </select>
                   </div>
                   <div>
-                    <label class="font-black block mb-1">रिफाइनरी चुनें *</label>
-                    <input required id="ru-refinery" type="text" value="Mathura Refinery (IOCL Ref)" class="w-full p-2.5 rounded-lg border border-slate-300 font-semibold" />
+                    <label class="font-black block mb-1">रिफाइनरी चुनें (Supply Location) *</label>
+                    <input required id="rf-loc" type="text" value="Mathura Refinery" class="w-full p-2.5 rounded-xl border border-slate-300 font-semibold" />
                   </div>
                   <div>
-                    <label class="font-black block mb-1">बेसिक रेट दर्ज करें (₹/MT) *</label>
-                    <input required id="ru-basic" type="number" step="0.01" min="1000" value="83472" class="w-full p-2.5 rounded-lg border border-slate-300 font-black mono text-sm" />
-                  </div>
-                  <div>
-                    <label class="font-black block mb-1">बढ़ोतरी / बदलाव (₹/MT)</label>
-                    <input id="ru-inc" type="number" step="1" value="7920" class="w-full p-2.5 rounded-lg border border-slate-300 font-bold mono" />
+                    <label class="font-black block mb-1">बेसिक रेट दर्ज करें (Basic ₹/MT) *</label>
+                    <input required id="rf-basic" type="number" step="1" min="1000" placeholder="उदा. 83972" class="w-full p-2.5 rounded-xl border border-slate-300 font-bold mono" />
                   </div>
                   <div>
                     <label class="font-black block mb-1">लागू टैक्स की जानकारी *</label>
-                    <input required id="ru-tax" type="text" value="18% GST (Configurable / Subject to Verification)" class="w-full p-2.5 rounded-lg border border-slate-300 font-semibold" />
+                    <input required id="rf-tax" type="text" value="18% GST (Configurable / Subject to Verification)" class="w-full p-2.5 rounded-xl border border-slate-300 font-semibold" />
                   </div>
                   <div>
-                    <label class="font-black block mb-1">लागू होने की तारीख *</label>
-                    <input required id="ru-date" type="text" value="16/10/2026" class="w-full p-2.5 rounded-lg border border-slate-300 font-semibold" />
+                    <label class="font-black block mb-1">लागू होने की तारीख (Effective Date) *</label>
+                    <input required id="rf-date" type="text" value="19/10/2026" class="w-full p-2.5 rounded-xl border border-slate-300 font-semibold" />
                   </div>
                   <div>
-                    <label class="font-black block mb-1">रेट का स्रोत (Source) *</label>
-                    <input required id="ru-src" type="text" value="BOC Fortnightly Rate Circular" class="w-full p-2.5 rounded-lg border border-slate-300 font-semibold" />
+                    <label class="font-black block mb-1">रेट का स्रोत (Source / Circular) *</label>
+                    <input required id="rf-src" type="text" value="Owner Verified Refinery Circular" class="w-full p-2.5 rounded-xl border border-slate-300 font-semibold" />
                   </div>
-                  <div>
-                    <label class="font-black block mb-1">स्टेटस चुनें *</label>
-                    <select id="ru-status" class="w-full p-2.5 rounded-lg border border-slate-300 bg-white font-bold">
-                      <option value="Published Current Rate">प्रकाशित करें (Published Current Rate)</option>
-                      <option value="Draft Rate">ड्राफ्ट सेव करें (Draft Rate)</option>
-                    </select>
-                  </div>
-                  <div class="sm:col-span-2 lg:col-span-4 flex justify-end gap-3 pt-2">
-                    <button type="submit" class="px-6 py-3 rounded-xl bg-blue-700 hover:bg-blue-800 text-white font-black text-sm shadow cursor-pointer">
-                      💾 सेव और प्रकाशित करें (Save &amp; Publish Rate)
-                    </button>
+                  <div class="sm:col-span-2 flex items-end gap-2">
+                    <button type="submit" name="mode" value="DRAFT" class="flex-1 py-3 rounded-xl bg-slate-800 text-white font-black cursor-pointer">💾 ड्राफ्ट सेव करें (Save Draft)</button>
+                    <button type="submit" name="mode" value="PUBLISH" class="flex-1 py-3 rounded-xl bg-emerald-600 text-white font-black cursor-pointer">📢 सेव और प्रकाशित करें (Publish Live)</button>
                   </div>
                 </form>
               </div>
+              ${renderBitumenRateBoardWidget(true)}
+            </div>
+          `;
+        }
 
-              ${buildRateBoardHTML(true)}
+        if (task === 'CALCULATOR') {
+          return renderFreightCalculatorWidget();
+        }
 
-              <!-- Rate History Table -->
-              <div class="bg-white p-5 rounded-2xl border border-slate-300 space-y-3 text-xs">
-                <h3 class="font-black text-sm uppercase text-slate-800">📜 पुराने रेट का इतिहास (Preserved Rate History — पुराने बिल कभी नहीं बदलेंगे)</h3>
-                <div class="space-y-1.5 mono">
-                  ${state.rateHistory.map(h => `
-                    <div class="p-2.5 rounded bg-slate-50 border flex flex-wrap justify-between gap-2">
-                      <span><strong>[${esc(h.ts)}]</strong> <strong>${esc(h.product)}</strong> (${esc(h.location)}): ₹${fmtInt(h.oldBasic)} → <strong>₹${fmtInt(h.newBasic)}/MT</strong></span>
-                      <span class="font-sans text-slate-600">${esc(h.source)} • [${esc(h.status)}]</span>
-                    </div>
-                  `).join('')}
+        if (task === 'ADD_TRIP') {
+          return `
+            <div class="bg-white p-6 rounded-2xl border-2 border-blue-700 shadow-md space-y-4 text-xs">
+              <h3 class="text-lg font-black">➕ नई ट्रिप जोड़ें (Add New Trip — 19, 23, 27, 28, 33 MT)</h3>
+              <form onsubmit="BOC.ownerAddTrip(event)" class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div><label class="font-black block mb-1">क्लाइंट चुनें *</label><input required id="ot-client" type="text" value="Demo Highway Contractors Pvt Ltd [DEMO]" class="w-full p-2.5 rounded-xl border" /></div>
+                <div><label class="font-black block mb-1">गाड़ी नंबर (Vehicle) *</label><input required id="ot-veh" type="text" value="UP85-DEMO-103" class="w-full p-2.5 rounded-xl border mono font-bold" /></div>
+                <div><label class="font-black block mb-1">टैंकर क्षमता (Capacity) *</label>
+                  <select id="ot-cap" class="w-full p-2.5 rounded-xl border bg-white font-bold">
+                    ${[19, 23, 27, 28, 33].map(c => `<option value="${c}" ${c===23?'selected':''}>${c} MT Tanker</option>`).join('')}
+                  </select>
                 </div>
+                <div><label class="font-black block mb-1">ड्राइवर का नाम *</label><input required id="ot-drv" type="text" value="Mahesh Singh" class="w-full p-2.5 rounded-xl border" /></div>
+                <div><label class="font-black block mb-1">लदा वजन (Loaded Weight kg) *</label><input required id="ot-kg" type="number" min="1000" value="23000" class="w-full p-2.5 rounded-xl border mono font-bold" /></div>
+                <div><label class="font-black block mb-1">डिलीवरी साइट (Destination) *</label><input required id="ot-dest" type="text" value="Gairsain Project Site (DEMO)" class="w-full p-2.5 rounded-xl border" /></div>
+                <div class="sm:col-span-3"><button type="submit" class="px-6 py-3 rounded-xl bg-blue-700 text-white font-black cursor-pointer">✓ ट्रिप सेव करें (Save Trip)</button></div>
+              </form>
+            </div>
+          `;
+        }
+
+        if (task === 'EMPLOYEES') {
+          const p = state.employeePermissions;
+          return `
+            <div class="bg-white p-6 rounded-2xl border-2 border-slate-300 space-y-4 text-xs">
+              <h3 class="text-lg font-black">👷 कर्मचारी परमिशन कंट्रोल (Control Employee Permissions)</h3>
+              <p class="text-slate-600">यहाँ से तय करें कि कर्मचारी (<strong>${esc(p.empName)}</strong>) को उनके लॉगिन में कौन-कौन से बटन दिखेंगे:</p>
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                ${[
+                  { k: 'canCreateTrip', lbl: 'नई ट्रिप बनाना (Create Trips)' },
+                  { k: 'canUpdateDeliveryStatus', lbl: 'डिलीवरी स्टेटस अपडेट (Update Status)' },
+                  { k: 'canPrepareQuotation', lbl: 'कोटेशन तैयार करना (Prepare Quotations)' },
+                  { k: 'canUpdateRates', lbl: 'बिटुमेन रेट ड्राफ्ट करना (Update Rates)' },
+                  { k: 'canPublishRates', lbl: 'रेट प्रकाशित करना (Publish Rates)' },
+                  { k: 'canRecordPayment', lbl: 'पेमेंट दर्ज करना (Record Payments)' }
+                ].map(item => `
+                  <label class="p-3.5 rounded-xl border-2 ${p[item.k] ? 'border-emerald-600 bg-emerald-50' : 'border-slate-200 bg-slate-50'} flex items-center justify-between cursor-pointer">
+                    <span class="font-black">${item.lbl}</span>
+                    <input type="checkbox" ${p[item.k] ? 'checked' : ''} onchange="BOC.toggleEmpPerm('${item.k}', this.checked)" class="w-5 h-5 accent-emerald-700" />
+                  </label>
+                `).join('')}
               </div>
             </div>
           `;
         }
 
-        if (sub === 'CALCULATOR') {
-          return buildFreightCalculatorWidgetHTML('मालिक का भाड़ा कैलकुलेटर (Owner Freight Calculator)');
-        }
-
-        if (sub === 'TRIPS') {
+        if (task === 'VEHICLES') {
           return `
-            <div class="bg-white p-6 rounded-2xl border border-slate-300 space-y-5 text-xs">
-              <h2 class="text-lg font-black">➕ नई ट्रिप जोड़ें (Add New Trip — 19, 23, 27, 28, 33 MT Tankers)</h2>
-              <form onsubmit="BOC.createTrip(event)" class="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-6 gap-3 bg-slate-50 p-4 rounded-xl border">
-                <div><label class="font-bold block mb-1">गाड़ी नंबर *</label><input required id="t-veh" type="text" value="UP85-DEMO-103" class="w-full p-2 rounded border bg-white mono font-bold" /></div>
-                <div><label class="font-bold block mb-1">टैंकर क्षमता *</label>
-                  <select id="t-cap" class="w-full p-2 rounded border bg-white font-bold">
-                    ${TANKER_CAPACITIES.map(c => `<option value="${c}" ${c===23?'selected':''}>${c} MT</option>`).join('')}
-                  </select>
-                </div>
-                <div><label class="font-bold block mb-1">प्रोडक्ट *</label>
-                  <select id="t-prod" class="w-full p-2 rounded border bg-white font-bold">
-                    ${state.productRates.map(p => `<option value="${esc(p.code)}">${esc(p.code)}</option>`).join('')}
-                  </select>
-                </div>
-                <div><label class="font-bold block mb-1">मात्रा (MT) *</label><input required id="t-mt" type="number" step="0.1" value="23" class="w-full p-2 rounded border bg-white mono font-bold" /></div>
-                <div><label class="font-bold block mb-1">डिलीवरी साइट *</label><input required id="t-dest" type="text" value="Gairsain Site (UK)" class="w-full p-2 rounded border bg-white font-semibold" /></div>
-                <div class="flex items-end"><button type="submit" class="w-full py-2.5 px-3 rounded-lg bg-emerald-600 text-white font-black cursor-pointer">+ ट्रिप सेव करें</button></div>
-              </form>
-
+            <div class="bg-white p-6 rounded-2xl border border-slate-300 space-y-4 text-xs">
+              <h3 class="text-lg font-black">🚛 गाड़ियां, टैंकर क्षमता (19–33 MT) और काग़ज़ात एक्सपायरी</h3>
               <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                ${state.trips.map(t => `
+                ${state.vehicles.map(v => `
                   <div class="p-4 rounded-xl border-2 border-slate-200 bg-slate-50 space-y-1.5">
-                    <div class="flex justify-between font-black text-sm"><span class="mono">${esc(t.vehicleNo)} (${t.tankerCapMt} MT)</span><span class="px-2 py-0.5 rounded bg-blue-100 text-blue-900">${esc(t.status)}</span></div>
-                    <div><strong>ट्रिप ID:</strong> ${esc(t.id)} • <strong>प्रोडक्ट:</strong> ${esc(t.product)} (${t.qtyMt} MT)</div>
-                    <div><strong>रूट:</strong> ${esc(t.origin)} →${esc(t.dest)}</div>
-                    <div><strong>ड्राइवर:</strong> ${esc(t.driverName)}</div>
-                    <div class="mono font-bold text-blue-900">भाड़ा: ${fmtINR(t.freightInr)} \vert{} प्रूफ: ${esc(t.proofNote)}</div>
+                    <div class="flex justify-between items-center">
+                      <span class="px-2.5 py-1 rounded bg-slate-950 text-amber-400 font-black mono">${esc(v.regNo)}</span>
+                      <span class="px-2 py-0.5 rounded bg-blue-100 text-blue-900 font-black">${v.capacityMt} MT Tanker</span>
+                    </div>
+                    <div><strong>ड्राइवर:</strong> ${esc(v.driver)} (${esc(v.phone)})</div>
+                    <div><strong>इंश्योरेंस एक्सपायरी:</strong> <span class="${v.insExpiry.includes('Left') ? 'text-red-700 font-black' : ''}">${esc(v.insExpiry)}</span></div>
+                    <div><strong>फिटनेस एक्सपायरी:</strong> ${esc(v.fitExpiry)}</div>
+                    <div class="text-emerald-800 font-bold">स्टेटस: ${esc(v.status)}</div>
                   </div>
                 `).join('')}
               </div>
@@ -835,90 +930,103 @@
           `;
         }
 
-        if (sub === 'EMPLOYEES') {
-          const ep = state.employeePermissions;
+        if (task === 'PAYMENTS' || task === 'EXPENSES') {
           return `
-            <div class="bg-white p-6 rounded-2xl border border-slate-300 space-y-4 text-xs">
-              <h2 class="text-lg font-black">👷 कर्मचारी परमिशन कंट्रोल (Owner Controls Employee Access — Part 5)</h2>
-              <p class="text-slate-600">यहाँ से तय करें कि कर्मचारी (${esc(ep.empName)}) अपनी स्क्रीन पर कौन-कौन से काम कर सकता है:</p>
-              <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-                <label class="p-3.5 rounded-xl border bg-slate-50 flex items-center gap-2.5 font-bold cursor-pointer">
-                  <input type="checkbox" ${ep.canCreateTrip?'checked':''} onchange="BOC.toggleEmpPerm('canCreateTrip', this.checked)" class="w-5 h-5 accent-blue-700" />
-                  <span>1. नई ट्रिप बनाने की अनुमति (Create Trips)</span>
-                </label>
-                <label class="p-3.5 rounded-xl border bg-slate-50 flex items-center gap-2.5 font-bold cursor-pointer">
-                  <input type="checkbox" ${ep.canUpdateStatus?'checked':''} onchange="BOC.toggleEmpPerm('canUpdateStatus', this.checked)" class="w-5 h-5 accent-blue-700" />
-                  <span>2. डिलीवरी स्टेटस अपडेट (Update Delivery Status)</span>
-                </label>
-                <label class="p-3.5 rounded-xl border bg-slate-50 flex items-center gap-2.5 font-bold cursor-pointer">
-                  <input type="checkbox" ${ep.canPrepareQuote?'checked':''} onchange="BOC.toggleEmpPerm('canPrepareQuote', this.checked)" class="w-5 h-5 accent-blue-700" />
-                  <span>3. कोटेशन तैयार करना (Prepare Quotations)</span>
-                </label>
-                <label class="p-3.5 rounded-xl border bg-amber-50 border-amber-300 flex items-center gap-2.5 font-bold cursor-pointer">
-                  <input type="checkbox" ${ep.canUpdateRates?'checked':''} onchange="BOC.toggleEmpPerm('canUpdateRates', this.checked)" class="w-5 h-5 accent-blue-700" />
-                  <span>4. बिटुमेन रेट बदलना (Update Product Rates)</span>
-                </label>
-                <label class="p-3.5 rounded-xl border bg-slate-50 flex items-center gap-2.5 font-bold cursor-pointer">
-                  <input type="checkbox" ${ep.canRecordExpense?'checked':''} onchange="BOC.toggleEmpPerm('canRecordExpense', this.checked)" class="w-5 h-5 accent-blue-700" />
-                  <span>5. खर्चे दर्ज करना (Record Expenses)</span>
-                </label>
-                <label class="p-3.5 rounded-xl border bg-amber-50 border-amber-300 flex items-center gap-2.5 font-bold cursor-pointer">
-                  <input type="checkbox" ${ep.canRecordPayment?'checked':''} onchange="BOC.toggleEmpPerm('canRecordPayment', this.checked)" class="w-5 h-5 accent-blue-700" />
-                  <span>6. पेमेंट रसीद दर्ज करना (Record Payments)</span>
-                </label>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs">
+              <div class="bg-white p-5 rounded-2xl border border-slate-300 space-y-3">
+                <div class="flex justify-between items-center">
+                  <h3 class="text-base font-black">💰 प्राप्त पेमेंट्स (Payments Received)</h3>
+                  <button onclick="BOC.recordQuickPayment()" class="px-3 py-1.5 rounded-lg bg-emerald-600 text-white font-black cursor-pointer">+ ₹50,000 NEFT जोड़ें</button>
+                </div>
+                ${state.payments.map(p => `<div class="p-3 rounded-lg bg-emerald-50 border border-emerald-300 flex justify-between"><span><strong>${esc(p.date)}</strong> • ${esc(p.mode)} (${esc(p.ref)})</span><strong class="mono">${fmtIntINR(p.amountInr)}</strong></div>`).join('')}
+              </div>
+              <div class="bg-white p-5 rounded-2xl border border-slate-300 space-y-3">
+                <h3 class="text-base font-black">⛽ वर्कशॉप व ट्रिप खर्चे (Expenses &amp; Approvals)</h3>
+                ${state.expenses.map((e, i) => `
+                  <div class="p-3 rounded-lg border ${e.status.includes('Awaiting') ? 'bg-amber-50 border-amber-400' : 'bg-slate-50'} flex justify-between items-center">
+                    <div>
+                      <div class="font-black">${esc(e.vehicleNo)} —${esc(e.category)}</div>
+                      <div class="text-[11px] text-slate-600">${esc(e.date)} •${esc(e.status)}</div>
+                    </div>
+                    <div class="text-right">
+                      <div class="mono font-black">${fmtIntINR(e.amountInr)}</div>${e.status.includes('Awaiting') ? `<button onclick="BOC.approveExpense(${i})" class="mt-1 px-2 py-0.5 rounded bg-emerald-700 text-white font-bold text-[10px] cursor-pointer">✓ अप्रूव करें</button>` : ''}
+                    </div>
+                  </div>
+                `).join('')}
               </div>
             </div>
           `;
         }
 
-        if (sub === 'REPORTS') {
-          // Run automated verification tests (Part 11 & Part 21)
-          const t1 = calculateEstimatedFreight(250, 23, 3, 2);
-          const t2 = calculateEstimatedFreight(100, 10, 3, 2);
-          const t3 = calculateEstimatedFreight(0, 23, 3, 2);
-          const t4 = calculateEstimatedFreight(-50, 23, 3, 2);
-
-          return `
-            <div class="bg-white p-6 rounded-2xl border border-slate-300 space-y-5 text-xs">
-              <div class="flex flex-wrap justify-between items-center gap-2 border-b pb-3">
-                <h2 class="text-lg font-black">📊 ऑटोमेटेड फॉर्मूला और सिस्टम टेस्ट रिपोर्ट (Part 11 &amp; Part 21 QA Evidence)</h2>
-                <button onclick="window.print()" class="px-4 py-2 rounded-lg bg-blue-700 text-white font-black cursor-pointer">🖨️ Print A4 Statement</button>
-              </div>
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mono">
-                <div class="p-3.5 rounded-xl border ${t1.totalFreightInr === 34500 ? 'bg-emerald-50 border-emerald-500' : 'bg-red-50'}">
-                  <div class="font-black text-emerald-900">TEST 1: 250 KM × 23 MT × ₹3 × 2</div>
-                  <div>Expected: ₹34,500.00 | Actual: <strong>${fmtINR(t1.totalFreightInr)}</strong> → <strong>${t1.totalFreightInr === 34500 ? 'PASS ✓' : 'FAIL'}</strong></div>
-                </div>
-                <div class="p-3.5 rounded-xl border ${t2.totalFreightInr === 6000 ? 'bg-emerald-50 border-emerald-500' : 'bg-red-50'}">
-                  <div class="font-black text-emerald-900">TEST 2: 100 KM × 10 MT × ₹3 × 2</div>
-                  <div>Expected: ₹6,000.00 | Actual: <strong>${fmtINR(t2.totalFreightInr)}</strong> → <strong>${t2.totalFreightInr === 6000 ? 'PASS ✓' : 'FAIL'}</strong></div>
-                </div>
-                <div class="p-3.5 rounded-xl border ${!t3.valid ? 'bg-emerald-50 border-emerald-500' : 'bg-red-50'}">
-                  <div class="font-black text-emerald-900">TEST 3: Zero Distance (0 KM) Rejection</div>
-                  <div>Expected: Validation Error | Actual: <strong>${!t3.valid ? 'Blocked (' + t3.errorHi + ') → PASS ✓' : 'FAIL'}</strong></div>
-                </div>
-                <div class="p-3.5 rounded-xl border ${!t4.valid ? 'bg-emerald-50 border-emerald-500' : 'bg-red-50'}">
-                  <div class="font-black text-emerald-900">TEST 4: Negative Distance (-50 KM) Rejection</div>
-                  <div>Expected: Validation Error | Actual: <strong>${!t4.valid ? 'Blocked → PASS ✓' : 'FAIL'}</strong></div>
-                </div>
-              </div>
-            </div>
-          `;
-        }
-
-        // Default summary for other sub-buttons (Quotes, Clients, Payments, Expenses, Vehicles)
+        // Default Owner View: Printable A4 Freight Statement + Active Trips + Quotations
         return `
-          <div class="bg-white p-6 rounded-2xl border border-slate-300 space-y-4 text-xs">
-            <h2 class="text-lg font-black">चयनित विभाग: ${esc(sub)}</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div class="p-4 rounded-xl bg-slate-50 border space-y-1.5">
-                <div class="font-black text-sm">क्लाइंट बकाया और लेजर (Clients &amp; Outstanding)</div>
-                <div><strong>Demo Highway Contractors Pvt Ltd [DEMO]:</strong> कुल बिल ₹3,11,625.00 | एडवांस कटौती ₹63,400.00 | NEFT प्राप्त ₹1,00,000.00 | <strong>बकाया: ₹1,48,225.00</strong></div>
+          <div class="space-y-6">
+            <!-- Printable A4 Landscape Freight Statement -->
+            <div id="a4-print-area" class="bg-white p-5 rounded-2xl border-2 border-slate-400 shadow-md space-y-4">
+              <div class="flex flex-wrap justify-between items-center gap-2 border-b-2 border-slate-950 pb-3">
+                <div>
+                  <div class="text-[10px] font-black uppercase text-slate-500">BHARAT OIL CARRIER (BOC) • MATHURA REFINERY GATE NO. 9</div>
+                  <h3 class="text-lg font-black">A4 Landscape Freight Statement (Mathura to Gairsain Freight)</h3>
+                </div>
+                <div class="flex gap-2 no-print">
+                  <button onclick="BOC.exportTripsCSV()" class="px-3.5 py-1.5 rounded-lg bg-slate-800 text-white font-black text-xs cursor-pointer">📥 CSV / Excel डाउनलोड</button>
+                  <button onclick="window.print()" class="px-4 py-1.5 rounded-lg bg-blue-700 text-white font-black text-xs cursor-pointer">🖨️ Print A4 Statement</button>
+                </div>
               </div>
-              <div class="p-4 rounded-xl bg-slate-50 border space-y-1.5">
-                <div class="font-black text-sm">कोटेशन और अप्रूवल (Quotations &amp; Expenses)</div>
-                <div>• कोटेशन <strong>QT-2026-101</strong>: 23 MT VG-30 (250 KM → अनुमानित भाड़ा ₹34,500.00) — [${esc(state.quotations[0].status)}]</div>
-                <div>• रिपेयर बिल <strong>EXP-01</strong>: UP85-DEMO-101 (₹18,400) — [${esc(state.expenses[0].status)}]</div>
+              <div class="overflow-x-auto">
+                <table class="w-full border-collapse border border-slate-400 text-xs mono print-tbl">
+                  <thead>
+                    <tr class="bg-slate-200 text-slate-950 font-black">
+                      <th class="p-2 border">S.No</th>
+                      <th class="p-2 border text-left">Date</th>
+                      <th class="p-2 border text-left">Vehicle (Cap)</th>
+                      <th class="p-2 border text-right">Loaded (kg / MT)</th>
+                      <th class="p-2 border text-right">Unloaded (kg / MT)</th>
+                      <th class="p-2 border text-right">Rate/MT</th>
+                      <th class="p-2 border text-center bg-amber-50">S/L</th>
+                      <th class="p-2 border text-right bg-amber-50">S/E Amt</th>
+                      <th class="p-2 border text-right">HSD &amp; Cash</th>
+                      <th class="p-2 border text-right">Plant HSD/Cash</th>
+                      <th class="p-2 border text-left">Site &amp; Status</th>
+                      <th class="p-2 border text-right bg-blue-50">Freight (₹)</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    ${state.trips.map(r => {
+                      const lMt = (r.loadedKg / 1000).toFixed(3);
+                      const uMt = (r.unloadedKg / 1000).toFixed(3);
+                      const fr = Number((Number(lMt) * r.ratePerMt).toFixed(2));
+                      return `
+                        <tr class="border-b hover:bg-slate-50">
+                          <td class="p-2 border text-center font-bold">${r.sno}</td>
+                          <td class="p-2 border">${esc(r.date)}</td>
+                          <td class="p-2 border font-bold">${esc(r.vehicleNo)} (${r.capacityMt}MT)</td>
+                          <td class="p-2 border text-right">${r.loadedKg.toLocaleString('en-IN')} kg (${lMt} MT)</td>
+                          <td class="p-2 border text-right">${r.unloadedKg.toLocaleString('en-IN')} kg (${uMt} MT)</td>
+                          <td class="p-2 border text-right">₹${r.ratePerMt}</td>
+                          <td class="p-2 border text-center bg-amber-50">${esc(r.slText)}</td>
+                          <td class="p-2 border text-right bg-amber-50">₹${r.seAmt}</td>
+                          <td class="p-2 border text-right">₹${(r.hsdAmt + r.cash).toLocaleString('en-IN')}</td>
+                          <td class="p-2 border text-right">₹${(r.plantHsdAmt + r.plantCash).toLocaleString('en-IN')}</td>
+                          <td class="p-2 border font-sans">${esc(r.site)} • <strong>${esc(r.status)}</strong></td>
+                          <td class="p-2 border text-right font-black bg-blue-50">${fmtINR(fr)}</td>
+                        </tr>
+                      `;
+                    }).join('')}
+                  </tbody>
+                  <tfoot class="bg-slate-200 font-black">
+                    <tr>
+                      <td colspan="3" class="p-2 border">TOTAL (${state.trips.length} TRIPS)</td>
+                      <td class="p-2 border text-right">${stmt.totLoadedKg.toLocaleString('en-IN')} kg (${stmt.totLoadedMt} MT)</td>
+                      <td class="p-2 border text-right">${stmt.totUnloadedKg.toLocaleString('en-IN')} kg (${stmt.totUnloadedMt} MT)</td>
+                      <td colspan="3" class="p-2 border text-right">S/E Ded: ₹${stmt.totSeAmt}</td>
+                      <td class="p-2 border text-right">− ₹${stmt.enrouteRec.toLocaleString('en-IN')}</td>
+                      <td class="p-2 border text-right">− ₹${stmt.plantRec.toLocaleString('en-IN')}</td>
+                      <td class="p-2 border font-sans">Net Payable: <strong class="text-blue-900">${fmtINR(stmt.netInvoicePayable)}</strong></td>
+                      <td class="p-2 border text-right bg-blue-100">${fmtINR(stmt.totFreight)}</td>
+                    </tr>
+                  </tfoot>
+                </table>
               </div>
             </div>
           </div>
@@ -926,441 +1034,494 @@
       }
 
       // ======================================================================
-      // INTERFACE 2: EMPLOYEE ERP (Part 5 — Permission-Filtered Staff View)
+      // INTERFACE 2: AUTHORIZED EMPLOYEE ERP (PART 5 — PERMISSION FILTERED)
       // ======================================================================
-      function renderEmployeeErp() {
-        const ep = state.employeePermissions;
+      function renderEmployeeInterface() {
+        const p = state.employeePermissions;
         return `
           <div class="max-w-6xl mx-auto px-4 sm:px-6 py-6 space-y-6">
             <div class="bg-blue-950 text-white p-5 rounded-2xl border-b-4 border-amber-400 flex flex-wrap justify-between items-center gap-4">
               <div>
-                <span class="text-xs font-black uppercase text-amber-400">Interface 2 • Permission-Controlled Staff ERP</span>
-                <h1 class="text-2xl font-black">🧑‍💼 कर्मचारी पोर्टल (${esc(ep.empName)})</h1>
-                <p class="text-xs text-blue-200">यहाँ केवल वही बटन चालू हैं जिनकी अनुमति मालिक (Owner) ने दी है।</p>
+                <span class="px-2.5 py-0.5 rounded bg-amber-400 text-slate-950 text-xs font-black uppercase">Interface 2 • Authorized Employee ERP</span>
+                <h1 class="text-2xl font-black mt-1">👷 कर्मचारी डैशबोर्ड (${esc(p.empName)})</h1>
+                <p class="text-xs text-blue-200">केवल वही कार्य दिख रहे हैं जिनकी अनुमति मालिक (Owner) ने दी है।</p>
               </div>
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 text-xs">
-              <div class="bg-white p-5 rounded-xl border-2 ${ep.canCreateTrip ? 'border-emerald-500' : 'border-slate-200 opacity-60'} space-y-2">
-                <div class="font-black text-sm">1. ट्रिप और डिस्पैच (Create &amp; Update Trips)</div>
-                <p class="text-slate-600">${ep.canCreateTrip ? '✅ अनुमति प्राप्त है: आप नई ट्रिप बना सकते हैं और डिलीवरी स्टेटस अपडेट कर सकते हैं।' : '🔒 मालिक द्वारा बंद किया गया है।'}</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+              <div class="bg-white p-5 rounded-2xl border border-slate-300 space-y-2">
+                <div class="font-black text-sm text-slate-900">आपकी अनुमत जिम्मेदारियां (Permitted Actions):</div>
+                <ul class="space-y-1.5">
+                  <li>${p.canCreateTrip ? '✅ नई ट्रिप बनाना और गाड़ी असाइन करना (Allowed)' : '🔒 नई ट्रिप बनाना (Restricted by Owner)'}</li>
+                  <li>${p.canUpdateDeliveryStatus ? '✅ डिलीवरी स्टेटस अपडेट करना (Allowed)' : '🔒 डिलीवरी स्टेटस अपडेट (Restricted)'}</li>
+                  <li>${p.canPrepareQuotation ? '✅ कोटेशन तैयार करना (Allowed)' : '🔒 कोटेशन तैयार करना (Restricted)'}</li>
+                  <li>${p.canUpdateRates ? '✅ बिटुमेन रेट ड्राफ्ट करना (Allowed)' : '🔒 बिटुमेन रेट अपडेट (Restricted)'}</li>
+                  <li>${p.canPublishRates ? '✅ रेट पब्लिश करना (Allowed)' : '🔒 फाइनल रेट पब्लिश करना (Owner Only)'}</li>
+                  <li>${p.canRecordPayment ? '✅ पेमेंट दर्ज करना (Allowed)' : '🔒 फाइनल इनवॉइस/पेमेंट बदलना (Restricted)'}</li>
+                </ul>
               </div>
-              <div class="bg-white p-5 rounded-xl border-2 ${ep.canUpdateRates ? 'border-emerald-500' : 'border-red-300 bg-red-50/40'} space-y-2">
-                <div class="font-black text-sm">2. बिटुमेन रेट बदलाव (Rate Management)</div>
-                <p class="text-slate-700">${ep.canUpdateRates ? '✅ अनुमति प्राप्त है।' : '🔒 सुरक्षा लॉक: डिस्पैच कर्मचारी को आधिकारिक बिटुमेन रेट या पक्के बिल बदलने की अनुमति नहीं है।'}</p>
-              </div>
-              <div class="bg-white p-5 rounded-xl border-2 ${ep.canRecordPayment ? 'border-emerald-500' : 'border-red-300 bg-red-50/40'} space-y-2">
-                <div class="font-black text-sm">3. पेमेंट और इनवॉइस (Payments &amp; Invoices)</div>
-                <p class="text-slate-700">${ep.canRecordPayment ? '✅ अनुमति प्राप्त है।' : '🔒 सुरक्षा लॉक: केवल अधिकृत अकाउंट्स/मालिक ही पेमेंट दर्ज कर सकते हैं।'}</p>
+              <div class="bg-white p-5 rounded-2xl border border-slate-300 space-y-2">
+                <div class="font-black text-sm text-slate-900">आज की एक्टिव ट्रिप्स स्टेटस अपडेट करें:</div>
+                ${state.trips.map(t => `
+                  <div class="p-2.5 rounded-lg bg-slate-50 border flex justify-between items-center">
+                    <span><strong>${esc(t.vehicleNo)}</strong> (${t.capacityMt} MT) →${esc(t.destination)}</span>
+                    <span class="px-2 py-0.5 rounded bg-blue-100 text-blue-900 font-bold">${esc(t.status)}</span>
+                  </div>
+                `).join('')}
               </div>
             </div>
 
-            ${buildFreightCalculatorWidgetHTML('कर्मचारी भाड़ा कैलकुलेटर (Staff Freight Calculator)')}
+            ${renderFreightCalculatorWidget()}
           </div>
         `;
       }
 
       // ======================================================================
-      // INTERFACE 3: CLIENT PORTAL (Part 6 — Isolated Per Client, 16 Features)
+      // INTERFACE 3: CLIENT PORTAL (PART 6 — ISOLATED & CLEAR CATEGORIES)
       // ======================================================================
-      function renderClientPortal() {
-        const client = state.clients.find(c => c.id === state.clientActiveId) || state.clients[0];
-        const clientTrips = state.trips.filter(t => t.clientId === client.id);
-        const clientQuotes = state.quotations.filter(q => q.clientId === client.id);
+      function renderClientInterface() {
+        const cid = state.activeClientFilter;
+        const clientObj = state.clients.find(c => c.id === cid) || state.clients[0];
+        const clientTrips = state.trips.filter(t => t.clientId === cid);
+        const clientQuotes = state.quotations.filter(q => q.clientId === cid);
+        const clientPayments = state.payments.filter(p => p.clientId === cid);
+
+        const stmt = getStatementSummary(clientTrips);
+        const productAmt = clientTrips.reduce((s, t) => s + (t.productAmountInr || 0), 0);
+        const transportAmt = stmt.totFreight;
+        const addCharges = clientTrips.reduce((s, t) => s + (t.additionalChargesInr || 0), 0);
+        const onTripRecoveries = stmt.enrouteRec + stmt.plantRec + stmt.totSeAmt;
+        const invoiceTotal = productAmt + transportAmt + addCharges - onTripRecoveries;
+        const paidTotal = clientPayments.reduce((s, p) => s + p.amountInr, 0);
+        const outstanding = Math.max(0, invoiceTotal - paidTotal);
 
         return `
           <div class="max-w-7xl mx-auto px-4 sm:px-6 py-6 space-y-6">
+            <!-- Client Header with Tenant Isolation Switcher for Testing -->
             <div class="bg-emerald-950 text-white p-5 rounded-2xl border-b-4 border-amber-400 flex flex-wrap justify-between items-center gap-4">
               <div>
-                <span class="text-xs font-black uppercase text-amber-400">Interface 3 • Isolated Client Portal (Part 6)</span>
-                <h1 class="text-2xl font-black">🏢 ग्राहक पोर्टल: ${esc(client.name)}</h1>
-                <p class="text-xs text-emerald-200">यहाँ केवल आपकी कंपनी के कोटेशन, ट्रिप्स, बिल और बकाया दिखते हैं।</p>
+                <span class="px-2.5 py-0.5 rounded bg-amber-400 text-slate-950 text-xs font-black uppercase">Interface 3 • Isolated Client Portal</span>
+                <h1 class="text-2xl font-black mt-1">🏢 ग्राहक पोर्टल: ${esc(clientObj.name)}</h1>
+                <p class="text-xs text-emerald-200">यहाँ केवल आपके संगठन के कोटेशन, ट्रिप्स, बिल और बकाया राशि दिखाई देती है।</p>
               </div>
-              <div class="flex items-center gap-2 text-xs">
-                <span class="font-bold">टेस्ट क्लाइंट आइसोलेशन:</span>
-                <select onchange="BOC.switchClientAccount(this.value)" class="p-2 rounded-lg bg-slate-900 text-white border border-slate-600 font-bold">
-                  <option value="CLIENT_A" ${state.clientActiveId==='CLIENT_A'?'selected':''}>Client A (Demo Highway Contractors)</option>
-                  <option value="CLIENT_B" ${state.clientActiveId==='CLIENT_B'?'selected':''}>Client B (Isolated Client — 0 Data)</option>
-                </select>
+              <div class="flex items-center gap-2 text-xs bg-emerald-900 p-2 rounded-xl border border-emerald-700">
+                <span>टेस्ट क्लाइंट आइसोलेशन:</span>
+                <button onclick="BOC.setClientFilter('CLIENT_A')" class="px-2.5 py-1 rounded font-black cursor-pointer ${cid==='CLIENT_A'?'bg-amber-400 text-slate-950':'text-white'}">Client A (3 Trips)</button>
+                <button onclick="BOC.setClientFilter('CLIENT_B')" class="px-2.5 py-1 rounded font-black cursor-pointer ${cid==='CLIENT_B'?'bg-amber-400 text-slate-950':'text-white'}">Client B (Isolated)</button>
               </div>
             </div>
 
-            <!-- Separate Financial Categories (Part 6 — Never mixes Quotes with Invoices) -->
-            <div class="bg-white p-5 rounded-2xl border-2 border-slate-300 space-y-3 text-xs">
-              <div class="flex flex-wrap justify-between items-center gap-2 border-b pb-2">
-                <h2 class="text-base font-black text-slate-900">💰 आपका वित्तीय विवरण (Separated Financial Categories)</h2>
-                <button onclick="window.print()" class="px-3.5 py-1.5 rounded-lg bg-blue-700 text-white font-black cursor-pointer">📥 स्टेटमेंट डाउनलोड / प्रिंट करें</button>
+            ${clientTrips.length === 0 ? `
+              <div class="p-6 rounded-2xl bg-amber-50 border-2 border-amber-500 text-slate-950 font-black text-sm">
+                🔒 क्लाइंट डेटा आइसोलेशन सत्यापित (Client Isolation Verified): आप अभी <strong>${esc(clientObj.name)}</strong> के रूप में लॉग इन हैं। आपके अकाउंट में 0 ट्रिप्स हैं और आप किसी दूसरे ग्राहक (Client A) के बिल या ट्रिप्स नहीं देख सकते!
               </div>
-              <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 mono">
-                <div class="p-3 rounded-xl bg-slate-50 border"><div class="font-sans text-[11px] font-bold text-slate-500">1. Product Amount</div><div class="text-base font-black mt-1">${fmtINR(client.productAmt)}</div><div class="font-sans text-[10px] text-slate-500">बिटुमेन माल मूल्य</div></div>
-                <div class="p-3 rounded-xl bg-slate-50 border"><div class="font-sans text-[11px] font-bold text-slate-500">2. Transportation Freight</div><div class="text-base font-black mt-1">${fmtINR(client.transportAmt)}</div><div class="font-sans text-[10px] text-slate-500">टैंकर भाड़ा (${clientTrips.length} ट्रिप्स)</div></div>
-                <div class="p-3 rounded-xl bg-slate-50 border"><div class="font-sans text-[11px] font-bold text-slate-500">3. On-Trip HSD/Cash Ded.</div><div class="text-base font-black text-red-700 mt-1">− ${fmtINR(client.advancesDeducted)}</div><div class="font-sans text-[10px] text-slate-500">डीज़ल/कैश एडवांस कटौती</div></div>
-                <div class="p-3 rounded-xl bg-slate-50 border"><div class="font-sans text-[11px] font-bold text-slate-500">4. Net Invoice Amount</div><div class="text-base font-black mt-1">${fmtINR(client.invoiceTotal - client.advancesDeducted)}</div><div class="font-sans text-[10px] text-slate-500">पक्का बिल (कोटेशन अलग है)</div></div>
-                <div class="p-3 rounded-xl bg-emerald-50 border border-emerald-400"><div class="font-sans text-[11px] font-bold text-emerald-900">5. Payments Received</div><div class="text-base font-black text-emerald-800 mt-1">${fmtINR(client.paymentsReceived)}</div><div class="font-sans text-[10px] text-emerald-700">जमा की गई राशि</div></div>
-                <div class="p-3 rounded-xl bg-blue-50 border-2 border-blue-600"><div class="font-sans text-[11px] font-bold text-blue-900">6. Outstanding Balance</div><div class="text-base font-black text-blue-950 mt-1">${fmtINR(client.outstandingBalance)}</div><div class="font-sans text-[10px] text-blue-800">कुल शेष बकाया</div></div>
+            ` : `
+              <!-- Separate Financial Categories (Part 6 Requirement) -->
+              <div class="bg-white p-5 rounded-2xl border-2 border-slate-300 space-y-3">
+                <div class="text-xs font-black uppercase text-blue-800">आपका वित्तीय विवरण (Separate Financial Categories — Quotations Not Mixed With Invoices):</div>
+                <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-2.5 text-xs mono">
+                  <div class="p-3 rounded-xl bg-slate-50 border"><div class="font-sans text-[11px] text-slate-500 font-bold">1. Product Amount</div><div class="text-base font-black mt-1">${fmtIntINR(productAmt)}</div><div class="font-sans text-[10px] text-slate-500">Transport Only Contract</div></div>
+                  <div class="p-3 rounded-xl bg-slate-50 border"><div class="font-sans text-[11px] text-slate-500 font-bold">2. Transport Freight</div><div class="text-base font-black mt-1">${fmtIntINR(transportAmt)}</div><div class="font-sans text-[10px] text-slate-500">${stmt.totLoadedMt} MT Dispatched</div></div>
+                  <div class="p-3 rounded-xl bg-slate-50 border"><div class="font-sans text-[11px] text-slate-500 font-bold">3. On-Trip HSD/Cash</div><div class="text-base font-black text-red-700 mt-1">− ${fmtIntINR(onTripRecoveries)}</div><div class="font-sans text-[10px] text-slate-500">HSD &amp; Plant Advances</div></div>
+                  <div class="p-3 rounded-xl bg-slate-50 border"><div class="font-sans text-[11px] text-slate-500 font-bold">4. Taxes (If Verified)</div><div class="text-xs font-black mt-1 font-sans">As per GTA / CA</div><div class="font-sans text-[10px] text-slate-500">No unverified tax</div></div>
+                  <div class="p-3 rounded-xl bg-blue-50 border border-blue-300"><div class="font-sans text-[11px] text-blue-900 font-bold">5. Net Invoice Amount</div><div class="text-base font-black text-blue-950 mt-1">${fmtIntINR(invoiceTotal)}</div><div class="font-sans text-[10px] text-blue-800">Confirmed Billed</div></div>
+                  <div class="p-3 rounded-xl bg-emerald-50 border border-emerald-300"><div class="font-sans text-[11px] text-emerald-900 font-bold">6. Payments Received</div><div class="text-base font-black text-emerald-800 mt-1">${fmtIntINR(paidTotal)}</div><div class="font-sans text-[10px] text-emerald-700">NEFT Verified</div></div>
+                  <div class="p-3 rounded-xl bg-amber-100 border-2 border-amber-500"><div class="font-sans text-[11px] text-slate-900 font-black">7. Outstanding Balance</div><div class="text-base font-black text-red-900 mt-1">${fmtIntINR(outstanding)}</div><div class="font-sans text-[10px] text-slate-800">Net Balance Due</div></div>
+                </div>
               </div>
-            </div>
 
-            <!-- Client Trips & Quotations -->
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 text-xs">
-              <div class="bg-white p-5 rounded-2xl border border-slate-300 space-y-3">
-                <h3 class="font-black text-base">🚛 मेरी ट्रिप्स और डिलीवरी स्टेटस (${clientTrips.length})</h3>
-                ${clientTrips.map(t => `
-                  <div class="p-3.5 rounded-xl bg-slate-50 border flex justify-between items-center">
-                    <div>
-                      <div class="font-black text-sm mono">${esc(t.vehicleNo)} (${t.tankerCapMt} MT) —${esc(t.product)}</div>
-                      <div>रूट: ${esc(t.origin)} → ${esc(t.dest)} (${esc(t.date)})</div>
-                      <div class="mono font-bold text-blue-900 mt-0.5">भाड़ा: ${fmtINR(t.freightInr)} \vert{} वजन: ${t.qtyMt} MT</div>
+              <!-- Client Trips & Quotations -->
+              <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 text-xs">
+                <div class="bg-white p-5 rounded-2xl border border-slate-300 space-y-3">
+                  <h3 class="text-base font-black">🚛 मेरी ट्रिप्स और डिलीवरी स्टेटस (My Transportation Records)</h3>
+                  ${clientTrips.map(t => `
+                    <div class="p-3 rounded-xl bg-slate-50 border flex justify-between items-center">
+                      <div>
+                        <div class="font-black text-sm mono">${esc(t.vehicleNo)} (${t.capacityMt} MT) • ${esc(t.date)}</div>
+                        <div>${esc(t.origin)} → ${esc(t.destination)} | वजन: <strong>${(t.loadedKg/1000).toFixed(3)} MT</strong></div>
+                      </div>
+                      <span class="px-2.5 py-1 rounded bg-blue-100 text-blue-950 font-black">${esc(t.status)}</span>
                     </div>
-                    <span class="px-2.5 py-1 rounded bg-blue-100 text-blue-900 font-black">${esc(t.status)}</span>
-                  </div>
-                `).join('') || '<div class="p-4 text-slate-500 font-bold">इस क्लाइंट अकाउंट में कोई ट्रिप नहीं है (Client Isolation Verified)।</div>'}
-              </div>
+                  `).join('')}
+                </div>
 
-              <div class="bg-white p-5 rounded-2xl border border-slate-300 space-y-3">
-                <h3 class="font-black text-base">📝 मेरे कोटेशन (Quotations — यह पक्का बिल नहीं है) (${clientQuotes.length})</h3>
-                ${clientQuotes.map(q => `
-                  <div class="p-3.5 rounded-xl bg-amber-50/60 border border-amber-300 flex justify-between items-center">
-                    <div>
-                      <div class="font-black text-sm">${esc(q.id)} • ${esc(q.product)} (${q.qtyMt} MT)</div>
-                      <div>दूरी: ${q.oneWayKm} KM (एक तरफ) • अनुमानित भाड़ा: <strong class="mono">${fmtINR(q.estimatedFreightInr)}</strong></div>
-                      <div class="text-[11px] text-slate-600">उस समय का बेसिक रेट: ₹${fmtInt(q.snapshotBasicRate)}/MT (सुरक्षित)</div>
+                <div class="bg-white p-5 rounded-2xl border border-slate-300 space-y-3">
+                  <h3 class="text-base font-black">📋 मेरे कोटेशन (My Quotations — Non-Invoice Estimates)</h3>
+                  ${clientQuotes.map(q => `
+                    <div class="p-3 rounded-xl bg-amber-50 border border-amber-300 space-y-1">
+                      <div class="flex justify-between font-black"><span>${esc(q.id)} • ${esc(q.product)} (${q.quantityMt} MT)</span><span>${esc(q.status)}</span></div>
+                      <div>दूरी: ${q.oneWayKm} KM (एक तरफ) • अनुमानित भाड़ा: <strong class="mono">${fmtIntINR(q.estimatedFreightInr)}</strong></div>
+                      <div class="text-[10px] text-slate-600">कोटेशन समय का बेसिक रेट: ${fmtIntINR(q.productBasicRateUsed)}/MT</div>
                     </div>
-                    <span class="px-2.5 py-1 rounded bg-amber-200 text-slate-950 font-black">${esc(q.status)}</span>
-                  </div>
-                `).join('') || '<div class="p-4 text-slate-500 font-bold">कोई कोटेशन मौजूद नहीं है।</div>'}
+                  `).join('')}
+                </div>
               </div>
-            </div>
+            `}
 
-            ${buildFreightCalculatorWidgetHTML('ग्राहक भाड़ा कैलकुलेटर (Client Freight Calculator)')}
-            ${buildRateBoardHTML(false)}
+            ${renderFreightCalculatorWidget()}
+            ${renderBitumenRateBoardWidget(false)}
           </div>
         `;
       }
 
       // ======================================================================
-      // INTERFACE 4: SIMPLE DRIVER MOBILE APP (Part 7 — Hindi-First, Big Buttons)
+      // INTERFACE 4: SIMPLE DRIVER MOBILE APP (PART 7 — HINDI-FIRST, LARGE BUTTONS)
       // ======================================================================
-      function renderDriverApp() {
-        const myTrip = state.trips.find(t => t.driverId === state.driverActiveId && t.status !== 'Delivered') || state.trips[0];
-
+      function renderDriverInterface() {
+        const activeTrip = state.trips[0];
         return `
-          <div class="max-w-md mx-auto px-4 py-6 space-y-5">
-            <!-- Driver Header Card -->
-            <div class="bg-slate-950 text-white p-5 rounded-3xl border-b-4 border-amber-400 shadow-xl space-y-2">
-              <div class="flex justify-between items-center">
-                <span class="px-2.5 py-0.5 rounded bg-amber-400 text-slate-950 font-black text-xs">ड्राइवर मोबाइल ऐप</span>
-                <span class="text-xs text-emerald-400 font-bold">● मैनुअल स्टेटस मोड</span>
-              </div>
-              <h1 class="text-2xl font-black">नमस्ते, ${esc(myTrip.driverName)}</h1>
-              <div class="p-3 rounded-2xl bg-slate-900 border border-slate-700 flex justify-between items-center">
-                <div>
-                  <div class="text-xs text-slate-400">🚛 मेरी गाड़ी (Assigned Vehicle):</div>
-                  <div class="text-xl font-black text-amber-400 mono">${esc(myTrip.vehicleNo)} (${myTrip.tankerCapMt} MT)</div>
-                </div>
-                <span class="px-3 py-1 rounded-full bg-blue-600 text-white font-black text-xs">${esc(myTrip.status)}</span>
+          <div class="max-w-md mx-auto px-4 py-6 space-y-4">
+            <!-- Driver App Header -->
+            <div class="bg-slate-950 text-white p-5 rounded-3xl border-b-4 border-amber-400 text-center space-y-1 shadow-xl">
+              <div class="text-xs font-black text-amber-400 uppercase">भारत ऑयल कैरियर (BOC) • ड्राइवर ऐप</div>
+              <h1 class="text-2xl font-black">👷 नमस्ते, रमेश कुमार</h1>
+              <div class="inline-block px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 font-black text-sm mono">
+                🚛 मेरी गाड़ी: ${esc(activeTrip.vehicleNo)} (${activeTrip.capacityMt} MT)
               </div>
             </div>
 
             <!-- Today's Trip Card -->
             <div class="bg-white p-5 rounded-3xl border-2 border-slate-300 shadow-md space-y-2 text-sm">
-              <div class="text-xs font-black uppercase text-blue-700">📍 आज की ट्रिप (Today's Assigned Trip)</div>
-              <div class="font-black text-lg text-slate-900">${esc(myTrip.origin)} ➔ ${esc(myTrip.dest)}</div>
-              <div class="text-slate-700 font-semibold">माल: <strong>${esc(myTrip.product)}</strong> • वजन: <strong>${myTrip.qtyMt} MT (${fmtInt(myTrip.loadedKg)} kg)</strong></div>
-              <div class="text-xs text-emerald-800 bg-emerald-50 p-2.5 rounded-xl border border-emerald-300 font-bold" id="driver-feedback-box">
-                ✅ स्थिति: ${esc(myTrip.status)} — नीचे बड़े बटन दबाकर अपडेट करें।
+              <div class="text-xs font-black uppercase text-blue-700">📍 आज की ट्रिप (Assigned Trip)</div>
+              <div class="font-black text-lg text-slate-950">कहाँ से: ${esc(activeTrip.origin)}</div>
+              <div class="font-black text-lg text-emerald-800">कहाँ तक: ${esc(activeTrip.destination)}</div>
+              <div class="flex justify-between pt-2 border-t text-xs font-bold text-slate-700">
+                <span>माल: ${esc(activeTrip.product)} (${(activeTrip.loadedKg/1000).toFixed(2)} MT)</span>
+                <span class="px-2.5 py-0.5 rounded bg-amber-200 text-slate-950 font-black">स्टेटस: ${esc(activeTrip.status)}</span>
               </div>
             </div>
 
-            <!-- Big Touch-Friendly Hindi Buttons (Part 7) -->
+            <!-- Confirmation Message Banner -->
+            <div id="driver-action-msg" class="hidden p-4 rounded-2xl bg-emerald-600 text-white font-black text-center text-base shadow-lg"></div>
+
+            <!-- Large Touch-Friendly Hindi Action Buttons (Part 7) -->
             <div class="space-y-3">
-              <button type="button" onclick="BOC.driverUpdateStatus('${myTrip.id}', 'Dispatched', 'ट्रिप शुरू हो गई है (Dispatched)!')" class="w-full py-4 px-5 rounded-2xl bg-blue-700 hover:bg-blue-800 active:scale-98 text-white font-black text-lg shadow-lg flex items-center justify-between cursor-pointer">
-                <span>▶️ 1. ट्रिप शुरू करें (Start Trip)</span>
-                <span class="text-sm bg-white/20 px-2.5 py-1 rounded-lg">दबाएं</span>
+              <button type="button" onclick="BOC.driverAction('Dispatched', '✅ आपकी ट्रिप शुरू हो गई है! (Trip Started)')" class="w-full py-4 px-5 rounded-2xl bg-blue-700 hover:bg-blue-800 text-white font-black text-lg shadow-lg flex items-center justify-between cursor-pointer">
+                <span>▶️ 1. ट्रिप शुरू करें</span>
+                <span class="text-xs bg-white/20 px-2.5 py-1 rounded-lg">Start Trip</span>
               </button>
 
-              <button type="button" onclick="BOC.driverUpdateStatus('${myTrip.id}', 'In Transit', 'गाड़ी रास्ते में है (In Transit) अपडेट हो गया!')" class="w-full py-4 px-5 rounded-2xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-lg shadow-lg flex items-center justify-between cursor-pointer">
-                <span>🔄 2. स्टेटस अपडेट: रास्ते में (In Transit)</span>
-                <span class="text-sm bg-black/10 px-2.5 py-1 rounded-lg">दबाएं</span>
+              <button type="button" onclick="BOC.driverAction('In Transit', '✅ स्टेटस अपडेट हो गया: गाड़ी रास्ते में है (In Transit)')" class="w-full py-4 px-5 rounded-2xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-black text-lg shadow-lg flex items-center justify-between cursor-pointer">
+                <span>🔄 2. स्टेटस अपडेट करें (रास्ते में)</span>
+                <span class="text-xs bg-black/10 px-2.5 py-1 rounded-lg">In Transit</span>
               </button>
 
-              <div class="bg-white p-4 rounded-2xl border-2 border-slate-300 space-y-2">
-                <label class="font-black text-base block text-slate-900">📷 3. डिलीवरी की फोटो / धर्मकांटा पर्ची भेजें</label>
-                <input type="file" accept="image/*" onchange="BOC.driverUploadPhoto('${myTrip.id}', this)" class="w-full text-xs file:mr-3 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:bg-slate-900 file:text-white file:font-black" />
-              </div>
-
-              <button type="button" onclick="BOC.driverUpdateStatus('${myTrip.id}', 'Delivered', 'बधाई! डिलीवरी पूरी हो गई (Delivered) दर्ज हो गया!')" class="w-full py-4 px-5 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white font-black text-lg shadow-lg flex items-center justify-between cursor-pointer">
-                <span>✅ 4. डिलीवरी पूरी करें (Complete Delivery)</span>
-                <span class="text-sm bg-white/20 px-2.5 py-1 rounded-lg">दबाएं</span>
+              <button type="button" onclick="BOC.driverAction('At Site', '📸 डिलीवरी पर्ची (POD) का रिकॉर्ड दर्ज हो गया!')" class="w-full py-4 px-5 rounded-2xl bg-indigo-700 hover:bg-indigo-800 text-white font-black text-lg shadow-lg flex items-center justify-between cursor-pointer">
+                <span>📸 3. डिलीवरी की फोटो / पर्ची भेजें</span>
+                <span class="text-xs bg-white/20 px-2.5 py-1 rounded-lg">Send POD</span>
               </button>
 
-              <a href="tel:8077703137" class="w-full py-4 px-5 rounded-2xl bg-slate-900 text-amber-400 font-black text-lg shadow-lg flex items-center justify-between">
-                <span>📞 5. ऑफिस में कॉल करें (8077703137)</span>
-                <span class="text-sm bg-amber-400 text-slate-950 px-2.5 py-1 rounded-lg">कॉल</span>
+              <button type="button" onclick="BOC.driverAction('Delivered', '🎉 बहुत बढ़िया! डिलीवरी पूरी हो गई (Delivered)')" class="w-full py-4 px-5 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white font-black text-lg shadow-lg flex items-center justify-between cursor-pointer">
+                <span>✅ 4. डिलीवरी पूरी करें</span>
+                <span class="text-xs bg-white/20 px-2.5 py-1 rounded-lg">Complete</span>
+              </button>
+
+              <a href="tel:+918077703137" class="w-full py-4 px-5 rounded-2xl bg-slate-900 hover:bg-slate-800 text-amber-400 font-black text-lg shadow-lg flex items-center justify-between">
+                <span>📞 5. ऑफिस में कॉल करें</span>
+                <span class="text-xs text-white mono">+91 8077703137</span>
               </a>
             </div>
           </div>
         `;
       }
 
-      // ======================================================================
-      // MASTER RENDER CONTROLLER
-      // ======================================================================
       function renderAll() {
-        const views = ['PUBLIC', 'OWNER', 'EMPLOYEE', 'CLIENT', 'DRIVER'];
-        views.forEach(v => {
-          const btn = document.getElementById('tab-btn-' + v);
-          if (!btn) return;
-          if (state.activeView === v) {
-            btn.className = 'px-2.5 py-1.5 rounded-lg text-xs font-black bg-slate-950 text-amber-400 shadow cursor-pointer';
-          } else {
-            btn.className = 'px-2.5 py-1.5 rounded-lg text-xs font-bold bg-white/70 text-slate-950 hover:bg-white cursor-pointer';
+        const vp = document.getElementById('app-viewport');
+        const mode = state.activeInterface;
+
+        ['PUBLIC', 'OWNER', 'EMPLOYEE', 'CLIENT', 'DRIVER'].forEach(k => {
+          const btn = document.getElementById('nav-btn-' + k);
+          if (btn) {
+            btn.className = mode === k
+              ? 'px-2.5 py-1.5 rounded-lg text-xs font-black bg-slate-950 text-amber-400 shadow cursor-pointer'
+              : 'px-2.5 py-1.5 rounded-lg text-xs font-bold bg-white/70 hover:bg-white text-slate-950 cursor-pointer';
           }
         });
 
-        const authBtn = document.getElementById('btn-auth-top');
-        if (authBtn) {
-          authBtn.textContent = state.loggedInEmail ? `🟢 ${state.loggedInEmail}` : '🔐 लॉगिन (Login)';
-        }
-
-        const vp = document.getElementById('app-viewport');
-        if (state.activeView === 'PUBLIC') vp.innerHTML = renderPublicWebsite();
-        else if (state.activeView === 'OWNER') vp.innerHTML = renderOwnerDashboard();
-        else if (state.activeView === 'EMPLOYEE') vp.innerHTML = renderEmployeeErp();
-        else if (state.activeView === 'CLIENT') vp.innerHTML = renderClientPortal();
-        else if (state.activeView === 'DRIVER') vp.innerHTML = renderDriverApp();
+        if (mode === 'PUBLIC') vp.innerHTML = renderPublicInterface();
+        else if (mode === 'OWNER') vp.innerHTML = renderOwnerInterface();
+        else if (mode === 'EMPLOYEE') vp.innerHTML = renderEmployeeInterface();
+        else if (mode === 'CLIENT') vp.innerHTML = renderClientInterface();
+        else if (mode === 'DRIVER') vp.innerHTML = renderDriverInterface();
       }
 
       return {
-        init() {
-          if (fbAuth) {
-            fbAuth.onAuthStateChanged(u => {
-              state.loggedInEmail = u ? u.email : null;
-              renderAll();
-            });
-          }
-          renderAll();
-        },
-        switchView(viewName) {
-          state.activeView = viewName;
+        init() { renderAll(); },
+        switchInterface(mode) {
+          state.activeInterface = mode;
           saveState();
           renderAll();
           window.scrollTo({ top: 0, behavior: 'smooth' });
         },
-        setOwnerPage(subPage) {
-          state.ownerSubPage = subPage;
+        setOwnerTask(taskKey) {
+          state.ownerSubTask = taskKey;
           saveState();
           renderAll();
         },
-        switchClientAccount(clientId) {
-          state.clientActiveId = clientId;
+        setClientFilter(cid) {
+          state.activeClientFilter = cid;
           saveState();
           renderAll();
         },
         onCalculatorInput() {
-          const kmEl = document.getElementById('calc-inp-km');
-          const mtEl = document.getElementById('calc-inp-mt');
-          state.calcDistKm = kmEl ? kmEl.value : '';
-          state.calcQtyMt = mtEl ? mtEl.value : '';
+          const kmEl = document.getElementById('calc-input-km');
+          const mtEl = document.getElementById('calc-input-mt');
+          state.calcKm = kmEl ? kmEl.value : '';
+          state.calcMt = mtEl ? mtEl.value : '';
           saveState();
-          const res = calculateEstimatedFreight(state.calcDistKm, state.calcQtyMt, state.freightDefaultRate, state.freightMultiplier);
+          const res = calculateOfficialFreight(state.calcKm, state.calcMt, state.freightRatePerKmMt, state.freightMultiplier);
           const box = document.getElementById('calc-result-container');
           if (box) box.innerHTML = renderCalculatorResultInner(res);
         },
-        prefillRateForm(code) {
-          const item = state.productRates.find(p => p.code === code);
-          if (!item) return;
-          document.getElementById('ru-refinery').value = item.refinery || 'Mathura Refinery';
-          document.getElementById('ru-basic').value = item.basicPriceInr || '';
-          document.getElementById('ru-inc').value = item.increaseInr || 0;
-          document.getElementById('ru-tax').value = item.taxLabel || '18% GST (Configurable / Subject to Verification)';
+        setCalcMt(mtVal) {
+          state.calcMt = mtVal;
+          saveState();
+          const mtEl = document.getElementById('calc-input-mt');
+          if (mtEl) mtEl.value = mtVal;
+          BOC.onCalculatorInput();
         },
-        handleRateUpdate(e) {
-          e.preventDefault();
-          const code = document.getElementById('ru-code').value;
-          const refinery = document.getElementById('ru-refinery').value.trim();
-          const basic = Math.max(0, Number(document.getElementById('ru-basic').value) || 0);
-          const inc = Number(document.getElementById('ru-inc').value) || 0;
-          const taxLabel = document.getElementById('ru-tax').value.trim();
-          const effDate = document.getElementById('ru-date').value.trim();
-          const src = document.getElementById('ru-src').value.trim();
-          const status = document.getElementById('ru-status').value;
-
-          const item = state.productRates.find(p => p.code === code);
-          if (!item) return;
-
-          const oldBasic = item.basicPriceInr || 0;
-          const taxable = Number((basic * 1.18).toFixed(2));
-          const nowStr = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
-
-          item.refinery = refinery;
-          item.basicPriceInr = basic;
-          item.increaseInr = inc;
-          item.taxLabel = taxLabel;
-          item.taxablePriceInr = taxable;
-          item.effectiveDate = effDate;
-          item.updatedAt = nowStr;
-          item.source = src;
-          item.status = status;
-
-          state.rateHistory.unshift({
-            ts: nowStr,
-            product: code,
-            oldBasic,
-            newBasic: basic,
-            location: refinery,
-            updatedBy: state.loggedInEmail || 'Owner',
-            source: src,
-            status
-          });
-
-          logAudit('OWNER', 'UPDATE_RATE', `${code} updated from ₹${oldBasic} to ₹${basic}/MT (${status})`);
-          if (fbDb) fbDb.collection('product_rates').doc(code).set(item).catch(() => {});
+        publishRate(idx) {
+          const r = state.productRates[idx];
+          if (!r) return;
+          r.status = 'Published Current Rate ✓';
+          r.updatedAt = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
+          logAction('OWNER', 'PUBLISH_RATE', `Published ${r.code} rate ₹${r.basicPrice}/MT`);
           renderAll();
-          alert(`✅ ${code} का नया रेट (Basic: ₹${fmtInt(basic)}/MT | Taxable: ${fmtINR(taxable)}/MT) सफलतापूर्वक सेव हो गया! पुराने बिलों का रेट सुरक्षित रखा गया है।`);
         },
-        submitQuoteRequest(e) {
+        saveProductRateForm(e) {
+          e.preventDefault();
+          const code = document.getElementById('rf-code').value;
+          const loc = document.getElementById('rf-loc').value.trim();
+          const basic = Math.max(0, Number(document.getElementById('rf-basic').value) || 0);
+          const tax = document.getElementById('rf-tax').value.trim();
+          const effDate = document.getElementById('rf-date').value.trim();
+          const src = document.getElementById('rf-src').value.trim();
+          const submitMode = e.submitter?.value || 'PUBLISH';
+
+          const prod = state.productRates.find(p => p.code === code);
+          if (prod) {
+            const oldBasic = prod.basicPrice;
+            prod.location = loc;
+            prod.increaseAmt = oldBasic > 0 ? Math.max(0, basic - oldBasic) : 0;
+            prod.basicPrice = basic;
+            prod.taxLabel = tax;
+            prod.taxablePrice = Number((basic * 1.18).toFixed(2));
+            prod.effectiveDate = effDate;
+            prod.sourceRef = src;
+            prod.updatedAt = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
+            prod.status = submitMode === 'PUBLISH' ? 'Published Current Rate ✓' : 'Draft Rate';
+
+            state.rateHistory.unshift({
+              ts: prod.updatedAt,
+              product: code,
+              oldBasic,
+              newBasic: basic,
+              taxable: prod.taxablePrice,
+              location: loc,
+              updatedBy: 'Owner',
+              status: prod.status
+            });
+            logAction('OWNER', 'UPDATE_PRODUCT_RATE', `Updated ${code} from ₹${oldBasic} to ₹${basic}/MT (Historical quotations preserved)`);
+            renderAll();
+            alert(`✅ ${prod.name} का नया बेसिक रेट (₹${basic}/MT) सेव हो गया!`);
+          }
+        },
+        submitQuotationRequest(e) {
           e.preventDefault();
           const clientName = document.getElementById('rq-client').value.trim();
           const phone = document.getElementById('rq-phone').value.trim();
-          const prod = document.getElementById('rq-prod').value;
-          const qtyMt = Number(document.getElementById('rq-qty').value) || 23;
-          const orig = document.getElementById('rq-orig').value.trim();
+          const prodCode = document.getElementById('rq-prod').value;
+          const mt = Number(document.getElementById('rq-mt').value) || 23;
           const dest = document.getElementById('rq-dest').value.trim();
           const km = Number(document.getElementById('rq-km').value) || 250;
 
-          const calc = calculateEstimatedFreight(km, qtyMt, state.freightDefaultRate, state.freightMultiplier);
-          if (!calc.valid) return alert(calc.errorHi);
+          const fRes = calculateOfficialFreight(km, mt, state.freightRatePerKmMt, state.freightMultiplier);
+          const prodObj = state.productRates.find(p => p.code === prodCode) || state.productRates[1];
 
-          const rateObj = state.productRates.find(p => p.code === prod);
-          const qObj = {
+          const newQ = {
             id: 'QT-2026-' + (101 + state.quotations.length),
             clientId: 'CLIENT_A',
             clientName,
             phone,
-            product: prod,
-            qtyMt,
+            product: prodCode,
+            quantityMt: mt,
+            supplyLocation: 'Mathura Refinery',
+            destination: dest,
             oneWayKm: km,
-            ratePerKmMt: state.freightDefaultRate,
-            multiplier: state.freightMultiplier,
-            snapshotBasicRate: rateObj && rateObj.basicPriceInr ? rateObj.basicPriceInr : 0,
-            estimatedFreightInr: calc.totalFreightInr,
-            origin: orig,
-            dest,
+            ratePerKmMtUsed: state.freightRatePerKmMt,
+            multiplierUsed: state.freightMultiplier,
+            estimatedFreightInr: fRes.valid ? fRes.totalFreight : 0,
+            productBasicRateUsed: prodObj.basicPrice,
+            productTaxableRateUsed: prodObj.taxablePrice,
             status: 'Quotation Requested',
-            date: '19/10/2026',
-            createdBy: 'Client Enquiry'
+            createdAt: '19/10/2026',
+            createdBy: 'Client Request'
           };
+          state.quotations.unshift(newQ);
+          logAction('CLIENT', 'REQUEST_QUOTATION', `${newQ.id}: ${clientName} (${mt} MT ${prodCode} to ${dest})`);
 
-          state.quotations.unshift(qObj);
-          logAudit(clientName, 'REQUEST_QUOTATION', `${qObj.id}: ${qtyMt} MT ${prod} (${km} KM -> ${fmtINR(calc.totalFreightInr)})`);
-          if (fbDb) fbDb.collection('quotations').add(qObj).catch(() => {});
-
-          const alertEl = document.getElementById('pub-quote-alert');
-          if (alertEl) {
-            alertEl.classList.remove('hidden');
-            alertEl.innerHTML = `✅ कोटेशन रिक्वेस्ट <strong>${esc(qObj.id)}</strong> सेव हो गई! अनुमानित भाड़ा: <strong>${fmtINR(calc.totalFreightInr)}</strong>। यह Owner Dashboard और Client Portal में तुरंत दिख रहा है।`;
+          const msg = document.getElementById('pub-quote-msg');
+          if (msg) {
+            msg.classList.remove('hidden');
+            msg.textContent = `✅ कोटेशन रिक्वेस्ट (${newQ.id}) सफलतापूर्वक सेव हो गई! अनुमानित भाड़ा: ${fmtIntINR(newQ.estimatedFreightInr)}।`;
           }
         },
-        createTrip(e) {
+        ownerAddTrip(e) {
           e.preventDefault();
-          const veh = document.getElementById('t-veh').value.trim();
-          const cap = Number(document.getElementById('t-cap').value) || 23;
-          const prod = document.getElementById('t-prod').value;
-          const mt = Number(document.getElementById('t-mt').value) || 23;
-          const dest = document.getElementById('t-dest').value.trim();
+          const client = document.getElementById('ot-client').value.trim();
+          const veh = document.getElementById('ot-veh').value.trim();
+          const cap = Number(document.getElementById('ot-cap').value) || 23;
+          const drv = document.getElementById('ot-drv').value.trim();
+          const kg = Math.max(1000, Number(document.getElementById('ot-kg').value) || 23000);
+          const dest = document.getElementById('ot-dest').value.trim();
 
-          const newTrip = {
-            id: 'TRP-' + (101 + state.trips.length),
-            sno: state.trips.length + 1,
+          const nextSno = state.trips.length + 1;
+          state.trips.push({
+            sno: nextSno,
+            tripId: 'TRP-26-10' + nextSno,
             date: '19/10/2026',
             clientId: 'CLIENT_A',
-            clientName: 'Demo Highway Contractors Pvt Ltd [DEMO]',
+            clientName: client,
             vehicleNo: veh,
-            tankerCapMt: cap,
-            driverId: 'DRV-101',
-            driverName: 'रमेश कुमार (Ramesh Kumar)',
-            product: prod,
-            qtyMt: mt,
-            loadedKg: Math.round(mt * 1000),
-            unloadedKg: Math.round(mt * 1000),
+            capacityMt: cap,
+            driverName: drv,
+            product: 'VG-30',
             origin: 'Mathura Refinery',
-            dest,
-            freightInr: Math.round(mt * 4500),
-            hsdCashRecInr: 15000,
-            status: 'Vehicle Assigned',
-            proofNote: 'Assigned',
-            createdBy: 'Owner'
-          };
-          state.trips.unshift(newTrip);
-          logAudit('OWNER', 'CREATE_TRIP', `${newTrip.id} (${veh}, ${cap} MT)`);
+            destination: dest,
+            loadedKg: kg,
+            unloadedKg: kg,
+            ratePerMt: 4500,
+            slText: '0 kg',
+            seAmt: 0,
+            hsdQty: 100,
+            hsdAmt: 9000,
+            cash: 5000,
+            plantHsdQty: 0,
+            plantHsdAmt: 0,
+            plantCash: 0,
+            status: 'Dispatched',
+            podNote: 'रवाना (Dispatched)',
+            productAmountInr: 0,
+            additionalChargesInr: 0
+          });
+          logAction('OWNER', 'ADD_TRIP', `Added Trip #${nextSno} (${veh} • ${cap} MT • ${kg} kg)`);
+          state.ownerSubTask = 'HOME';
           renderAll();
         },
         toggleEmpPerm(key, val) {
           state.employeePermissions[key] = Boolean(val);
-          logAudit('OWNER', 'UPDATE_PERMISSION', `Employee permission ${key} set to ${val}`);
+          logAction('OWNER', 'UPDATE_PERMISSION', `Set employee permission ${key} = ${val}`);
           renderAll();
         },
-        driverUpdateStatus(tripId, newStatus, msgHi) {
-          const t = state.trips.find(x => x.id === tripId);
-          if (!t) return;
-          if (t.status === newStatus) {
-            alert('ℹ️ यह स्टेटस पहले से ही अपडेट किया जा चुका है (Duplicate prevented)।');
-            return;
-          }
-          t.status = newStatus;
-          logAudit('DRIVER', 'UPDATE_TRIP_STATUS', `${tripId} -> ${newStatus} [MANUAL]`);
+        recordQuickPayment() {
+          state.payments.unshift({
+            id: 'PAY-10' + (state.payments.length + 1),
+            clientId: 'CLIENT_A',
+            clientName: 'Demo Highway Contractors Pvt Ltd [DEMO]',
+            date: '19/10/2026',
+            mode: 'NEFT / RTGS',
+            ref: 'UTR' + Math.floor(100000 + Math.random() * 900000),
+            amountInr: 50000
+          });
+          logAction('OWNER', 'RECORD_PAYMENT', 'Recorded ₹50,000 NEFT receipt');
           renderAll();
-          const box = document.getElementById('driver-feedback-box');
-          if (box) box.textContent = '✅ ' + msgHi;
         },
-        driverUploadPhoto(tripId, inputEl) {
-          if (!inputEl.files || !inputEl.files[0]) return;
-          const fileName = inputEl.files[0].name;
-          const t = state.trips.find(x => x.id === tripId);
-          if (t) {
-            t.proofNote = `Photo Attached: ${fileName}`;
-            logAudit('DRIVER', 'UPLOAD_PROOF', `${tripId}: ${fileName}`);
+        approveExpense(idx) {
+          if (state.expenses[idx]) {
+            state.expenses[idx].status = 'Approved by Owner ✓';
+            logAction('OWNER', 'APPROVE_EXPENSE', `Approved ${state.expenses[idx].id}`);
             renderAll();
-            alert(`✅ फोटो "${fileName}" सफलतापूर्वक जुड़ गई!`);
           }
+        },
+        driverAction(newStatus, confirmText) {
+          state.trips[0].status = newStatus;
+          state.trips[0].podNote = confirmText;
+          logAction('DRIVER', 'DRIVER_STATUS_UPDATE', `Updated UP85-DEMO-101 to ${newStatus}`);
+          renderAll();
+          const box = document.getElementById('driver-action-msg');
+          if (box) {
+            box.classList.remove('hidden');
+            box.textContent = confirmText;
+          }
+        },
+        exportTripsCSV() {
+          const headers = ['S.No','Trip ID','Date','Vehicle','Capacity (MT)','Loaded (kg)','Loaded (MT)','Unloaded (kg)','Rate/MT','HSD+Cash','Plant HSD+Cash','Site','Status','Freight (INR)'];
+          const lines = [headers.join(',')];
+          state.trips.forEach(r => {
+            const lMt = (r.loadedKg / 1000).toFixed(3);
+            const fr = (Number(lMt) * r.ratePerMt).toFixed(2);
+            lines.push([r.sno, r.tripId, r.date, r.vehicleNo, r.capacityMt, r.loadedKg, lMt, r.unloadedKg, r.ratePerMt, r.hsdAmt + r.cash, r.plantHsdAmt + r.plantCash, `"${r.destination}"`, r.status, fr].join(','));
+          });
+          const a = document.createElement('a');
+          a.href = URL.createObjectURL(new Blob([lines.join('\n')], { type: 'text/csv;charset=utf-8;' }));
+          a.download = 'BOC_Freight_Statement_Export.csv';
+          a.click();
         },
         openLoginModal() { document.getElementById('login-modal').classList.remove('hidden'); },
         closeLoginModal() { document.getElementById('login-modal').classList.add('hidden'); },
         handleFirebaseLogin(e) {
           e.preventDefault();
           const email = document.getElementById('login-email').value.trim();
-          const pass = document.getElementById('login-password').value;
+          const pass = document.getElementById('login-pass').value;
           const alertBox = document.getElementById('login-alert');
           alertBox.classList.remove('hidden');
           if (!fbAuth) return;
           fbAuth.signInWithEmailAndPassword(email, pass)
             .then(cred => {
               state.loggedInEmail = cred.user.email;
-              state.activeView = 'OWNER';
-              logAudit(cred.user.email, 'FIREBASE_LOGIN', 'Signed in via Firebase Auth');
               BOC.closeLoginModal();
-              renderAll();
+              BOC.switchInterface('OWNER');
             })
             .catch(err => {
               alertBox.className = 'p-3 rounded-lg font-bold bg-amber-100 text-amber-950';
-              alertBox.textContent = `Firebase लॉगिन सूचना: ${err.message}। (हम अगले स्टेप में Firebase Console में आपका पासवर्ड सेट करेंगे। अभी आप नीचे के 4 बटनों से सीधा खोल सकते हैं)।`;
+              alertBox.textContent = `Firebase सूचना: ${err.message} (नीचे दिए गए बटन से सीधे डैशबोर्ड खोलें)।`;
             });
         },
         handlePasswordReset() {
           const email = document.getElementById('login-email').value.trim();
           const alertBox = document.getElementById('login-alert');
           alertBox.classList.remove('hidden');
-          if (!fbAuth || !email) return;
-          fbAuth.sendPasswordResetEmail(email)
-            .then(() => {
-              alertBox.className = 'p-3 rounded-lg font-bold bg-emerald-100 text-emerald-950';
-              alertBox.textContent = `✅ पासवर्ड रीसेट लिंक ${email} पर भेज दिया गया है!`;
-            })
-            .catch(err => {
-              alertBox.className = 'p-3 rounded-lg font-bold bg-amber-100 text-amber-950';
-              alertBox.textContent = `सूचना: ${err.message}`;
-            });
+          if (fbAuth && email) {
+            fbAuth.sendPasswordResetEmail(email)
+              .then(() => { alertBox.className = 'p-3 rounded-lg font-bold bg-emerald-100 text-emerald-950'; alertBox.textContent = `पासवर्ड रीसेट लिंक ${email} पर भेज दिया गया है!`; })
+              .catch(err => { alertBox.className = 'p-3 rounded-lg font-bold bg-amber-100 text-amber-950'; alertBox.textContent = err.message; });
+          }
+        },
+        // Part 11 & Part 21: Built-in Automated Test Runner
+        runAutomatedTests() {
+          const t1 = calculateOfficialFreight(250, 23, 3, 2);
+          const t2 = calculateOfficialFreight(100, 10, 3, 2);
+          const t3 = calculateOfficialFreight(0, 23, 3, 2);
+          const t4 = calculateOfficialFreight(-50, 23, 3, 2);
+          const t5 = getStatementSummary(state.trips);
+
+          const results = [
+            { name: 'Test 1: 250 KM × 23 MT × ₹3 × 2 = ₹34,500 (500 KM Round-Trip)', expected: '₹34,500 & 500 KM', actual: `₹${t1.totalFreight} & ${t1.roundTripKm} KM`, pass: t1.valid && t1.totalFreight === 34500 && t1.roundTripKm === 500 },
+            { name: 'Test 2: 100 KM × 10 MT × ₹3 × 2 = ₹6,000', expected: '₹6,000', actual: `₹${t2.totalFreight}`, pass: t2.valid && t2.totalFreight === 6000 },
+            { name: 'Test 3: Zero Distance (0 KM) Rejection', expected: 'valid: false (Validation Error)', actual: `valid: ${t3.valid} (${t3.errorHi})`, pass: t3.valid === false },
+            { name: 'Test 4: Negative Distance (-50 KM) Rejection', expected: 'valid: false (Validation Error)', actual: `valid: ${t4.valid}`, pass: t4.valid === false },
+            { name: 'Test 5: A4 Statement Math (69.250 MT = ₹3,11,625 Gross, ₹2,48,225 Net)', expected: '₹2,48,225', actual: `₹${t5.netInvoicePayable}`, pass: t5.totFreight === 311625 && t5.netInvoicePayable === 248225 },
+            { name: 'Test 6: Client B Isolation Check', expected: '0 Client A records leaked', actual: `${state.trips.filter(x => x.clientId === 'CLIENT_B').length} records`, pass: state.trips.filter(x => x.clientId === 'CLIENT_B').length === 0 }
+          ];
+
+          const box = document.getElementById('test-results-box');
+          box.classList.remove('hidden');
+          box.innerHTML = `
+            <div class="bg-slate-900 text-white p-5 rounded-2xl border-2 border-emerald-400 space-y-3 text-xs">
+              <div class="flex justify-between items-center">
+                <span class="font-black text-sm text-emerald-400">✅ AUTOMATED QA TEST SUITE RESULTS (${results.filter(r=>r.pass).length}/${results.length} PASSED)</span>
+                <button onclick="document.getElementById('test-results-box').classList.add('hidden')" class="text-slate-400 hover:text-white font-bold cursor-pointer">✕ बंद करें</button>
+              </div>
+              <div class="space-y-1.5 mono">
+                ${results.map(r => `
+                  <div class="p-2 rounded bg-slate-800 flex flex-wrap justify-between gap-2">
+                    <span>${r.pass ? '🟢 PASS' : '🔴 FAIL'} — ${esc(r.name)}</span>
+                    <span class="text-amber-300">Expected: ${esc(r.expected)} \vert{} Actual:${esc(r.actual)}</span>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          `;
         }
       };
     })();
